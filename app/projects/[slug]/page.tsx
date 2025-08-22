@@ -1,6 +1,7 @@
 import { getProjects } from "@/lib/getProjects";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 
 interface ProjectPageProps {
   params: { slug: string };
@@ -18,10 +19,13 @@ export default function ProjectPage({ params }: ProjectPageProps) {
     <main className="min-h-screen bg-background">
       {/* Image de couverture */}
       <section className="w-[90vw] h-auto max-h-[50vh] mx-auto rounded-2xl overflow-hidden mb-12">
-        <img
+        <Image
           src={project.cover}
           alt={project.title}
+          width={1600}
+          height={900}
           className="w-full h-auto object-contain"
+          priority
         />
       </section>
 
@@ -50,7 +54,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             href="/"
             className="inline-block px-6 py-3 text-xl font-semibold text-text bg-background border-2 border-text rounded-full hover:bg-text hover:text-background transition-all duration-300"
           >
-            ← Retour à l'accueil
+            ← Retour à l&apos;accueil
           </Link>
         </div>
       </div>

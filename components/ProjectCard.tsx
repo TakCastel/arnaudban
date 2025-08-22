@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Project } from "@/data/projects";
+import Image from "next/image";
 
 interface ProjectCardProps {
   project: Project;
@@ -18,9 +19,11 @@ export default function ProjectCard({ project, imageHeight }: ProjectCardProps) 
         {/* Container avec dimensions fixes et stables */}
         <div className={`w-full ${imageHeight} bg-gray-300 overflow-hidden relative`}>
           {/* Image avec dimensions fixes */}
-          <img
+          <Image
             src={project.cover}
             alt={project.title}
+            width={400}
+            height={300}
             className="w-full h-full object-cover"
             loading="lazy"
           />
