@@ -1,5 +1,4 @@
 import "./globals.css";
-import { ThemeProvider } from "next-themes";
 import localFont from "next/font/local";
 import Header from "@/components/Header";
 
@@ -17,16 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" suppressHydrationWarning>
+    <html lang="fr" className="bg-background text-text">
       <body className={`${moderat.variable} font-sans`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-        >
-          <Header />
-          {children}
-        </ThemeProvider>
+        <Header />
+        {children}
       </body>
     </html>
   );

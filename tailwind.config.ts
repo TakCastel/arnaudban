@@ -2,24 +2,22 @@ import type { Config } from "tailwindcss";
 
 export default {
   content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./pages/**/*.{ts,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        brand: {
-          blue: "#1D4ED8",
+        background: {
+          DEFAULT: "#f8fafc", // fond blanc cassé bleu très légèrement
+        },
+        text: {
+          DEFAULT: "#1e3a8a", // bleu marin sombre
         },
       },
-      borderRadius: {
-        xl2: "1.25rem",
-      },
-      container: {
-        center: true,
-        padding: "1rem",
-        screens: { "2xl": "1280px" },
+      fontFamily: {
+        sans: ["var(--font-moderat)", "sans-serif"],
       },
     },
   },

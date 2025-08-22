@@ -7,9 +7,15 @@ export default function SectionTitle({
   subtitle?: string;
 }) {
   return (
-    <div className="mb-10">
-      <h2 className="text-4xl md:text-5xl font-extrabold">{title}</h2>
-      {subtitle && <p className="text-brand-blue mt-2">{subtitle}</p>}
+    <div className="mb-12">
+      <h2 className="text-4xl md:text-5xl font-extrabold text-blue-900 leading-tight">
+        {title}
+      </h2>
+      {subtitle && (
+        <p className="text-blue-700 mt-3 text-lg font-medium tracking-wide">
+          {subtitle}
+        </p>
+      )}
     </div>
   );
 }

@@ -9,26 +9,20 @@ export default function HomePage() {
     <main>
       <HeroSection id="top" />
 
-      <section id="work" className="container py-24">
+      {/* SECTION WORK */}
+      <section
+        id="work"
+        className="
+          relative
+          -mt-16
+          m-4 md:m-6
+          rounded-t-lg md:rounded-t-xl
+          bg-blue-50
+          px-4 md:px-8 py-24
+        "
+      >
         <SectionTitle title="Sélection" subtitle="Projects" />
         <MosaicGrid projects={items} />
-      </section>
-
-      <section id="about" className="container py-24 max-w-3xl">
-        <SectionTitle title="À propos" />
-        <p className="text-lg leading-relaxed">
-          Réalisateur — esthétique épurée, noir & blanc, bleu sur blanc par
-          touches…
-        </p>
-      </section>
-
-      <section id="contact" className="container py-24">
-        <a
-          className="text-2xl font-semibold rounded-full px-6 py-3 border hover:opacity-80 transition"
-          href="mailto:contact@arnaudban.com"
-        >
-          F24 — Discutons
-        </a>
       </section>
     </main>
   );

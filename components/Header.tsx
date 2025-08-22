@@ -1,34 +1,26 @@
 "use client";
 import Link from "next/link";
-import ThemeToggle from "./ThemeToggle";
-import Container from "./Container";
-
-const NavLink = ({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) => (
-  <a href={href} className="hover:opacity-70">
-    {children}
-  </a>
-);
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 backdrop-blur bg-white/60 dark:bg-black/40">
-      <Container className="flex items-center justify-between h-14">
-        <Link href="/" className="font-semibold">
-          ARNAUD BAN
+    <header className="w-full px-4 md:px-6 my-6">
+      <div className="flex items-center justify-between">
+        {/* Nom à gauche */}
+        <Link
+          href="/"
+          className="font-extrabold text-lg sm:text-xl md:text-2xl tracking-tight text-blue-900"
+        >
+          Arnaud Ban
         </Link>
-        <nav className="flex items-center gap-6 text-sm">
-          <NavLink href="#work">Work</NavLink>
-          <NavLink href="#about">About</NavLink>
-          <NavLink href="#contact">Contact</NavLink>
-          <ThemeToggle />
-        </nav>
-      </Container>
+
+        {/* Bouton "Voir tous les projets" à droite */}
+        <a
+          href="#work"
+          className="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors"
+        >
+          Voir tous les projets
+        </a>
+      </div>
     </header>
   );
 }
