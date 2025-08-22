@@ -1,16 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  // Configuration pour le déploiement sur Netlify
-  images: {
-    unoptimized: true,
-  },
-  
-  // Optimisations SEO et performances
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   poweredByHeader: false,
   compress: true,
   
-  // Headers de sécurité
   async headers() {
     return [
       {
@@ -36,8 +28,7 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  
-  // Redirection des anciennes URLs si nécessaire
+
   async redirects() {
     return [
       {
@@ -49,4 +40,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
