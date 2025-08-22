@@ -44,7 +44,7 @@ export default function ProjectCard({ project, imageHeight }: ProjectCardProps) 
     >
       <Link
         href={`/projects/${project.slug}`}
-        className="block rounded-2xl overflow-hidden border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-[1.02] bg-background group"
+        className="block rounded-2xl overflow-hidden border border-gray-200 shadow-none hover:shadow-xl transition-all duration-500 ease-out hover:scale-[1.02] bg-background group"
       >
         {/* Container avec dimensions fixes et stables */}
         <div className={`w-full ${imageHeight} bg-gray-300 overflow-hidden relative`}>
@@ -59,14 +59,14 @@ export default function ProjectCard({ project, imageHeight }: ProjectCardProps) 
           />
           
           {/* Overlay avec texte qui apparaît au hover */}
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-center items-center p-4 text-center">
+          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out flex flex-col justify-center items-center p-4 text-center">
             {/* Titre qui apparaît en premier */}
-            <h3 className="text-white text-3xl font-bold opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 delay-200">
+            <h3 className="text-white text-3xl font-bold opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 ease-out delay-200">
               {project.title}
             </h3>
             {/* Sous-titre qui commence juste après */}
             {project.subtitle && (
-              <p className="text-white/90 text-xl mt-4 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 delay-300">
+              <p className="text-white/90 text-xl mt-4 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 ease-out delay-300">
                 {project.subtitle}
               </p>
             )}
