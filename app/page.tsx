@@ -14,9 +14,9 @@ export default function HomePage() {
         id="work"
         className="
           relative
-          -mt-16
-          m-4 md:m-6
-          rounded-t-lg md:rounded-t-xl
+          sticky top-20
+          w-[90vw] mx-auto
+          rounded-2xl
           bg-blue-50
           px-4 md:px-8 py-24
         "
