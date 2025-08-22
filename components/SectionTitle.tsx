@@ -2,13 +2,18 @@
 export default function SectionTitle({
   title,
   subtitle,
+  id,
 }: {
   title: string;
   subtitle?: string;
+  id?: string;
 }) {
   return (
     <div className="mb-12">
-      <h2 className="text-4xl md:text-5xl font-extrabold text-text leading-tight">
+      <h2 
+        id={id}
+        className="text-4xl md:text-5xl font-extrabold text-text leading-tight"
+      >
         {title}
       </h2>
       {subtitle && (

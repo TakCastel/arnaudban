@@ -55,6 +55,8 @@ export default function HeroSection({ id }: { id?: string }) {
       style={{
         marginBottom: '16px'
       }}
+      role="banner"
+      aria-label="Section d'accueil - Arnaud Ban"
     >
       <div className={`w-full h-full pb-16 transition-all duration-1000 ease-out ${
         isLoaded && isVisible
@@ -63,7 +65,7 @@ export default function HeroSection({ id }: { id?: string }) {
       }`}>
         <Image
           src="https://picsum.photos/1600/900"
-          alt="Hero background"
+          alt="Image de fond représentant l'univers cinématographique d'Arnaud Ban"
           width={1600}
           height={900}
           className="w-full h-full object-cover rounded-2xl"

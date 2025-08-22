@@ -16,11 +16,20 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
   };
 
   return (
-    <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
+    <div 
+      className="columns-1 sm:columns-2 lg:columns-3 gap-6"
+      role="grid"
+      aria-label="Grille des projets d'Arnaud Ban"
+      aria-describedby="work-title"
+    >
       {projects.map((p, index) => {
         const randomHeight = getRandomHeight(index);
         return (
-          <div key={p.slug} className="break-inside-avoid mb-6">
+          <div 
+            key={p.slug} 
+            className="break-inside-avoid mb-6"
+            role="gridcell"
+          >
             <ProjectCard project={p} imageHeight={randomHeight} />
           </div>
         );

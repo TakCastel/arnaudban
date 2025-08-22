@@ -24,11 +24,15 @@ export default function Header() {
   }, []);
 
   return (
-                    <header className={`w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] h-16 flex items-center sticky top-0 z-50 mx-auto transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-background' 
-        : 'bg-background'
-    }`}>
+    <header 
+      className={`w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] h-16 flex items-center sticky top-0 z-50 mx-auto transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-background' 
+          : 'bg-background'
+      }`}
+      role="banner"
+      aria-label="Navigation principale"
+    >
       <div className="flex items-center justify-between w-full px-4 md:px-8">
         {/* Nom à gauche */}
         <Link
@@ -38,6 +42,7 @@ export default function Header() {
               ? 'opacity-100 translate-x-0' 
               : 'opacity-0 -translate-x-4'
           }`}
+          aria-label="Retour à la page d'accueil - Arnaud Ban"
         >
           Arnaud Ban
         </Link>
@@ -51,6 +56,7 @@ export default function Header() {
                 ? 'opacity-100 translate-x-0' 
                 : 'opacity-0 translate-x-4'
             }`}
+            aria-label="Voir la section des projets"
           >
             Voir tous les projets
           </a>
