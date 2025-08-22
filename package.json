@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node scripts/fix-paths.js",
+    "build": "next build",
     "build:static": "next build && next export",
     "build:fix": "next build && node scripts/fix-paths.js",
     "start": "next start",
