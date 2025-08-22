@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 
 export default function HeroSection({ id }: { id?: string }) {
@@ -63,13 +62,10 @@ export default function HeroSection({ id }: { id?: string }) {
           ? 'scale-100 opacity-100' 
           : 'scale-75 opacity-0'
       }`}>
-        <Image
+        <img
           src="https://picsum.photos/1600/900"
           alt="Image de fond représentant l'univers cinématographique d'Arnaud Ban"
-          width={1600}
-          height={900}
           className="w-full h-full object-cover rounded-2xl"
-          priority
           onLoad={() => setIsLoaded(true)}
         />
       </div>

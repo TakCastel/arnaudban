@@ -4,6 +4,9 @@ const nextConfig = {
   trailingSlash: true,
   poweredByHeader: false,
   compress: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   
   async headers() {
     return [

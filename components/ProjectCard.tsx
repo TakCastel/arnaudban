@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Project } from "@/data/projects";
-import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 
 interface ProjectCardProps {
@@ -54,11 +53,9 @@ export default function ProjectCard({ project, imageHeight }: ProjectCardProps) 
           {/* Container avec dimensions fixes et stables */}
           <div className={`w-full ${imageHeight} bg-gray-300 overflow-hidden relative`}>
             {/* Image avec dimensions fixes */}
-            <Image
+            <img
               src={project.cover}
               alt={`Image de couverture du projet ${project.title}`}
-              width={400}
-              height={300}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
             />
