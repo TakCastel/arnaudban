@@ -9,36 +9,63 @@ export default function HomePage() {
     <main>
       <HeroSection id="top" />
 
-      {/* SECTION WORK */}
-      <section
-        id="work"
-        className="
-          relative
-          sticky top-20
-          w-[90vw] mx-auto
-          rounded-2xl
-          bg-background
-          px-4 md:px-8 py-24
-        "
-      >
+             {/* SECTION WORK */}
+       <section
+         id="work"
+         className="
+           relative z-20
+           w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] mx-auto
+           rounded-t-2xl
+           bg-background
+           px-4 md:px-8 py-12 md:py-24
+         "
+       >
         <SectionTitle title="Sélection" subtitle="Projects" />
         <MosaicGrid projects={items} />
       </section>
 
-      {/* SECTION DE TEST DES COULEURS - À SUPPRIMER APRÈS */}
-      <section className="w-[90vw] mx-auto mt-8 p-8 bg-background rounded-2xl">
-        <h2 className="text-4xl font-bold text-text mb-6">Test des couleurs personnalisées</h2>
-        <div className="space-y-6">
-          <div className="p-6 bg-background border border-text/20 rounded">
-            <p className="text-text text-xl">Texte principal avec text-text</p>
-            <p className="text-text/80 text-lg">Texte secondaire avec text-text/80</p>
-            <p className="text-text/60 text-lg">Texte tertiaire avec text-text/60</p>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       {/* FOOTER */}
+                                                                                     <footer className="w-full bg-background mt-0 py-12 md:py-24 relative z-30">
+           <div className="w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] mx-auto">
+             <div className="bg-text text-background rounded-2xl overflow-hidden px-4 md:px-8 py-12 md:py-24">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="text-5xl font-bold mb-16 tracking-tight">À PROPOS</h2>
+                
+                <div className="space-y-8 text-xl leading-relaxed">
+                  <p className="text-2xl">
+                    Salut ! Je m'appelle <span className="font-bold">Arnaud Ban</span> et je suis un réalisateur indépendant qui travaille sur Avignon.
+                  </p>
+                  
+                  <p className="text-xl">
+                    Mes spécialités sont le <span className="font-semibold">montage</span> et l'<span className="font-semibold">étalonnage</span>.
+                  </p>
+                  
+                  <p className="text-lg">
+                    Pour toute demande professionnelle, merci de me contacter par mail :{' '}
+                    <a 
+                      href="mailto:ban.arnaud@outlook.fr" 
+                      className="font-medium hover:underline transition-colors duration-300"
+                    >
+                      ban.arnaud@outlook.fr
+                    </a>
+                  </p>
+                </div>
+                
+                {/* Mentions légales */}
+                <div className="mt-16 pt-8 border-t border-background/20">
+                  <p className="text-sm text-background/70 text-center">
+                    <a 
+                      href="/mentions-legales" 
+                      className="hover:underline transition-colors duration-300"
+                    >
+                      Mentions légales
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="p-6 bg-text text-background rounded">
-            <p className="text-xl">Fond avec bg-text et texte avec text-background</p>
-          </div>
-        </div>
-      </section>
+        </footer>
     </main>
   );
 }
