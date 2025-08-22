@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Configuration pour le déploiement
-  output: 'export',
-  trailingSlash: true,
+  // Configuration pour le déploiement sur Netlify
   images: {
     unoptimized: true,
   },
