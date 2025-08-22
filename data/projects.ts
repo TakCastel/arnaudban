@@ -1,5 +1,5 @@
 // Types pour les projets
-interface Project {
+export interface Project {
   slug: string;
   title: string;
   subtitle: string;

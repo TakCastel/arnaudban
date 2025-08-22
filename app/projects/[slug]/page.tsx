@@ -15,31 +15,31 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-background">
       {/* Image de couverture */}
-      <section className="w-[90vw] h-[60vh] mx-auto rounded-2xl overflow-hidden mb-12">
+      <section className="w-[90vw] h-auto max-h-[50vh] mx-auto rounded-2xl overflow-hidden mb-12">
         <img
           src={project.cover}
           alt={project.title}
-          className="w-full h-full object-cover"
+          className="w-full h-auto object-contain"
         />
       </section>
 
       {/* Contenu du projet */}
       <div className="w-[90vw] mx-auto">
         {/* Titre et sous-titre */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+        <div className="mb-12">
+          <h1 className="text-6xl font-bold text-text mb-4">
             {project.title}
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-2xl text-text/80">
             {project.subtitle}
           </p>
         </div>
 
         {/* Description */}
-        <div className="prose prose-lg max-w-none mb-12">
-          <p className="text-gray-700 leading-relaxed">
+        <div className="prose prose-xl max-w-none mb-16">
+          <p className="text-text/90 leading-relaxed text-xl">
             {project.description}
           </p>
         </div>
@@ -48,7 +48,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         <div className="text-center">
           <Link
             href="/"
-            className="inline-block px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+            className="inline-block px-6 py-3 text-xl font-semibold text-text bg-background border-2 border-text rounded-full hover:bg-text hover:text-background transition-all duration-300"
           >
             ← Retour à l'accueil
           </Link>

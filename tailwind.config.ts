@@ -10,10 +10,10 @@ export default {
     extend: {
       colors: {
         background: {
-          DEFAULT: "#f8fafc", // fond blanc cassé bleu très légèrement
+          DEFAULT: "rgb(239 246 255)", // fond bleu clair
         },
         text: {
-          DEFAULT: "#1e3a8a", // bleu marin sombre
+          DEFAULT: "rgb(30 58 138)", // bleu marin sombre
         },
       },
       fontFamily: {

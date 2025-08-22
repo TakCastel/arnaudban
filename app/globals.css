@@ -4,10 +4,10 @@
 
 /* Couleurs personnalisées */
 :root {
-  --background: #f8fafc;
-  --foreground: #1e3a8a;
-  --brand-blue: #1e40af;
-  --brand-blue-light: #3b82f6;
+  --background: rgb(239 246 255);
+  --foreground: rgb(30 58 138);
+  --brand-blue: rgb(30 58 138);
+  --brand-blue-light: rgb(59 130 246);
 }
 
 body {
