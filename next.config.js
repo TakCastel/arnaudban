@@ -2,6 +2,11 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
+  assetPrefix: '',
+  basePath: '',
   poweredByHeader: false,
   compress: true,
   eslint: {
