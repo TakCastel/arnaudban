@@ -33,11 +33,11 @@ export default function HomePage() {
                 
                 <div className="space-y-8 text-xl leading-relaxed">
                   <p className="text-2xl">
-                    Salut ! Je m'appelle <span className="font-bold">Arnaud Ban</span> et je suis un réalisateur indépendant qui travaille sur Avignon.
+                    Salut ! Je m&apos;appelle <span className="font-bold">Arnaud Ban</span> et je suis un réalisateur indépendant qui travaille sur Avignon.
                   </p>
                   
                   <p className="text-xl">
-                    Mes spécialités sont le <span className="font-semibold">montage</span> et l'<span className="font-semibold">étalonnage</span>.
+                    Mes spécialités sont le <span className="font-semibold">montage</span> et l&apos;<span className="font-semibold">étalonnage</span>.
                   </p>
                   
                   <p className="text-lg">

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function MentionsLegalesPage() {
   return (
     <main className="min-h-screen bg-background py-8 md:py-16">
@@ -38,7 +40,7 @@ export default function MentionsLegalesPage() {
           <section>
             <h2 className="text-2xl font-semibold text-text mb-4">Contact</h2>
             <p className="text-lg">
-              Pour toute question concernant ce site, vous pouvez me contacter à l'adresse :{' '}
+              Pour toute question concernant ce site, vous pouvez me contacter à l&apos;adresse :{' '}
               <a 
                 href="mailto:ban.arnaud@outlook.fr" 
                 className="text-text hover:underline transition-colors duration-300"
@@ -51,7 +53,7 @@ export default function MentionsLegalesPage() {
           <section>
             <h2 className="text-2xl font-semibold text-text mb-4">Propriété intellectuelle</h2>
             <p className="text-lg">
-              L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. 
+              L&apos;ensemble de ce site relève de la législation française et internationale sur le droit d&apos;auteur et la propriété intellectuelle. 
               Tous les droits de reproduction sont réservés, y compris pour les documents téléchargeables et les représentations iconographiques et photographiques.
             </p>
           </section>
@@ -59,17 +61,17 @@ export default function MentionsLegalesPage() {
           <section>
             <h2 className="text-2xl font-semibold text-text mb-4">Liens hypertextes</h2>
             <p className="text-lg">
-              Les liens hypertextes mis en place dans le cadre du présent site web en direction d'autres ressources présentes sur le réseau Internet ne sauraient engager la responsabilité d'Arnaud Ban.
+              Les liens hypertextes mis en place dans le cadre du présent site web en direction d&apos;autres ressources présentes sur le réseau Internet ne sauraient engager la responsabilité d&apos;Arnaud Ban.
             </p>
           </section>
 
           <div className="mt-12 pt-8 border-t border-text/20">
-            <a 
+            <Link 
               href="/" 
               className="text-text/70 hover:text-text transition-colors duration-300"
             >
-              ← Retour à l'accueil
-            </a>
+              ← Retour à l&apos;accueil
+            </Link>
           </div>
         </div>
       </div>
