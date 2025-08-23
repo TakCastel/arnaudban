@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import HeroLoader from "./HeroLoader";
 
 export default function HeroSection({ id }: { id?: string }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -57,17 +59,44 @@ export default function HeroSection({ id }: { id?: string }) {
       role="banner"
       aria-label="Section d'accueil - Arnaud Ban"
     >
-      <div className={`w-full h-full pb-16 transition-all duration-1000 ease-out ${
-        isLoaded && isVisible
-          ? 'scale-100 opacity-100' 
-          : 'scale-75 opacity-0'
-      }`}>
-        <img
-          src="https://picsum.photos/1600/900"
-          alt="Image de fond représentant l'univers cinématographique d'Arnaud Ban"
-          className="w-full h-full object-cover rounded-2xl"
-          onLoad={() => setIsLoaded(true)}
-        />
+      <div className="w-full h-full pb-16 relative">
+        {/* Loader qui s'affiche pendant le chargement */}
+        <AnimatePresence>
+          {!isLoaded && (
+            <motion.div
+              key="loader"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0 z-20"
+            >
+              <HeroLoader />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Image avec animation d'apparition */}
+        <motion.div
+          className="w-full h-full"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={isLoaded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+          transition={{
+            duration: 0.8,
+            ease: [0.25, 0.46, 0.45, 0.94],
+            delay: 0.2
+          }}
+        >
+          <img
+            src="https://picsum.photos/1600/900"
+            alt="Image de fond représentant l'univers cinématographique d'Arnaud Ban"
+            className="w-full h-full object-cover rounded-2xl"
+            onLoad={() => {
+              // Délai pour laisser le loader s'afficher un peu
+              setTimeout(() => setIsLoaded(true), 500);
+            }}
+          />
+        </motion.div>
       </div>
     </section>
   );

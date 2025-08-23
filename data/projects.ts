@@ -55,7 +55,7 @@ export const projects: Project[] = [
     slug: "3-femmes-2024",
     title: "3 femmes",
     subtitle: "2024 - Étalonnage et compositing",
-    cover: "https://picsum.photos/seed/3femmes/800/600",
+    cover: "/assets/ARABESQUE.png",
     description: "Un travail d'étalonnage qui vient vraiment accompagner la narration de l'histoire. La trame se déroule dans les années folles qui s'illustre au début du film par un noir et blanc au format 4/3. Mais alors qu'une information apporte un souffle nouveau de liberté sur le personnage principal, le ratio de l'image s'étire et le noir et blanc laisse place à une colorimétrie saturée et irréaliste qui reprends les codes du Teal and Orange.",
   },
 
@@ -113,7 +113,7 @@ export const projects: Project[] = [
     slug: "id-logistics",
     title: "ID Logistics",
     subtitle: "Projet corporate",
-    cover: "https://picsum.photos/seed/idlogistics/800/600",
+    cover: "/assets/CHARLY_POETE.png",
     description: "Projet corporate pour ID Logistics. Travailler pour une entreprise comme ID Logistics demande de comprendre leurs enjeux de communication. Il faut créer du contenu qui reflète leur identité de marque tout en étant engageant pour leur audience.",
   },
   {

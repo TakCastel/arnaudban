@@ -1,6 +1,7 @@
 import HeroSection from "@/components/HeroSection";
 import MosaicGrid from "@/components/MosaicGrid";
 import SectionTitle from "@/components/SectionTitle";
+import StaggeredAnimation from "@/components/StaggeredAnimation";
 import { getProjects } from "@/lib/getProjects";
 import { Metadata } from "next";
 
@@ -40,8 +41,10 @@ export default function HomePage() {
            px-4 md:px-8 py-12 md:py-24
          "
        >
-        <SectionTitle title="Sélection" subtitle="Projects" id="work-title" />
-        <MosaicGrid projects={items} />
+        <StaggeredAnimation initialDelay={0.2}>
+          <SectionTitle title="Sélection" subtitle="Projects" id="work-title" />
+          <MosaicGrid projects={items} />
+        </StaggeredAnimation>
       </section>
     </main>
   );

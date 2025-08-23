@@ -2,6 +2,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ConditionalPageTransition from "@/components/ConditionalPageTransition";
 
 const moderat = localFont({
   src: [{ path: "../public/fonts/Moderat-Regular.woff2", style: "normal" }],
@@ -102,7 +103,9 @@ export default function RootLayout({
         
         <Header />
         <div id="main-content">
-          {children}
+          <ConditionalPageTransition>
+            {children}
+          </ConditionalPageTransition>
         </div>
 
         <Footer />

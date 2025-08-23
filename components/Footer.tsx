@@ -4,9 +4,8 @@ export default function Footer() {
   return (
     <footer className="w-full bg-background mt-0 py-8 md:py-16 relative z-30" role="contentinfo">
       <div className="w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] mx-auto">
-        <div className="bg-text text-background rounded-2xl overflow-hidden px-4 md:px-8 py-8 md:py-16">
-          {/* Container pour le texte avec la même largeur que les pages de projets */}
-          <div className="w-[calc(100vw-32px)] md:w-[70vw] max-w-4xl mx-auto">
+        <div className="bg-text text-background rounded-2xl overflow-hidden px-6 md:px-8 py-8 md:py-16">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-bold mb-8 md:mb-16 tracking-tight">À PROPOS</h2>
 
             <div className="space-y-6 md:space-y-8 text-lg md:text-xl leading-relaxed">

@@ -2,6 +2,8 @@ import { getProjects } from "@/lib/getProjects";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import ProjectPageTransition from "@/components/ProjectPageTransition";
+import ProjectImageWithLoader from "@/components/ProjectImageWithLoader";
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
@@ -61,13 +63,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <main className="bg-background py-8 md:py-16" role="main">
+    <ProjectPageTransition>
       {/* Image de couverture */}
       <section className="w-[calc(100vw-32px)] md:w-[70vw] max-w-4xl h-auto mx-auto rounded-2xl overflow-hidden mb-8">
-        <img
+        <ProjectImageWithLoader
           src={project.cover}
           alt={`Image de couverture du projet ${project.title}`}
-          className="w-full h-auto object-contain"
+          title={project.title}
         />
       </section>
 
@@ -101,6 +103,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </Link>
         </div>
       </div>
-    </main>
+    </ProjectPageTransition>
   );
 }

@@ -33,7 +33,7 @@ export default function Header() {
       role="banner"
       aria-label="Navigation principale"
     >
-      <div className="flex items-center justify-between w-full px-4 md:px-8">
+      <div className="flex items-center justify-between w-full">
         {/* Nom à gauche */}
         <Link
           href="/"
