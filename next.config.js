@@ -12,6 +12,11 @@ const nextConfig = {
     deviceSizes: [375, 768, 1920],
     imageSizes: [375, 768, 1920],
     minimumCacheTTL: 60,
+    // Configuration pour Netlify
+    unoptimized: false,
+    loader: 'default',
+    domains: [],
+    remotePatterns: [],
   },
   
   async headers() {

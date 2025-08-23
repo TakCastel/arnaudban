@@ -3,10 +3,16 @@
   publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Configuration pour l'API d'images Next.js
+[[redirects]]
+  from = "/_next/image"
+  to = "/.netlify/functions/___netlify-handler"
+  status = 200
 
 # Headers de sécurité et de performance
 [[headers]]
