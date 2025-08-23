@@ -5,8 +5,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:static": "next build && next export",
-    "build:fix": "next build && node scripts/fix-paths.js",
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
