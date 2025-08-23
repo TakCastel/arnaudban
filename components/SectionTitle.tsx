@@ -12,7 +12,7 @@ export default function SectionTitle({
     <div className="mb-12">
       <h2 
         id={id}
-        className="text-4xl md:text-5xl font-extrabold text-text leading-tight"
+        className="text-5xl md:text-7xl font-extrabold text-text leading-tight"
       >
         {title}
       </h2>

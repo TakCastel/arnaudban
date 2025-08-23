@@ -131,3 +131,25 @@ button:focus-visible {
 .skip-link:focus {
   top: 6px;
 }
+
+/* Styles Masonry optimisés pour 3 colonnes */
+.grid-item {
+  transition: transform 0.3s ease;
+  margin-bottom: 24px;
+  /* Forcer la largeur des colonnes */
+  width: calc((100% - 48px) / 3) !important;
+}
+
+.grid-item:hover {
+  transform: translateY(-4px);
+}
+
+/* Fallback CSS pour éviter le flash noir */
+.grid-item {
+  background: transparent;
+}
+
+/* S'assurer que Masonry respecte les 3 colonnes */
+.grid-item:nth-child(3n+1) {
+  clear: left;
+}

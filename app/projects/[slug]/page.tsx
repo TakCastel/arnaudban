@@ -79,17 +79,17 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <div className="w-[calc(100vw-32px)] md:w-[70vw] max-w-4xl mx-auto">
         {/* Titre et sous-titre */}
         <header className="mb-8">
-          <h1 className="text-4xl md:text-6xl font-bold text-text mb-4">
+          <h1 className="text-5xl md:text-7xl font-bold text-text mb-4">
             {project.title}
           </h1>
-          <p className="text-lg md:text-2xl text-text/80">
+          <p className="text-3xl md:text-4xl text-text/80">
             {project.subtitle}
           </p>
         </header>
 
         {/* Description */}
         <div className="prose prose-lg max-w-none mb-12">
-          <p className="text-text/90 leading-relaxed text-lg md:text-2xl">
+          <p className="text-text/90 leading-relaxed text-3xl md:text-4xl">
             {project.description}
           </p>
         </div>

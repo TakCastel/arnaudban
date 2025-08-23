@@ -82,21 +82,7 @@ export default function ProjectCard({ project, imageHeight }: ProjectCardProps) 
           </div>
         </Link>
         
-        {/* Texte du projet et "Voir plus" en dessous de l'image */}
-        <div className="mt-3">
-          <p className="text-text text-2xl leading-relaxed mb-2">
-            {project.description.split(' ').length > 15 
-              ? `${project.description.split(' ').slice(0, 15).join(' ')}...` 
-              : project.description
-            }
-          </p>
-          <Link
-            href={`/projects/${project.slug}`}
-            className="text-text text-sm font-medium hover:underline cursor-pointer"
-          >
-            Voir plus
-          </Link>
-        </div>
+        {/* Suppression du texte et du lien "Voir plus" - on garde seulement l'image comme lien */}
       </div>
     </article>
   );

@@ -1,10 +1,103 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import ProjectCard from "./ProjectCard";
 import { Project } from "@/data/projects";
+import Masonry from "masonry-layout";
 
 export default function MosaicGrid({ projects }: { projects: Project[] }) {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const masonryRef = useRef<Masonry | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (gridRef.current) {
+      // Attendre un peu que le DOM soit prêt
+      const timer = setTimeout(() => {
+        if (gridRef.current) {
+          try {
+            // Forcer 3 colonnes avec une largeur fixe
+            const containerWidth = gridRef.current.offsetWidth;
+            const gutter = 24;
+            const columns = 3;
+            
+            // Calculer la largeur exacte pour 3 colonnes
+            const columnWidth = Math.floor((containerWidth - (gutter * (columns - 1))) / columns);
+            
+            console.log('Masonry configuré avec:', {
+              containerWidth,
+              columnWidth,
+              columns,
+              gutter,
+              itemsCount: projects.length
+            });
+
+            // Initialiser Masonry avec 3 colonnes fixes
+            const masonry = new Masonry(gridRef.current, {
+              itemSelector: '.grid-item',
+              columnWidth: columnWidth,
+              percentPosition: false,
+              gutter: gutter,
+              transitionDuration: '0.3s'
+            });
+            
+            masonryRef.current = masonry;
+
+            // Mettre à jour le layout après le chargement des images
+            const images = gridRef.current.querySelectorAll('img');
+            
+            if (images.length === 0) {
+              // Pas d'images, marquer comme chargé et faire le layout
+              setIsLoaded(true);
+              if (masonry) {
+                masonry.layout();
+              }
+            } else {
+              // Attendre que toutes les images soient chargées
+              let loadedImages = 0;
+              
+              const onImageLoad = () => {
+                loadedImages++;
+                if (loadedImages === images.length) {
+                  setIsLoaded(true);
+                  if (masonryRef.current) {
+                    masonryRef.current.layout();
+                  }
+                }
+              };
+
+              images.forEach(img => {
+                if (img.complete) {
+                  onImageLoad();
+                } else {
+                  img.addEventListener('load', onImageLoad);
+                }
+              });
+
+              // Layout initial même si les images ne sont pas encore chargées
+              if (masonry) {
+                masonry.layout();
+              }
+            }
+          } catch (error) {
+            console.error('Erreur Masonry, utilisation du fallback CSS:', error);
+            setIsLoaded(true);
+          }
+        }
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+
+    // Cleanup
+    return () => {
+      if (masonryRef.current) {
+        masonryRef.current.destroy();
+        masonryRef.current = null;
+      }
+    };
+  }, [projects]);
+
   // Tailles variées pour l'effet Masonry
   const heights = [
     "h-48", "h-56", "h-64", "h-72", "h-80", "h-96", 
@@ -12,59 +105,31 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
     "h-44", "h-50", "h-58", "h-66", "h-74", "h-82", "h-90"
   ];
 
-  // Fonction pour mélanger aléatoirement les tailles
   const getRandomHeight = (index: number) => {
-    const randomIndex = (index * 7 + 13) % heights.length; // Pseudo-aléatoire mais déterministe
+    const randomIndex = (index * 7 + 13) % heights.length;
     return heights[randomIndex];
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
-      },
-    },
-  };
-
   return (
-    <motion.div 
-      className="columns-1 sm:columns-2 lg:columns-3 gap-6"
+    <div 
+      ref={gridRef}
+      className="w-full transition-opacity duration-300"
       role="grid"
       aria-label="Grille des projets d'Arnaud Ban"
       aria-describedby="work-title"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
     >
-      {projects.map((p, index) => {
+      {projects.map((project, index) => {
         const randomHeight = getRandomHeight(index);
         return (
-          <motion.div 
-            key={p.slug} 
-            className="break-inside-avoid mb-6"
+          <div 
+            key={project.slug} 
+            className="grid-item"
             role="gridcell"
-            variants={itemVariants}
           >
-            <ProjectCard project={p} imageHeight={randomHeight} />
-          </motion.div>
+            <ProjectCard project={project} imageHeight={randomHeight} />
+          </div>
         );
       })}
-    </motion.div>
+    </div>
   );
 }

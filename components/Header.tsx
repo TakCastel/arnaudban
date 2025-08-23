@@ -23,6 +23,19 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToProjects = () => {
+    if (pathname === '/') {
+      // Si on est sur la page d'accueil, scroll vers la section projets
+      const projectsSection = document.getElementById('work');
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Si on est sur une autre page, naviguer vers l'accueil puis scroll
+      window.location.href = '/#work';
+    }
+  };
+
   return (
     <header 
       className={`w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] h-16 flex items-center sticky top-0 z-50 mx-auto transition-all duration-300 ${
@@ -47,20 +60,31 @@ export default function Header() {
           Arnaud Ban
         </Link>
 
-        {/* Bouton "Voir tous les projets" à droite - caché sur les pages projets */}
-        {!isProjectPage && (
-          <a
-            href="#work"
-            className={`px-5 py-1.5 text-base font-semibold text-text bg-background border-2 border-text rounded-full hover:bg-text hover:text-background transition-all duration-700 ease-out ${
+        {/* Navigation à droite */}
+        <nav className="flex items-center space-x-4">
+          <button
+            onClick={scrollToProjects}
+            className={`px-4 py-2 text-sm font-semibold text-text bg-background border-2 border-text rounded-full hover:bg-text hover:text-background transition-all duration-300 ${
               isVisible 
                 ? 'opacity-100 translate-x-0' 
                 : 'opacity-0 translate-x-4'
             }`}
             aria-label="Voir la section des projets"
           >
-            Voir tous les projets
-          </a>
-        )}
+            Projets
+          </button>
+          <Link
+            href="/about"
+            className={`px-4 py-2 text-sm font-semibold text-text bg-background border-2 border-text rounded-full hover:bg-text hover:text-background transition-all duration-300 ${
+              isVisible 
+                ? 'opacity-100 translate-x-0' 
+                : 'opacity-0 translate-x-4'
+            }`}
+            aria-label="À propos"
+          >
+            À propos
+          </Link>
+        </nav>
       </div>
     </header>
   );
