@@ -66,10 +66,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     <ProjectPageTransition>
       {/* Image de couverture */}
       <section className="w-[calc(100vw-32px)] md:w-[70vw] max-w-4xl h-auto mx-auto rounded-2xl overflow-hidden mb-8">
-        <ProjectImageWithLoader
+        <img
           src={project.cover}
           alt={`Image de couverture du projet ${project.title}`}
-          title={project.title}
+          className="w-full h-auto object-cover rounded-2xl"
+          width={1200}
+          height={800}
         />
       </section>
 

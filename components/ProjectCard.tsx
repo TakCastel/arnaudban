@@ -53,16 +53,14 @@ export default function ProjectCard({ project, imageHeight }: ProjectCardProps) 
         >
           {/* Container avec dimensions fixes et stables */}
           <div className={`w-full ${imageHeight} bg-gray-300 overflow-hidden relative`}>
-            {/* Image optimisée avec next/image */}
-            <Image
+            {/* Image avec dimensions fixes */}
+            <img
               src={project.cover}
               alt={`Image de couverture du projet ${project.title}`}
               width={600}
               height={450}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              sizes="(max-width: 768px) 375px, 768px"
-              priority={false}
-              quality={85}
+              loading="lazy"
             />
             
             {/* Overlay avec texte qui apparaît au hover */}
