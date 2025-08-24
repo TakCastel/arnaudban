@@ -6,11 +6,11 @@ export default function HeroLoader() {
       <div className="text-center">
         {/* Rond qui tourne avec CSS keyframes */}
         <div 
-          className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-6 border-4 border-foreground/20 border-t-foreground rounded-full animate-spin"
+          className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-6 border-4 border-gray-200 dark:border-gray-600 border-t-blue-500 dark:border-t-blue-400 rounded-full animate-spin"
         />
         
         {/* Texte de chargement */}
-        <p className="text-foreground/70 text-sm md:text-base font-medium animate-pulse">
+        <p className="text-foreground text-sm md:text-base font-medium animate-pulse">
           Chargement...
         </p>
       </div>
