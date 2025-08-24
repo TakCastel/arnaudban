@@ -25,7 +25,9 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
 
         // Mettre à jour la configuration de Masonry
         if (masonryRef.current) {
+          // @ts-ignore
           masonryRef.current.option('columnWidth', columnWidth);
+          // @ts-ignore
           masonryRef.current.layout();
         }
       } catch (error) {
