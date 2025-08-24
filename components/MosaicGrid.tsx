@@ -21,16 +21,14 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
         // Calculer la largeur exacte pour 3 colonnes
         const columnWidth = Math.floor((containerWidth - (gutter * (columns - 1))) / columns);
         
-        console.log('Masonry recalculé avec:', {
-          containerWidth,
-          columnWidth,
-          columns,
-          gutter
-        });
+
 
         // Mettre à jour la configuration de Masonry
-        masonryRef.current.option('columnWidth', columnWidth);
-        masonryRef.current.layout();
+        const masonry = masonryRef.current;
+        if (masonry) {
+          masonry.option('columnWidth', columnWidth);
+          masonry.layout();
+        }
       } catch (error) {
         console.error('Erreur lors du recalcul Masonry:', error);
       }
@@ -51,13 +49,7 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
             // Calculer la largeur exacte pour 3 colonnes
             const columnWidth = Math.floor((containerWidth - (gutter * (columns - 1))) / columns);
             
-            console.log('Masonry configuré avec:', {
-              containerWidth,
-              columnWidth,
-              columns,
-              gutter,
-              itemsCount: projects.length
-            });
+
 
             // Initialiser Masonry avec 3 colonnes fixes
             const masonry = new Masonry(gridRef.current, {
