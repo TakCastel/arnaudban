@@ -10,6 +10,33 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
   const masonryRef = useRef<Masonry | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // Fonction pour recalculer Masonry
+  const recalculateMasonry = () => {
+    if (gridRef.current && masonryRef.current) {
+      try {
+        const containerWidth = gridRef.current.offsetWidth;
+        const gutter = 24;
+        const columns = 3;
+        
+        // Calculer la largeur exacte pour 3 colonnes
+        const columnWidth = Math.floor((containerWidth - (gutter * (columns - 1))) / columns);
+        
+        console.log('Masonry recalculé avec:', {
+          containerWidth,
+          columnWidth,
+          columns,
+          gutter
+        });
+
+        // Mettre à jour la configuration de Masonry
+        masonryRef.current.options.columnWidth = columnWidth;
+        masonryRef.current.layout();
+      } catch (error) {
+        console.error('Erreur lors du recalcul Masonry:', error);
+      }
+    }
+  };
+
   useEffect(() => {
     if (gridRef.current) {
       // Attendre un peu que le DOM soit prêt
@@ -97,6 +124,26 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
       }
     };
   }, [projects]);
+
+  // Gestion du redimensionnement de la fenêtre
+  useEffect(() => {
+    let resizeTimeout: NodeJS.Timeout;
+    
+    const handleResize = () => {
+      // Debounce pour éviter trop de recalculs
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        recalculateMasonry();
+      }, 150);
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout);
+    };
+  }, []);
 
   // Tailles variées pour l'effet Masonry
   const heights = [

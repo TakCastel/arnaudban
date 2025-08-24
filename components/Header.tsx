@@ -1,90 +1,74 @@
 "use client";
-import Link from "next/link";
+
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const pathname = usePathname();
-  const isProjectPage = pathname?.startsWith('/projects/');
 
   useEffect(() => {
-    // Animation d'apparition au chargement
-    setIsVisible(true);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const timer = setTimeout(() => setIsVisible(true), 100);
+    return () => clearTimeout(timer);
   }, []);
 
   const scrollToProjects = () => {
     if (pathname === '/') {
-      // Si on est sur la page d'accueil, scroll vers la section projets
       const projectsSection = document.getElementById('work');
       if (projectsSection) {
         projectsSection.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // Si on est sur une autre page, naviguer vers l'accueil puis scroll
       window.location.href = '/#work';
     }
   };
 
   return (
-    <header 
-      className={`w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] h-16 flex items-center sticky top-0 z-50 mx-auto transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-background' 
-          : 'bg-background'
-      }`}
-      role="banner"
-      aria-label="Navigation principale"
-    >
-      <div className="flex items-center justify-between w-full">
-        {/* Nom à gauche */}
-        <Link
-          href="/"
-          className={`font-extrabold text-xl sm:text-2xl md:text-3xl tracking-tight text-text transition-all duration-700 ease-out ${
-            isVisible 
-              ? 'opacity-100 translate-x-0' 
-              : 'opacity-0 -translate-x-4'
-          }`}
-          aria-label="Retour à la page d'accueil - Arnaud Ban"
-        >
-          Arnaud Ban
-        </Link>
-
-        {/* Navigation à droite */}
-        <nav className="flex items-center space-x-4">
-          <button
-            onClick={scrollToProjects}
-            className={`px-4 py-2 text-sm font-semibold text-text bg-background border-2 border-text rounded-full hover:bg-text hover:text-background transition-all duration-300 ${
-              isVisible 
-                ? 'opacity-100 translate-x-0' 
-                : 'opacity-0 translate-x-4'
-            }`}
-            aria-label="Voir la section des projets"
-          >
-            Projets
-          </button>
+    <header className="fixed top-0 left-0 right-0 bg-background z-50 transition-all duration-300">
+      <div className="w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] mx-auto py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
           <Link
-            href="/about"
-            className={`px-4 py-2 text-sm font-semibold text-text bg-background border-2 border-text rounded-full hover:bg-text hover:text-background transition-all duration-300 ${
+            href="/"
+            className={`text-2xl font-bold text-foreground transition-all duration-300 ${
               isVisible 
                 ? 'opacity-100 translate-x-0' 
-                : 'opacity-0 translate-x-4'
+                : 'opacity-0 -translate-x-4'
             }`}
-            aria-label="À propos"
+            aria-label="Retour à l'accueil"
           >
-            À propos
+            Arnaud Ban
           </Link>
-        </nav>
+
+          {/* Navigation */}
+          <nav className="flex items-center space-x-4">
+            <button
+              onClick={scrollToProjects}
+              className={`px-4 py-2 text-sm font-semibold bg-background text-foreground border-2 border-foreground rounded-full hover:bg-foreground hover:text-background transition-all duration-300 ${
+                isVisible 
+                  ? 'opacity-100 translate-x-0' 
+                  : 'opacity-0 translate-x-4'
+              }`}
+              aria-label="Voir la section des projets"
+            >
+              Projets
+            </button>
+            <Link
+              href="/about"
+              className={`px-4 py-2 text-sm font-semibold bg-background text-foreground border-2 border-foreground rounded-full hover:bg-foreground hover:text-background transition-all duration-300 ${
+                isVisible 
+                  ? 'opacity-100 translate-x-0' 
+                  : 'opacity-0 translate-x-4'
+              }`}
+              aria-label="À propos"
+            >
+              À propos
+            </Link>
+            <ThemeToggle />
+          </nav>
+        </div>
       </div>
     </header>
   );

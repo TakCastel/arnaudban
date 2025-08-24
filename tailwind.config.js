@@ -8,15 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: { DEFAULT: "rgb(239 246 255)" },
-        text: { DEFAULT: "rgb(30 58 138)" },
-        // Pour les classes déjà utilisées dans tes comps:
-        foreground: { DEFAULT: "rgb(30 58 138)" }, // utilisé par `from-foreground`, `text-foreground`
-        brand: {
-          blue: "#1e3a8a",
-          "blue-light": "#3b82f6",
-        },
-        "text-muted": "#64748b", // si tu utilises border-text-muted etc.
+        background: "var(--background)",
+        foreground: "var(--foreground)",
       },
       fontFamily: {
         sans: ["var(--font-moderat)", "sans-serif"],

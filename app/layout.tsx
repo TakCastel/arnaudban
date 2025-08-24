@@ -1,8 +1,9 @@
-import "./globals.css";
+import type { Metadata } from "next";
 import localFont from "next/font/local";
+import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ConditionalPageTransition from "@/components/ConditionalPageTransition";
+import ThemeProvider from "@/components/ThemeProvider";
 
 const moderat = localFont({
   src: [{ path: "../public/fonts/Moderat-Regular.woff2", style: "normal" }],
@@ -10,24 +11,10 @@ const moderat = localFont({
   display: "swap",
 });
 
-export const metadata = {
-  title: {
-    default: "Arnaud Ban - Réalisateur & Monteur Vidéo | Avignon",
-    template: "%s | Arnaud Ban"
-  },
-  description: "Portfolio d'Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon. Découvrez ses projets de court-métrage, clips musicaux et productions audiovisuelles.",
-  keywords: [
-    "Arnaud Ban",
-    "réalisateur",
-    "monteur vidéo",
-    "étalonnage",
-    "Avignon",
-    "court-métrage",
-    "clip musical",
-    "production audiovisuelle",
-    "cinéma",
-    "vidéo"
-  ],
+export const metadata: Metadata = {
+  title: "Arnaud Ban - Réalisateur & Monteur Vidéo",
+  description: "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon. Contactez-le pour vos projets audiovisuels.",
+  keywords: ["réalisateur", "monteur", "étalonnage", "vidéo", "Avignon", "audiovisuel"],
   authors: [{ name: "Arnaud Ban" }],
   creator: "Arnaud Ban",
   publisher: "Arnaud Ban",
@@ -36,31 +23,31 @@ export const metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://arnaudban.com'),
+  metadataBase: new URL("https://arnaudban.com"),
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
   openGraph: {
-    type: 'website',
-    locale: 'fr_FR',
-    url: 'https://arnaudban.com',
-    title: 'Arnaud Ban - Réalisateur & Monteur Vidéo | Avignon',
-    description: 'Portfolio d\'Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.',
-    siteName: 'Arnaud Ban',
+    type: "website",
+    locale: "fr_FR",
+    url: "https://arnaudban.com",
+    title: "Arnaud Ban | Réalisateur & Monteur Vidéo",
+    description: "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.",
+    siteName: "Arnaud Ban",
     images: [
       {
-        url: '/assets/DOUG.png',
+        url: "/assets/DOUG.png",
         width: 1200,
         height: 630,
-        alt: 'Arnaud Ban - Portfolio',
+        alt: "Arnaud Ban - Réalisateur & Monteur Vidéo",
       },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Arnaud Ban - Réalisateur & Monteur Vidéo | Avignon',
-    description: 'Portfolio d\'Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.',
-    images: ['/assets/DOUG.png'],
+    card: "summary_large_image",
+    title: "Arnaud Ban | Réalisateur & Monteur Vidéo",
+    description: "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.",
+    images: ["/assets/DOUG.png"],
   },
   robots: {
     index: true,
@@ -68,13 +55,13 @@ export const metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   verification: {
-    google: 'your-google-verification-code',
+    google: "your-google-verification-code",
   },
 };
 
@@ -84,31 +71,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className="bg-background text-text">
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <meta name="theme-color" content="#000000" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="color-scheme" content="light dark" />
-      </head>
-      <body className={`${moderat.variable} font-sans`}>
-        {/* Lien de saut pour l'accessibilité */}
-        <a href="#main-content" className="skip-link">
-          Aller au contenu principal
-        </a>
-        
-        <Header />
-        <div id="main-content">
-          <ConditionalPageTransition>
+    <html lang="fr" className={moderat.variable}>
+      <body className="min-h-screen bg-background text-foreground font-sans">
+        <ThemeProvider>
+          <Header />
+          <main className="pt-16">
             {children}
-          </ConditionalPageTransition>
-        </div>
-
-        <Footer />
+          </main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

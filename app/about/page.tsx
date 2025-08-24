@@ -27,7 +27,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Contenu texte à gauche */}
           <div className="space-y-8 md:space-y-10">
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 md:mb-12 tracking-tight text-text">
+            <h1 className="text-5xl md:text-7xl font-bold mb-8 md:mb-12 tracking-tight text-foreground">
               À propos
             </h1>
 
@@ -44,7 +44,7 @@ export default function AboutPage() {
                 Pour toute demande professionnelle, merci de me contacter par mail :{' '}
                 <a
                   href="mailto:ban.arnaud@outlook.fr"
-                  className="font-medium hover:underline transition-colors duration-300 text-text"
+                  className="font-medium hover:underline transition-colors duration-300 text-foreground"
                   aria-label="Envoyer un email à ban.arnaud@outlook.fr"
                 >
                   ban.arnaud@outlook.fr

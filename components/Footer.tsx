@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="text-center">
           <Link
             href="/mentions-legales"
-            className="text-sm text-text/70 hover:text-text hover:underline transition-colors duration-300"
+            className="text-sm text-foreground/70 hover:text-foreground hover:underline transition-colors duration-300"
             aria-label="Lire les mentions légales"
           >
             Mentions légales

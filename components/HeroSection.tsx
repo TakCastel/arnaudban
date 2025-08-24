@@ -52,10 +52,8 @@ export default function HeroSection({ id }: { id?: string }) {
     <section
       ref={heroRef}
       id={id}
-      className="w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] h-[calc(100vh-64px)] mx-auto sticky top-16 z-10"
-      style={{
-        marginBottom: '16px'
-      }}
+      className="w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] h-[calc(100vh-72px)] mx-auto sticky top-[72px] z-10"
+
       role="banner"
       aria-label="Section d'accueil - Arnaud Ban"
     >
