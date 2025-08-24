@@ -29,7 +29,7 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
         });
 
         // Mettre à jour la configuration de Masonry
-        masonryRef.current.options.columnWidth = columnWidth;
+        masonryRef.current.option('columnWidth', columnWidth);
         masonryRef.current.layout();
       } catch (error) {
         console.error('Erreur lors du recalcul Masonry:', error);
