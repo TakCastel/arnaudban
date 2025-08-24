@@ -70,7 +70,7 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
               // Pas d'images, marquer comme chargé et faire le layout
               setIsLoaded(true);
               if (masonry) {
-                masonry.layout();
+                masonry!.layout();
               }
             } else {
               // Attendre que toutes les images soient chargées
@@ -96,7 +96,7 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
 
               // Layout initial même si les images ne sont pas encore chargées
               if (masonry) {
-                masonry.layout();
+                masonry!.layout();
               }
             }
           } catch (error) {
