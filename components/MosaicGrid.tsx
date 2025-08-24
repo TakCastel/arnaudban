@@ -21,8 +21,6 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
         // Calculer la largeur exacte pour 3 colonnes
         const columnWidth = Math.floor((containerWidth - (gutter * (columns - 1))) / columns);
         
-
-
         // Mettre à jour la configuration de Masonry
         if (masonryRef.current) {
           // @ts-ignore
@@ -50,8 +48,6 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
             // Calculer la largeur exacte pour 3 colonnes
             const columnWidth = Math.floor((containerWidth - (gutter * (columns - 1))) / columns);
             
-
-
             // Initialiser Masonry avec 3 colonnes fixes
             const masonry = new Masonry(gridRef.current, {
               itemSelector: '.grid-item',
@@ -70,6 +66,7 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
               // Pas d'images, marquer comme chargé et faire le layout
               setIsLoaded(true);
               if (masonry) {
+                // @ts-ignore
                 masonry!.layout();
               }
             } else {
@@ -81,6 +78,7 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
                 if (loadedImages === images.length) {
                   setIsLoaded(true);
                   if (masonryRef.current) {
+                    // @ts-ignore
                     masonryRef.current.layout();
                   }
                 }
@@ -96,6 +94,7 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
 
               // Layout initial même si les images ne sont pas encore chargées
               if (masonry) {
+                // @ts-ignore
                 masonry!.layout();
               }
             }
@@ -112,6 +111,7 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
     // Cleanup
     return () => {
       if (masonryRef.current) {
+        // @ts-ignore
         masonryRef.current.destroy();
         masonryRef.current = null;
       }
