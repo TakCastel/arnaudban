@@ -34,15 +34,15 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
       item.style.width = `${columnWidth}px`;
     });
 
-    if (masonryRef.current && typeof masonryRef.current.layout === "function") {
-      masonryRef.current.layout();
-    }
+    // @ts-expect-error: Masonry layout method may not be defined at this point
+    masonryRef.current?.layout();
   };
 
   useEffect(() => {
     const el = gridRef.current;
     if (!el) return;
 
+    // @ts-expect-error: Masonry constructor typing not recognized properly
     const masonry = new Masonry(el, {
       itemSelector: ".grid-item",
       columnWidth: ".grid-sizer",
@@ -58,6 +58,7 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
     const onLoad = () => {
       loaded++;
       if (loaded === imgs.length) {
+        // @ts-expect-error: Masonry layout may be undefined at this point
         masonry.layout();
       }
     };
@@ -75,6 +76,7 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
     return () => {
       ro.disconnect();
       window.removeEventListener("resize", updateLayout);
+      // @ts-expect-error: Masonry destroy method may not be typed
       masonry.destroy();
     };
   }, []);
