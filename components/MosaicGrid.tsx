@@ -34,7 +34,9 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
       item.style.width = `${columnWidth}px`;
     });
 
-    masonryRef.current?.layout();
+    if (masonryRef.current && typeof masonryRef.current.layout === "function") {
+      masonryRef.current.layout();
+    }
   };
 
   useEffect(() => {
