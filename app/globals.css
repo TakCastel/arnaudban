@@ -21,8 +21,6 @@ body {
 .grid-item {
   transition: transform 0.3s ease;
   margin-bottom: 24px;
-  /* Forcer la largeur des colonnes */
-  width: calc((100% - 48px) / 3) !important;
 }
 
 .grid-item:hover {
@@ -35,6 +33,6 @@ body {
 }
 
 /* S'assurer que Masonry respecte les 3 colonnes */
-.grid-item:nth-child(3n+1) {
+.grid-item:nth-child(3n + 1) {
   clear: left;
 }

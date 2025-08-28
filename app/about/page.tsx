@@ -4,10 +4,12 @@ import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
   title: "À propos - Arnaud Ban",
-  description: "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon. Contactez-le pour vos projets audiovisuels.",
+  description:
+    "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon. Contactez-le pour vos projets audiovisuels.",
   openGraph: {
     title: "À propos - Arnaud Ban | Réalisateur & Monteur Vidéo",
-    description: "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.",
+    description:
+      "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.",
     url: "https://arnaudban.com/about",
     images: [
       {
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <PageTransition>
-      <main className="h-[calc(100vh-8.625rem)] bg-background pt-16 w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] mx-auto max-w-7xl">
+      <div className="bg-background w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] max-w-7xl mx-auto py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Contenu texte à gauche */}
           <div className="space-y-8 md:space-y-10">
@@ -33,7 +35,8 @@ export default function AboutPage() {
 
             <div className="space-y-6 md:space-y-8 text-xl md:text-2xl leading-relaxed">
               <p className="text-3xl md:text-4xl">
-                Salut ! Je m&apos;appelle Arnaud Ban et je suis un réalisateur indépendant qui travaille sur Avignon.
+                Salut ! Je m&apos;appelle Arnaud Ban et je suis un réalisateur
+                indépendant qui travaille sur Avignon.
               </p>
 
               <p className="text-3xl md:text-4xl">
@@ -41,7 +44,8 @@ export default function AboutPage() {
               </p>
 
               <p className="text-3xl md:text-4xl">
-                Pour toute demande professionnelle, merci de me contacter par mail :{' '}
+                Pour toute demande professionnelle, merci de me contacter par
+                mail :{" "}
                 <a
                   href="mailto:ban.arnaud@outlook.fr"
                   className="font-medium hover:underline transition-colors duration-300 text-foreground"
@@ -56,7 +60,7 @@ export default function AboutPage() {
               <Link
                 href="/"
                 className="inline-block px-6 py-3 text-base font-semibold text-background bg-text rounded-full hover:bg-text/90 transition-all duration-300"
-                aria-label="Retour à la page d'accueil"
+                aria-label="Retour à l'accueil"
               >
                 Retour à l&apos;accueil
               </Link>
@@ -66,7 +70,7 @@ export default function AboutPage() {
           {/* Image à droite */}
           <div className="aspect-square w-full max-w-lg mx-auto lg:mx-0 bg-gray-300 rounded-2xl"></div>
         </div>
-      </main>
+      </div>
     </PageTransition>
   );
 }

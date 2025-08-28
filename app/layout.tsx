@@ -13,8 +13,16 @@ const moderat = localFont({
 
 export const metadata: Metadata = {
   title: "Arnaud Ban - Réalisateur & Monteur Vidéo",
-  description: "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon. Contactez-le pour vos projets audiovisuels.",
-  keywords: ["réalisateur", "monteur", "étalonnage", "vidéo", "Avignon", "audiovisuel"],
+  description:
+    "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon. Contactez-le pour vos projets audiovisuels.",
+  keywords: [
+    "réalisateur",
+    "monteur",
+    "étalonnage",
+    "vidéo",
+    "Avignon",
+    "audiovisuel",
+  ],
   authors: [{ name: "Arnaud Ban" }],
   creator: "Arnaud Ban",
   publisher: "Arnaud Ban",
@@ -32,7 +40,8 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     url: "https://arnaudban.com",
     title: "Arnaud Ban | Réalisateur & Monteur Vidéo",
-    description: "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.",
+    description:
+      "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.",
     siteName: "Arnaud Ban",
     images: [
       {
@@ -46,7 +55,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Arnaud Ban | Réalisateur & Monteur Vidéo",
-    description: "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.",
+    description:
+      "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.",
     images: ["/assets/DOUG.png"],
   },
   robots: {
@@ -72,12 +82,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={moderat.variable}>
-      <body className="min-h-screen bg-background text-foreground font-sans">
+      <body className="min-h-screen flex flex-col bg-background text-foreground font-sans">
         <ThemeProvider>
           <Header />
-          <main className="pt-16">
-            {children}
-          </main>
+          <main className="pt-16 flex-grow">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>

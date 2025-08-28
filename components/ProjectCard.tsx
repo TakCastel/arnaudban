@@ -10,7 +10,10 @@ interface ProjectCardProps {
   imageHeight: string;
 }
 
-export default function ProjectCard({ project, imageHeight }: ProjectCardProps) {
+export default function ProjectCard({
+  project,
+  imageHeight,
+}: ProjectCardProps) {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -34,12 +37,10 @@ export default function ProjectCard({ project, imageHeight }: ProjectCardProps) 
   }, []);
 
   return (
-    <article 
+    <article
       ref={cardRef}
       className={`transition-all duration-700 ease-out ${
-        isVisible 
-          ? 'scale-100 opacity-100' 
-          : 'scale-90 opacity-0'
+        isVisible ? "scale-100 opacity-100" : "scale-90 opacity-0"
       }`}
       role="article"
       aria-labelledby={`project-title-${project.slug}`}
@@ -52,7 +53,9 @@ export default function ProjectCard({ project, imageHeight }: ProjectCardProps) 
           aria-label={`Voir le projet ${project.title} - ${project.subtitle}`}
         >
           {/* Container avec dimensions fixes et stables */}
-          <div className={`w-full ${imageHeight} bg-gray-300 overflow-hidden relative`}>
+          <div
+            className={`w-full ${imageHeight} bg-gray-300 overflow-hidden relative`}
+          >
             {/* Image avec dimensions fixes */}
             <img
               src={project.cover}
@@ -62,11 +65,11 @@ export default function ProjectCard({ project, imageHeight }: ProjectCardProps) 
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
             />
-            
+
             {/* Overlay avec texte qui apparaît au hover */}
             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out flex flex-col justify-center items-center p-4 text-center">
               {/* Titre qui apparaît en premier */}
-              <h3 
+              <h3
                 id={`project-title-${project.slug}`}
                 className="text-white text-3xl font-bold opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 ease-out delay-200"
               >
@@ -81,8 +84,6 @@ export default function ProjectCard({ project, imageHeight }: ProjectCardProps) 
             </div>
           </div>
         </Link>
-        
-        {/* Suppression du texte et du lien "Voir plus" - on garde seulement l'image comme lien */}
       </div>
     </article>
   );
