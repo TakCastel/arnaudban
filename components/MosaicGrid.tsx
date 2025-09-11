@@ -110,8 +110,8 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
     <div
       ref={gridRef}
       className="w-full transition-opacity duration-300"
-      role="grid"
-      aria-label="Grille des projets d'Arnaud Ban"
+      role="list"
+      aria-label="Liste des projets d'Arnaud Ban"
       aria-describedby="work-title"
     >
       <div className="grid-sizer" />
@@ -119,7 +119,7 @@ export default function MosaicGrid({ projects }: { projects: Project[] }) {
       {projects.map((project, index) => {
         const heightClass = getRandomHeight(index);
         return (
-          <div key={project.slug} className="grid-item" role="gridcell">
+          <div key={project.slug} className="grid-item" role="listitem">
             <ProjectCard project={project} imageHeight={heightClass} />
           </div>
         );

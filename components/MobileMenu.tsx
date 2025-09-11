@@ -43,9 +43,9 @@ export default function MobileMenu({
     >
       {/* Overlay cliquable */}
       <div
-        aria-hidden="true"
         className="absolute inset-0 bg-black/40"
         onClick={onClose}
+        aria-label="Fermer le menu"
       />
 
       {/* Panneau PLEIN ÉCRAN qui glisse du haut */}
@@ -59,7 +59,11 @@ export default function MobileMenu({
         }`}
       >
         <div className="px-4 pb-10 pt-[calc(env(safe-area-inset-top)_+_72px)] h-full flex flex-col items-center justify-start space-y-6">
-          <nav className="w-full space-y-3">
+          <nav 
+            className="w-full space-y-3"
+            role="navigation"
+            aria-label="Menu mobile"
+          >
             <button
               onClick={() => {
                 onGoToProjects();

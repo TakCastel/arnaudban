@@ -36,3 +36,37 @@ body {
 .grid-item:nth-child(3n + 1) {
   clear: left;
 }
+
+/* Améliorations d'accessibilité */
+:focus {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+/* Améliorer la visibilité des liens au survol */
+a:hover {
+  text-decoration: underline;
+}
+
+/* S'assurer que les éléments interactifs sont accessibles au clavier */
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+/* Améliorer le contraste pour les éléments de navigation */
+nav a:focus,
+nav button:focus {
+  background-color: var(--foreground);
+  color: var(--background);
+}

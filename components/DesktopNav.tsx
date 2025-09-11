@@ -11,7 +11,11 @@ export default function DesktopNav({
   onScrollToProjects: () => void;
 }) {
   return (
-    <nav className="hidden md:flex items-center space-x-4">
+    <nav 
+      className="hidden md:flex items-center space-x-4"
+      role="navigation"
+      aria-label="Navigation principale"
+    >
       <button
         onClick={onScrollToProjects}
         className={`px-4 py-2 text-sm font-semibold bg-background text-foreground border-2 border-foreground rounded-full hover:bg-foreground hover:text-background transition-all duration-300 ${

@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   const items = getProjects();
   return (
-    <main role="main">
+    <>
       <HeroSection id="top" />
 
              {/* SECTION WORK */}
@@ -69,6 +69,6 @@ export default function HomePage() {
           <MosaicGrid projects={items} />
         </StaggeredAnimation>
       </section>
-    </main>
+    </>
   );
 }
