@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import ProjectPageTransition from "@/components/ProjectPageTransition";
-import ProjectImageWithLoader from "@/components/ProjectImageWithLoader";
+import ProjectImageWithSkeleton from "@/components/ProjectImageWithSkeleton";
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
@@ -24,31 +24,49 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   if (!project) {
     return {
-      title: "Projet non trouvé",
+      title: "Projet non trouvé - Arnaud Ban",
       description: "Le projet demandé n'a pas été trouvé.",
     };
   }
 
+  // Générer des mots-clés basés sur le projet
+  const keywords = [
+    "Arnaud Ban",
+    "réalisateur Avignon",
+    "montage vidéo",
+    "étalonnage",
+    project.title.toLowerCase(),
+    ...project.subtitle.toLowerCase().split(' ').filter(word => word.length > 3)
+  ];
+
   return {
-    title: project.title,
-    description: project.description,
+    title: `${project.title} - ${project.subtitle} | Arnaud Ban`,
+    description: `${project.description} Découvrez ce projet réalisé par Arnaud Ban, réalisateur et monteur vidéo à Avignon.`,
+    keywords,
+    authors: [{ name: "Arnaud Ban" }],
+    creator: "Arnaud Ban",
     openGraph: {
-      title: `${project.title} | Arnaud Ban`,
-      description: project.description,
+      title: `${project.title} - ${project.subtitle} | Arnaud Ban`,
+      description: `${project.description} Projet réalisé par Arnaud Ban, réalisateur et monteur vidéo à Avignon.`,
+      url: `https://arnaudban.com/projects/${project.slug}`,
+      type: "article",
       images: [
         {
           url: project.cover,
           width: 1200,
           height: 630,
-          alt: project.title,
+          alt: `${project.title} - Projet réalisé par Arnaud Ban`,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${project.title} | Arnaud Ban`,
-      description: project.description,
+      title: `${project.title} - ${project.subtitle} | Arnaud Ban`,
+      description: `${project.description} Projet réalisé par Arnaud Ban.`,
       images: [project.cover],
+    },
+    alternates: {
+      canonical: `/projects/${project.slug}`,
     },
   };
 }
@@ -64,32 +82,28 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <ProjectPageTransition>
-      {/* Image de couverture */}
-      <section className="w-[calc(100vw-32px)] md:w-[70vw] max-w-4xl h-auto mx-auto rounded-2xl overflow-hidden mb-8">
-        <img
-          src={project.cover}
-          alt={`Image de couverture du projet ${project.title}`}
-          className="w-full h-auto object-cover rounded-2xl"
-          width={1200}
-          height={800}
-        />
-      </section>
+      {/* Image de couverture avec skeleton */}
+      <ProjectImageWithSkeleton
+        src={project.cover}
+        alt={`Image de couverture du projet ${project.title}`}
+        title={project.title}
+      />
 
       {/* Contenu du projet */}
       <div className="w-[calc(100vw-32px)] md:w-[70vw] max-w-4xl mx-auto">
         {/* Titre et sous-titre */}
         <header className="mb-8">
-          <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-4">
+          <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-foreground mb-4">
             {project.title}
           </h1>
-          <p className="text-3xl md:text-4xl text-foreground/80">
+          <p className="text-xl md:text-3xl lg:text-4xl text-foreground/80">
             {project.subtitle}
           </p>
         </header>
 
         {/* Description */}
         <div className="prose prose-lg max-w-none mb-12">
-          <p className="text-foreground/90 leading-relaxed text-3xl md:text-4xl">
+          <p className="text-foreground/90 leading-relaxed text-lg md:text-3xl lg:text-4xl">
             {project.description}
           </p>
         </div>

@@ -3,22 +3,43 @@ import { Metadata } from "next";
 import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
-  title: "À propos - Arnaud Ban",
+  title: "À propos - Arnaud Ban | Réalisateur & Monteur Vidéo à Avignon",
   description:
-    "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon. Contactez-le pour vos projets audiovisuels.",
+    "Arnaud Ban, réalisateur indépendant basé à Avignon, spécialisé en montage et étalonnage vidéo. Découvrez son parcours, ses compétences et contactez-le pour vos projets audiovisuels.",
+  keywords: [
+    "réalisateur Avignon",
+    "monteur vidéo Avignon", 
+    "étalonnage Avignon",
+    "audiovisuel Avignon",
+    "Arnaud Ban",
+    "réalisateur indépendant",
+    "montage vidéo professionnel"
+  ],
+  authors: [{ name: "Arnaud Ban" }],
+  creator: "Arnaud Ban",
   openGraph: {
-    title: "À propos - Arnaud Ban | Réalisateur & Monteur Vidéo",
+    title: "À propos - Arnaud Ban | Réalisateur & Monteur Vidéo à Avignon",
     description:
-      "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.",
+      "Arnaud Ban, réalisateur indépendant basé à Avignon, spécialisé en montage et étalonnage vidéo. Découvrez son parcours et ses compétences.",
     url: "https://arnaudban.com/about",
+    type: "profile",
     images: [
       {
         url: "/assets/DOUG.png",
         width: 1200,
         height: 630,
-        alt: "Arnaud Ban - À propos",
+        alt: "Arnaud Ban - Réalisateur et monteur vidéo à Avignon",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "À propos - Arnaud Ban | Réalisateur & Monteur Vidéo à Avignon",
+    description: "Arnaud Ban, réalisateur indépendant basé à Avignon, spécialisé en montage et étalonnage vidéo.",
+    images: ["/assets/DOUG.png"],
+  },
+  alternates: {
+    canonical: "/about",
   },
 };
 
@@ -59,7 +80,7 @@ export default function AboutPage() {
             <div className="pt-4">
               <Link
                 href="/"
-                className="inline-block px-6 py-3 text-base font-semibold text-background bg-text rounded-full hover:bg-text/90 transition-all duration-300"
+                className="inline-block px-6 py-3 text-base font-semibold text-foreground bg-background rounded-full hover:bg-background/90 dark:text-background dark:bg-foreground dark:hover:bg-foreground/90 transition-all duration-300"
                 aria-label="Retour à l'accueil"
               >
                 Retour à l&apos;accueil

@@ -1,4 +1,23 @@
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Mentions légales - Arnaud Ban | Réalisateur & Monteur Vidéo",
+  description: "Mentions légales du site d'Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Mentions légales - Arnaud Ban",
+    description: "Mentions légales du site d'Arnaud Ban, réalisateur indépendant à Avignon.",
+    url: "https://arnaudban.com/mentions-legales",
+    type: "website",
+  },
+  alternates: {
+    canonical: "/mentions-legales",
+  },
+};
 
 export default function MentionsLegalesPage() {
   return (

@@ -1,7 +1,7 @@
 {
-  "name": "Arnaud Ban - Réalisateur & Monteur Vidéo",
+  "name": "Arnaud Ban - Réalisateur & Monteur Vidéo à Avignon",
   "short_name": "Arnaud Ban",
-  "description": "Portfolio d'Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon",
+  "description": "Portfolio d'Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon. Découvrez ses projets audiovisuels.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
@@ -24,6 +24,8 @@
       "type": "image/png"
     }
   ],
-  "categories": ["entertainment", "business", "photography"],
-  "lang": "fr-FR"
+  "categories": ["entertainment", "business", "photography", "video"],
+  "lang": "fr-FR",
+  "scope": "/",
+  "id": "arnaudban-portfolio"
 }

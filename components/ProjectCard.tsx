@@ -52,17 +52,19 @@ export default function ProjectCard({
           className="block overflow-hidden rounded-2xl group"
           aria-label={`Voir le projet ${project.title} - ${project.subtitle}`}
         >
-          {/* Container avec dimensions fixes et stables */}
+          {/* Container avec dimensions fixes et stables - IMPORTANT: position relative pour fill */}
           <div
             className={`w-full ${imageHeight} bg-gray-300 overflow-hidden relative`}
           >
-            {/* Image avec dimensions fixes */}
-            <img
+            {/* Image optimisée avec Next.js Image */}
+            <Image
               src={project.cover}
-              alt={`Image de couverture du projet ${project.title}`}
+              alt={`${project.title} - ${project.subtitle} - Projet réalisé par Arnaud Ban`}
               width={600}
               height={450}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              quality={85}
               loading="lazy"
             />
 
@@ -71,13 +73,13 @@ export default function ProjectCard({
               {/* Titre qui apparaît en premier */}
               <h3
                 id={`project-title-${project.slug}`}
-                className="text-white text-3xl font-bold opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 ease-out delay-200"
+                className="text-white text-xl md:text-3xl font-bold opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 ease-out delay-200"
               >
                 {project.title}
               </h3>
               {/* Sous-titre qui commence juste après */}
               {project.subtitle && (
-                <p className="text-white/90 text-xl mt-4 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 ease-out delay-300">
+                <p className="text-white/90 text-sm md:text-xl mt-2 md:mt-4 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 ease-out delay-300">
                   {project.subtitle}
                 </p>
               )}
