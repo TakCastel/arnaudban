@@ -15,6 +15,7 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
+  transition: background-color 300ms ease, color 300ms ease;
 }
 
 /* Styles Masonry optimisés pour 3 colonnes */
@@ -69,4 +70,9 @@ nav a:focus,
 nav button:focus {
   background-color: var(--foreground);
   color: var(--background);
+}
+
+/* Transition globale pour le changement de thème */
+* {
+  transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
 }
