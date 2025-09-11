@@ -101,15 +101,7 @@ export default function HeroSection({ id }: { id?: string }) {
             onLoadedData={() => {
               setTimeout(() => setIsLoaded(true), 300);
             }}
-          >
-            <track
-              kind="captions"
-              src="/videos/banner_test_captions.vtt"
-              srcLang="fr"
-              label="Français"
-              default
-            />
-          </video>
+          />
         </motion.div>
       </div>
     </section>
