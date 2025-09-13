@@ -27,7 +27,7 @@ export default function HamburgerButton({
       />
       <span
         aria-hidden
-        className={`pointer-events-none absolute block h-[1.5px] w-3 bg-foreground transition-opacity duration-200 ${
+        className={`pointer-events-none absolute block h-[1.5px] w-3 bg-foreground transition-opacity duration-300 ${
           open ? "opacity-0" : "opacity-100"
         }`}
       />

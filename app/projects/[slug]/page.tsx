@@ -1,9 +1,9 @@
 import { getProjects } from "@/lib/getProjects";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import ProjectPageTransition from "@/components/ProjectPageTransition";
 import ProjectImageWithSkeleton from "@/components/ProjectImageWithSkeleton";
+import HomeButton from "@/components/HomeButton";
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
@@ -82,13 +82,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <ProjectPageTransition>
-      {/* Image de couverture avec skeleton */}
-      <ProjectImageWithSkeleton
-        src={project.cover}
-        alt={`Image de couverture du projet ${project.title}`}
-        title={project.title}
-      />
-
       {/* Contenu du projet */}
       <div className="w-[calc(100vw-32px)] md:w-[70vw] max-w-4xl mx-auto">
         {/* Titre et sous-titre */}
@@ -101,22 +94,54 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </p>
         </header>
 
-        {/* Description */}
-        <div className="prose prose-lg max-w-none mb-12">
-          <p className="text-foreground/90 leading-relaxed text-lg md:text-3xl lg:text-4xl">
-            {project.description}
-          </p>
+        {/* Image de couverture avec skeleton */}
+        <ProjectImageWithSkeleton
+          src={project.cover}
+          alt={`Image de couverture du projet ${project.title}`}
+          title={project.title}
+        />
+
+        {/* Section avec 2 colonnes */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          {/* Colonne 1: Description */}
+          <div className="prose prose-lg max-w-none">
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-4">
+              Description
+            </h2>
+            <p className="text-foreground/90 leading-relaxed text-base md:text-lg lg:text-xl">
+              {project.description}
+            </p>
+          </div>
+
+          {/* Colonne 2: Date et Mots-clés */}
+          <div className="prose prose-lg max-w-none">
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-4">
+              Informations
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground mb-2">
+                  Date
+                </h3>
+                <p className="text-foreground/90 text-base md:text-lg lg:text-xl">
+                  {project.date}
+                </p>
+              </div>
+              <div>
+                <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground mb-2">
+                  Mots-clés
+                </h3>
+                <p className="text-foreground/90 text-base md:text-lg lg:text-xl">
+                  {project.keywords}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Lien retour */}
-        <div className="text-center">
-          <Link
-            href="/"
-            className="text-lg text-foreground/70 hover:text-foreground transition-colors duration-300"
-            aria-label="Retourner à la page d'accueil"
-          >
-            ← Retour à l&apos;accueil
-          </Link>
+        {/* Bouton retour */}
+        <div className="pt-8">
+          <HomeButton />
         </div>
       </div>
     </ProjectPageTransition>

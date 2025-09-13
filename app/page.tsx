@@ -61,11 +61,11 @@ export default function HomePage() {
            w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] mx-auto
            rounded-t-2xl
            bg-background
-           px-4 md:px-8 py-12 md:py-24
+           p-8
          "
        >
         <StaggeredAnimation initialDelay={0.2}>
-          <SectionTitle title="Sélection" subtitle="Projects" id="work-title" />
+          <SectionTitle title="Projets" subtitle="Sélection" id="work-title" />
           <MosaicGrid projects={items} />
         </StaggeredAnimation>
       </section>

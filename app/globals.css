@@ -5,11 +5,15 @@
 :root {
   --background: rgb(239 246 255);
   --foreground: rgb(30 58 138);
+  --footer-bg: rgb(30 58 138);
+  --footer-text: rgb(255 255 255);
 }
 
 .dark {
   --background: rgb(15 23 42);
   --foreground: rgb(241 245 249);
+  --footer-bg: rgb(255 255 255);
+  --footer-text: rgb(30 58 138);
 }
 
 body {
@@ -54,9 +58,6 @@ body {
 }
 
 /* Améliorer la visibilité des liens au survol */
-a:hover {
-  text-decoration: underline;
-}
 
 /* S'assurer que les éléments interactifs sont accessibles au clavier */
 button:focus-visible,
@@ -75,4 +76,33 @@ nav button:focus {
 /* Transition globale pour le changement de thème */
 * {
   transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
+}
+
+/* Classes spécifiques pour le footer */
+.footer-bg {
+  background-color: var(--footer-bg);
+}
+
+.footer-text {
+  color: var(--footer-text);
+}
+
+.footer-text-secondary {
+  color: var(--footer-text);
+  opacity: 0.9;
+}
+
+.footer-text-muted {
+  color: var(--footer-text);
+  opacity: 0.6;
+}
+
+.footer-text-dimmed {
+  color: var(--footer-text);
+  opacity: 0.8;
+}
+
+.footer-hover:hover {
+  color: var(--footer-text);
+  opacity: 1;
 }

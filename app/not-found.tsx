@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HomeButton from "@/components/HomeButton";
 
 export default function NotFound() {
   return (
@@ -24,12 +25,7 @@ export default function NotFound() {
         {/* Actions */}
         <div className="space-y-4">
           <div>
-            <Link
-              href="/"
-              className="inline-block px-6 py-3 text-lg font-semibold text-foreground bg-background border-2 border-foreground rounded-full hover:bg-foreground hover:text-background transition-all duration-300"
-            >
-              Retour à l&apos;accueil
-            </Link>
+            <HomeButton size="lg" centered={false} />
           </div>
           
           <div>

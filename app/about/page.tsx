@@ -1,6 +1,7 @@
-import Link from "next/link";
 import { Metadata } from "next";
 import PageTransition from "@/components/PageTransition";
+import HomeButton from "@/components/HomeButton";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "À propos - Arnaud Ban | Réalisateur & Monteur Vidéo à Avignon",
@@ -54,22 +55,22 @@ export default function AboutPage() {
               À propos
             </h1>
 
-            <div className="space-y-6 md:space-y-8 text-xl md:text-2xl leading-relaxed">
-              <p className="text-3xl md:text-4xl">
-                Salut ! Je m&apos;appelle Arnaud Ban et je suis un réalisateur
-                indépendant qui travaille sur Avignon.
+            <div className="space-y-6 md:space-y-8 text-base md:text-lg leading-relaxed">
+              <p className="text-xl md:text-2xl">
+                <em className="font-serif">Salut !</em> Je m&apos;appelle <strong className="font-mono">Arnaud Ban</strong> et je suis un <strong>réalisateur
+                indépendant</strong> qui travaille sur <strong>Avignon</strong>.
               </p>
 
-              <p className="text-3xl md:text-4xl">
-                Mes spécialités sont le montage et l&apos;étalonnage.
+              <p className="text-xl md:text-2xl">
+                Mes spécialités sont le <strong>montage</strong> et l&apos;<strong>étalonnage</strong>.
               </p>
 
-              <p className="text-3xl md:text-4xl">
-                Pour toute demande professionnelle, merci de me contacter par
+              <p className="text-xl md:text-2xl">
+                Pour toute demande <strong>professionnelle</strong>, <em className="font-serif">merci de me contacter</em> par
                 mail :{" "}
                 <a
                   href="mailto:ban.arnaud@outlook.fr"
-                  className="font-medium hover:underline transition-colors duration-300 text-foreground"
+                  className="font-mono font-bold hover:text-foreground/80 transition-colors duration-300 text-foreground underline decoration-2 underline-offset-4 hover:decoration-4"
                   aria-label="Envoyer un email à ban.arnaud@outlook.fr"
                 >
                   ban.arnaud@outlook.fr
@@ -78,18 +79,29 @@ export default function AboutPage() {
             </div>
 
             <div className="pt-4">
-              <Link
-                href="/"
-                className="inline-block px-6 py-3 text-base font-semibold text-foreground bg-background rounded-full hover:bg-background/90 dark:text-background dark:bg-foreground dark:hover:bg-foreground/90 transition-all duration-300"
-                aria-label="Retour à l'accueil"
-              >
-                Retour à l&apos;accueil
-              </Link>
+              <HomeButton />
             </div>
           </div>
 
-          {/* Image à droite */}
-          <div className="aspect-square w-full max-w-lg mx-auto lg:mx-0 bg-gray-300 rounded-2xl"></div>
+           {/* Image à droite avec effet chromatique Anamorphose */}
+           <div className="aspect-square w-full max-w-lg mx-auto lg:mx-0 relative rounded-2xl overflow-hidden group">
+             <Image
+               src="/assets/photo-site.jpg"
+               alt="Arnaud Ban - Réalisateur et monteur vidéo à Avignon"
+               width={600}
+               height={600}
+               className="w-full h-full object-cover transition-all duration-300 brightness-110 contrast-105"
+               priority
+             />
+             {/* Overlay chromatique bleu - style Anamorphose */}
+             <div 
+               className="absolute inset-0 pointer-events-none"
+               style={{
+                 background: 'rgba(30, 58, 138, 0.6)', // Couleur bleue du site
+                 mixBlendMode: 'multiply'
+               }}
+             ></div>
+           </div>
         </div>
       </div>
     </PageTransition>

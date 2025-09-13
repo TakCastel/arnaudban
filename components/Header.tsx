@@ -43,9 +43,9 @@ export default function Header() {
           >
             <span className="relative z-10">Arnaud Ban</span>
             {/* Effet de surbrillance qui passe sur le texte */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-300 ease-out"></div>
             {/* Effet de brillance subtile */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out delay-100"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-300 ease-out delay-50"></div>
           </Link>
 
           {/* Navigation */}

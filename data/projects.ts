@@ -5,6 +5,8 @@ export interface Project {
   subtitle: string;
   cover: string;
   description: string;
+  date: string;
+  keywords: string;
 }
 
 export const projects: Project[] = [
@@ -12,147 +14,183 @@ export const projects: Project[] = [
   {
     slug: "doug-2020",
     title: "Doug",
-    subtitle: "2020 - Réalisation, montage et étalonnage",
+    subtitle: "Court métrage de fiction",
     cover: "/assets/DOUG.png",
-    description:
-      "Un projet de fiction que j'ai écrit et réalisé pendant ma première année d'école de cinéma. C'est un exercice de style à la Tarantino dont le projet d'origine faisait une dizaine de pages mais a dû être raccourci à cause du covid.",
+    description: "Un projet de fiction que j'ai écrit et réalisé pendant ma première année d'école de cinéma.",
+    date: "2020",
+    keywords: "Réalisation, Montage, Étalonnage"
   },
   {
     slug: "invisible-2021",
     title: "Invisible",
-    subtitle: "2021 - Réalisation, tournage, montage et étalonnage",
+    subtitle: "Documentaire",
     cover: "/assets/INVISIBLE.png",
-    description:
-      "Mon projet de fin d'études et un des films les plus difficiles et éprouvants que j'ai jamais réalisé. Avec ce documentaire j'ai tenté de montrer que des gens qui souffrent dans l'ombre ne sont pas reconnus par le gouvernement. J'espère que leurs voix seront entendues.",
+    description: "Documentaire de fin d'études. Je suis parti filmer la vie austère d'une petite communauté de gens en Auvergne. Voici le témoignage de personnes qui souffrent dans l'ombre. Des invisibles à qui on ne donne pas la parole.",
+    date: "2021",
+    keywords: "Réalisation, Montage, Étalonnage"
   },
   {
     slug: "goutte-de-trop-2023",
     title: "Goutte de trop",
-    subtitle: "2023 - Montage et étalonnage",
+    subtitle: "Court métrage de fiction",
     cover: "/assets/GOUTTE_DE_TROP.png",
-    description:
-      "Un petit projet de fiction réalisé dans le cadre du festival KINO-A. Le but de ce festival est de réaliser sans budget et entre passionés, des productions audiovisuelles autour d'une thématique choisie à l'avance et avec différentes contraintes à respecter.",
+    description: "Fiction réalisée dans le cadre du festival KINO-A. Le but de ce festival est de réaliser sans budget et entre passionnés, des productions audiovisuelles autour d'une thématique et différentes contraintes à respecter.",
+    date: "2023",
+    keywords: "Réalisation, Montage, Étalonnage"
   },
   {
     slug: "tel-esprit-qui-croyait-prendre-2024",
     title: "Tel esprit qui croyait prendre",
-    subtitle: "2024 - 1er assistant caméra, montage et étalonnage",
+    subtitle: "Court métrage de fiction",
     cover: "/assets/TEL_ESPRIT.png",
-    description:
-      "Un projet de court-métrage réalisé pour le festival KINO-A. En tant qu'assistant caméra 1er, j'ai eu la responsabilité de maintenir la netteté de l'image et d'assister le chef opérateur.",
+    description: "Fiction réalisée dans le cadre du festival KINO-A. Les instructions du festival étaient de raconter une histoire autour d'un fait divers dans les années 30. Nous avons choisi l'engouement bien connu pour le spiritisme à cette époque-là.",
+    date: "2024",
+    keywords: "1er Assistant caméra, Montage, Étalonnage"
   },
   {
     slug: "belitre-2024",
     title: "Bêlitre",
-    subtitle: "2024 - 1er assistant caméra",
+    subtitle: "Court métrage de fiction",
     cover: "/assets/BELITRE.png",
-    description:
-      "Projet en tant qu'assistant caméra 1er. L'assistant caméra 1er est responsable de la netteté de l'image. C'est un poste technique qui demande de la précision et de la concentration.",
+    description: "Avec tout ce qu'on raconte sur les intelligences artificielles, que vont penser les amis de Gaëlle après l'acquisition d'un nouveau compagnon robotique ? Attention si vous êtes sensibles au gore car la fin est un peu sanglante...",
+    date: "2024",
+    keywords: "1er Assistant caméra"
   },
   {
     slug: "arabesque-2019",
     title: "Arabesque",
-    subtitle: "2019 - Réalisation, montage et étalonnage",
+    subtitle: "Court métrage de fiction",
     cover: "/assets/ARABESQUE.png",
-    description:
-      "La collaboration avec une danseuse a été un travail intéressant. Il s'agissait de créer un dialogue avec une professionnelle alors que je suis étranger à cet univers. Les échanges pour déterminer quels mouvements feraient partie de la chorégraphie et lesquels colleraient bien à la composition musicale que nous avions demandé à Augustin Birraux.",
+    description: "Passer d'une émotion à l'autre sans un mot de dialogue. C'était le défi qu'on s'est lancés lors de cette collaboration avec la danseuse Agathe Petrini. Créer une chorégraphie brusque et saccadée qui se change en allégresse lorsque la musique d'Augustin Birraux s'adoucit.",
+    date: "2019",
+    keywords: "Réalisation, Montage, Étalonnage"
   },
   {
     slug: "3-femmes-2024",
     title: "3 femmes",
-    subtitle: "2024 - Étalonnage et compositing",
+    subtitle: "Court métrage de fiction",
     cover: "/assets/3_FEMMES.png",
-    description:
-      "Un travail d'étalonnage qui vient vraiment accompagner la narration de l'histoire. La trame se déroule dans les années folles qui s'illustre au début du film par un noir et blanc au format 4/3. Mais alors qu'une information apporte un souffle nouveau de liberté sur le personnage principal, le ratio de l'image s'étire et le noir et blanc laisse place à une colorimétrie saturée et irréaliste qui reprends les codes du Teal and Orange.",
+    description: "Deuxième projet du festival KINO sur les années folles. Une histoire de fait divers orchestrée par 3 femmes aux airs innocents.",
+    date: "2024",
+    keywords: "Étalonnage"
   },
 
   // COMMANDES
   {
     slug: "synapson",
     title: "Synapson",
-    subtitle: "Montage",
+    subtitle: "After movie",
     cover: "/assets/SYNAPSON.png",
-    description:
-      "Aftermovie pour une soirée dans la cave à vin Maison Sinae à Chusclan. La soirée accueillait de multiples DJ's dont Synapson et Monsieur et Madame Benoît. Monter un aftermovie demande de capturer l'essence de la soirée en quelques minutes.",
+    description: "Montage effectué pour la boîte de production Five Frames Studio. Un Aftermovie pour une soirée dans la cave à vin Maison Sinae à Chusclan. La soirée accueillait de multiples DJ's dont Synapson et Monsieur et Madame Benoît.",
+    date: "2022",
+    keywords: "Montage"
   },
   {
     slug: "midnight-cthulhu-and-you-2024",
     title: "Midnight, cthulhu and you",
-    subtitle: "2024 - Réalisation, montage et étalonnage",
+    subtitle: "Clip promotionnel",
     cover: "/assets/MIDNIGHT_CTHULHU.jpg",
-    description:
-      "Projet personnel réalisé avec mon cousin qui est tatoueur professionnel. Le tatouage portant sur l'univers de HP Lovecraft, je désirais m'éloigner de la vidéo de tatouage traditionnelle pour tenter une mise en scène plus fantastique.",
+    description: "Ma passion pour les histoires fantastiques et H.P Lovecraft me pousse à m'éloigner de la vidéo de tatouage traditionnelle et à tenter de raconter le tatouage par d'autres moyens.",
+    date: "2024",
+    keywords: "Réalisation, Montage, Étalonnage"
   },
   {
     slug: "on-dit-delle-2021",
     title: "On dit d'elle",
-    subtitle: "2021 - Réalisation, tournage, montage et étalonnage",
+    subtitle: "Clip musical",
     cover: "/assets/ON DIT DELLE.png",
-    description:
-      "La chanteuse Miss Myriam m'a approché afin de réaliser le clip de son single On dit d'elle. Pour ce clip j'ai été cherché du côté de l'esthétique Rococo avec des influences telles que le Marie Antoinette de Sofia Coppola. Le clip a fait partie de la sélection du festival 1ère marche en 2023.",
+    description: "La chanteuse Miss Myriam m'a approché afin de réaliser le clip de son single On dit d'elle. Pour ce clip j'ai voulu une esthétique Rococo avec des influences telles que le Marie Antoinette de Sofia Coppola. Le clip a fait partie de la sélection du festival 1ère marche en 2023.",
+    date: "2021",
+    keywords: "Réalisation, Montage, Étalonnage"
   },
   {
     slug: "amour-molotov-2019",
     title: "Amour Molotov",
-    subtitle: "2019 - Tournage et montage",
+    subtitle: "Live session",
     cover: "/assets/AMOUR_MOLOTOV.png",
-    description:
-      "J'ai été approché par le groupe Dub Silence pour capter et monter une live session enregistrée au studio Octavox à Poisat. Enregistrer une session live demande de l'anticipation et de la réactivité.",
+    description: "Une live session enregistrée au studio Octavox à Poisat pour le groupe de musique Dub Silence.",
+    date: "2019",
+    keywords: "Captation, Montage"
   },
   {
     slug: "concept-pub-san-pellegrino",
-    title: "Concept pub : San Pellegrino",
-    subtitle: "Concept publicitaire",
+    title: "Concept pub san pellegrino",
+    subtitle: "Publicité",
     cover: "/assets/SANPELLEGRINO.png",
-    description:
-      "Voici un concept de publicité que j'ai réalisé en une journée à la maison de mes parents afin de me monter un début de port-folio. Parfois, les meilleures idées naissent sous la contrainte.",
+    description: "Se demander ce que l'on va faire aujourd'hui. Ouvrir le frigo et trouver une cannette de San Pellegrino. Improviser un concept de publicité pour se faire un début de portfolio. Merci aux copains Benjamin Martin et Lou Touchard pour leur aide.",
+    date: "2022",
+    keywords: "Réalisation, Montage, Étalonnage"
   },
   {
     slug: "baladi-jazz-project",
     title: "Baladi jazz project",
-    subtitle: "Tournage, montage et étalonnage",
+    subtitle: "Concert",
     cover: "/assets/BALADI.png",
-    description:
-      "Demande de captation d'un concert dans un théâtre du centre ville d'Avignon. Les clients ont tellement aimé les images qu'ils ont également demandé à ce que je monte un petit teaser.",
+    description: "Captation de la formation Baladi Jazz Project au Théâtre de l'oulle à Avignon. Le groupe a aimé les images et il m'a été demandé de monter un petit teaser avec celles-ci.",
+    date: "2023",
+    keywords: "Captation, Montage, Étalonnage"
   },
   {
     slug: "charly-poete-poete",
-    title: "Charly poète poète",
-    subtitle: "Tournage, montage et étalonnage",
+    title: "Charly poete poete",
+    subtitle: "Théâtre",
     cover: "/assets/CHARLY_POETE.png",
-    description:
-      "J'ai accompagné cet artiste pendant une tournée Au bourget du lac et à Voiron afin de faire les captations de son spectacle. J'ai ensuite mélangé les deux captations pour garder les meilleurs moments de chacune en un seul montage.",
+    description: "J'ai accompagné cet artiste pendant une tournée au bourget du lac et à Voiron afin de faire les captations de son spectacle. Le montage est un mélange des meilleurs moments des deux captations.",
+    date: "2024",
+    keywords: "Captation, Montage, Étalonnage"
   },
   {
     slug: "id-logistics",
-    title: "ID Logistics",
-    subtitle: "Projet corporate",
-    cover: "/assets/CHARLY_POETE.png",
-    description:
-      "Projet corporate pour ID Logistics. Travailler pour une entreprise comme ID Logistics demande de comprendre leurs enjeux de communication. Il faut créer du contenu qui reflète leur identité de marque tout en étant engageant pour leur audience.",
-  },
-  {
-    slug: "quartiers-dete-mission-locale-avignon",
-    title: "Quartiers d'été, mission locale d'Avignon",
-    subtitle: "Projet social",
-    cover: "/assets/QUARTIERS_DETE.png",
-    description:
-      "Projet pour la mission locale d'Avignon dans le cadre des quartiers d'été. Travailler avec la mission locale d'Avignon m'a permis de m'impliquer dans un projet à fort impact social.",
+    title: "ID logistics",
+    subtitle: "Reportage corporate",
+    cover: "/assets/ID_LOGISTICS.png",
+    description: "Aurélie Briquet, employée chez ID logistics, nous présente le métier de cariste. Une commande de ID logistics réalisée pendant mon contrat en tant que vidéaste chez Insercall.",
+    date: "2024",
+    keywords: "Captation, Montage, Étalonnage"
   },
   {
     slug: "les-jeunes-font-leurs-show-mission-locale-orange",
-    title: "Les jeunes font leurs show, mission locale d'Orange",
-    subtitle: "Projet social",
-    cover: "/assets/JEUNES_FONT_LEURS_SHOW.png",
-    description:
-      "Projet pour la mission locale d'Orange dans le cadre de l'initiative 'Les jeunes font leurs show'. Cette initiative permet aux jeunes de s'exprimer artistiquement et de prendre confiance en eux.",
+    title: "Les jeunes font leurs show",
+    subtitle: "Reportage",
+    cover: "/assets/LJFLS.png",
+    description: "Les jeunes de la mission locale s'expriment à travers les arts de la scène. Projet réalisé pour la mission locale d'orange pendant mon contrat en tant que vidéaste chez Insercall.",
+    date: "2024",
+    keywords: "Captation, Montage, Étalonnage"
+  },
+  {
+    slug: "quartiers-dete-mission-locale-avignon",
+    title: "Quartier d'été",
+    subtitle: "Reportage",
+    cover: "/assets/QUARTIERS_DETE.png",
+    description: "La cité de l'emploi mets en place des rencontres professionnelles un peu particulières… Sortir de l'entretien d'embauche traditionnel, se rencontrer autrement grâce à des activités comme l'escalade ou l'escape game. Projet réalisé pendant mon contrat en tant que vidéaste chez Insercall.",
+    date: "2023",
+    keywords: "Captation, Montage, Étalonnage"
   },
   {
     slug: "ecotubeurs",
     title: "Ecotubeurs",
-    subtitle: "Projet environnemental",
+    subtitle: "Court métrage de fiction",
     cover: "/assets/ECOTUBEURS.png",
-    description:
-      "Projet Ecotubeurs. Travailler sur un projet environnemental comme Ecotubeurs est particulièrement gratifiant. C'est important de contribuer à la sensibilisation aux enjeux écologiques à travers la création audiovisuelle.",
+    description: "Ecotubeurs est un dispositif qui permet à des élèves de primaire, collège ou lycée de réaliser des films courts sur le thème de l'écologie. Avec Florine Clap nous sommes intervenus pour accompagner les jeunes sur le plan technique du film qu'ils ont écrit.",
+    date: "2025",
+    keywords: "Montage, FX, Étalonnage"
+  },
+  {
+    slug: "remise-des-diplomes-cfa",
+    title: "Remise des diplômes CFA",
+    subtitle: "After movie",
+    cover: "/assets/CFA.png",
+    description: "Aftermovie de la soirée de remise des diplômes pour les étudiants du CFA du bâtiment à Avignon. Réalisé pendant mon contrat en tant que vidéaste chez Insercall.",
+    date: "2023",
+    keywords: "Captation, Montage, Étalonnage"
+  },
+  {
+    slug: "renovart",
+    title: "Renov'Art",
+    subtitle: "Reportage",
+    cover: "/assets/RENOVART.png",
+    description: "Les jeunes de la mission locale d'orange racontent la rénovation d'un quartier de la ville à travers différents médiums artistiques. Projet réalisé pour la mission locale d'orange pendant mon contrat en tant que vidéaste chez Insercall.",
+    date: "2023",
+    keywords: "Captation, Montage, Étalonnage"
   },
 ];
