@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import PageTransition from "@/components/PageTransition";
 import HomeButton from "@/components/HomeButton";
 import Image from "next/image";
+import PhotoSite from "@/public/assets/photo-site.jpg";
 
 export const metadata: Metadata = {
   title: "À propos - Arnaud Ban | Réalisateur & Monteur Vidéo à Avignon",
@@ -51,13 +52,14 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Contenu texte à gauche */}
           <div className="space-y-8 md:space-y-10">
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 md:mb-12 tracking-tight text-foreground">
-              À propos
-            </h1>
+            <h1 className="sr-only">À propos</h1>
+            <div className="text-2xl md:text-4xl font-semibold font-serif italic mb-8 md:mb-12 tracking-tight text-foreground">
+              Bonjour !
+            </div>
 
             <div className="space-y-6 md:space-y-8 text-base md:text-lg leading-relaxed">
               <p className="text-xl md:text-2xl">
-                <em className="font-serif">Salut !</em> Je m&apos;appelle <strong className="font-mono">Arnaud Ban</strong> et je suis un <strong>réalisateur
+                Je m&apos;appelle <strong className="font-mono">Arnaud Ban</strong> et je suis un <strong>réalisateur
                 indépendant</strong> qui travaille sur <strong>Avignon</strong>.
               </p>
 
@@ -83,24 +85,17 @@ export default function AboutPage() {
             </div>
           </div>
 
-           {/* Image à droite avec effet chromatique Anamorphose */}
-           <div className="aspect-square w-full max-w-lg mx-auto lg:mx-0 relative rounded-2xl overflow-hidden group">
+           {/* Image à droite avec bords arrondis */}
+           <div className="w-full max-w-xl mx-auto lg:mx-0 relative">
              <Image
-               src="/assets/photo-site.jpg"
+               src={PhotoSite}
                alt="Arnaud Ban - Réalisateur et monteur vidéo à Avignon"
+               className="w-full h-auto object-cover transition-all duration-300"
+               style={{ borderRadius: '1rem' }}
                width={600}
-               height={600}
-               className="w-full h-full object-cover transition-all duration-300 brightness-110 contrast-105"
+               height={800}
                priority
              />
-             {/* Overlay chromatique bleu - style Anamorphose */}
-             <div 
-               className="absolute inset-0 pointer-events-none"
-               style={{
-                 background: 'rgba(30, 58, 138, 0.6)', // Couleur bleue du site
-                 mixBlendMode: 'multiply'
-               }}
-             ></div>
            </div>
         </div>
       </div>

@@ -61,6 +61,7 @@ export default function HomePage() {
            w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] mx-auto
            rounded-t-2xl
            bg-background
+           scroll-mt-[72px]
            p-8
          "
        >

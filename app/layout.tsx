@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ThemeProvider from "@/components/ThemeProvider";
 import SkipToMain from "@/components/SkipToMain";
+import ScrollToAnchor from "@/components/ScrollToAnchor";
+import PassiveEventsInit from "@/components/PassiveEventsInit";
 
 const moderat = localFont({
   src: [{ path: "../public/fonts/Moderat-Regular.woff2", style: "normal" }],
@@ -84,6 +86,8 @@ export default function RootLayout({
         <ThemeProvider>
           <SkipToMain />
           <Header />
+          <ScrollToAnchor />
+          <PassiveEventsInit />
           <main className="pt-16 flex-grow" role="main" tabIndex={-1}>{children}</main>
           <Footer />
         </ThemeProvider>
