@@ -62,7 +62,7 @@ export default function HomePage() {
            rounded-t-2xl
            bg-background
            scroll-mt-[72px]
-           p-8
+           py-8 px-0
          "
        >
         <StaggeredAnimation initialDelay={0.2}>
