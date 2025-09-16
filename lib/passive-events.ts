@@ -15,8 +15,9 @@ export function enablePassiveEvents() {
       }
     };
     
-    window.addEventListener('test', () => {}, options);
-    window.removeEventListener('test', () => {}, options);
+    const testListener = () => {};
+    window.addEventListener('test', testListener, options);
+    window.removeEventListener('test', testListener);
   } catch (err) {
     passiveSupported = false;
   }
