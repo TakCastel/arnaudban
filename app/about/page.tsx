@@ -92,10 +92,15 @@ export default function AboutPage() {
           <Image
             src={PhotoSite}
             alt="Arnaud Ban - Réalisateur et monteur vidéo à Avignon"
-            className="w-full h-auto object-cover transition-all duration-300 scale-x-[-1]"
-            style={{ borderRadius: '1rem' }}
-            width={800}
-            height={1000}
+            className="w-full h-auto max-w-full transition-all duration-300 scale-x-[-1] object-cover"
+            style={{ 
+              borderRadius: '1rem',
+              maxWidth: '100%',
+              height: 'auto'
+            }}
+            width={600}
+            height={750}
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 60vw, 60vw"
             priority
           />
         </div>
