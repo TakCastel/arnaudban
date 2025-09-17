@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import ProjectPageTransition from "@/components/ProjectPageTransition";
 import ProjectImageWithSkeleton from "@/components/ProjectImageWithSkeleton";
+import VimeoWithFallback from "@/components/VimeoWithFallback";
 import { projects as allProjects, Project } from "@/data/projects";
 import HomeButton from "@/components/HomeButton";
 
@@ -95,18 +96,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </p>
         </header>
 
-        {/* Média principal: vidéo Vimeo si disponible, sinon image */}
+        {/* Média principal: vidéo Vimeo avec fallback automatique vers image */}
         {project.videoUrl ? (
-          <section className="w-[calc(100vw-32px)] md:w-[70vw] max-w-4xl mx-auto rounded-2xl overflow-hidden mb-8">
-            <div className="relative pt-[56.25%]">
-              <iframe
-                src={`${project.videoUrl}?title=0&byline=0&portrait=0`}
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
-                title={`${project.title} - vidéo`}
-                className="absolute inset-0 w-full h-full rounded-2xl"
-              />
-            </div>
-          </section>
+          <VimeoWithFallback
+            videoUrl={project.videoUrl}
+            fallbackImage={project.cover}
+            title={project.title}
+            alt={`Image de couverture du projet ${project.title}`}
+          />
         ) : (
           <ProjectImageWithSkeleton
             src={project.cover}
