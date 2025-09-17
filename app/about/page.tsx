@@ -48,55 +48,56 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <PageTransition>
-      <div className="bg-background w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] max-w-7xl mx-auto py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Contenu texte à gauche */}
-          <div className="space-y-8 md:space-y-10">
-            <h1 className="sr-only">À propos</h1>
-            <div className="text-2xl md:text-4xl font-semibold font-serif italic mb-8 md:mb-12 tracking-tight text-foreground">
-              Bonjour !
-            </div>
-
-            <div className="space-y-6 md:space-y-8 text-base md:text-lg leading-relaxed">
-              <p className="text-xl md:text-2xl">
-                Je m&apos;appelle <strong className="font-mono">Arnaud Ban</strong> et je suis un <strong>réalisateur
-                indépendant</strong> qui travaille sur <strong>Avignon</strong>.
-              </p>
-
-              <p className="text-xl md:text-2xl">
-                Mes spécialités sont le <strong>montage</strong> et l&apos;<strong>étalonnage</strong>.
-              </p>
-
-              <p className="text-xl md:text-2xl">
-                Pour toute demande <strong>professionnelle</strong>, <em className="font-serif">merci de me contacter</em> par
-                mail :{" "}
-                <a
-                  href="mailto:ban.arnaud@outlook.fr"
-                  className="font-mono font-bold hover:text-foreground/80 transition-colors duration-300 text-foreground underline decoration-2 underline-offset-4 hover:decoration-4"
-                  aria-label="Envoyer un email à ban.arnaud@outlook.fr"
-                >
-                  ban.arnaud@outlook.fr
-                </a>
-              </p>
-            </div>
-
-            <div className="pt-4">
-              <HomeButton />
-            </div>
+      <div className="bg-background w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] max-w-7xl mx-auto min-h-[calc(100vh-112px)] lg:min-h-[calc(100vh-184px)] flex flex-col lg:grid lg:grid-cols-2 lg:items-center">
+        {/* Contenu texte - Colonne 1 */}
+        <div className="w-full space-y-8 md:space-y-10 flex-1 flex flex-col justify-center lg:justify-start">
+          <h1 className="sr-only">À propos</h1>
+          <div className="text-2xl md:text-4xl font-semibold font-serif italic mb-8 md:mb-12 tracking-tight text-foreground">
+            Bonjour !
           </div>
 
-           {/* Image à droite avec bords arrondis */}
-           <div className="w-full max-w-xl mx-auto lg:mx-0 relative">
-             <Image
-               src={PhotoSite}
-               alt="Arnaud Ban - Réalisateur et monteur vidéo à Avignon"
-               className="w-full h-auto object-cover transition-all duration-300"
-               style={{ borderRadius: '1rem' }}
-               width={600}
-               height={800}
-               priority
-             />
-           </div>
+          <div className="space-y-6 md:space-y-8 text-base md:text-lg leading-relaxed">
+            <p className="text-xl md:text-2xl">
+              Je m&apos;appelle <strong className="font-mono">Arnaud Ban</strong> et je suis un <strong>réalisateur
+              indépendant</strong> qui travaille sur <strong>Avignon</strong>.
+            </p>
+
+            <p className="text-xl md:text-2xl">
+              Mes spécialités sont le <strong>montage</strong> et l&apos;<strong>étalonnage</strong>.
+            </p>
+
+            <p className="text-xl md:text-2xl">
+              Pour toute demande <strong>professionnelle</strong>, <em className="font-serif">merci de me contacter</em> par
+              mail :{" "}
+              <a
+                href="mailto:ban.arnaud@outlook.fr"
+                className="font-mono font-bold hover:text-foreground/80 transition-colors duration-300 text-foreground underline decoration-2 underline-offset-4 hover:decoration-4"
+                aria-label="Envoyer un email à ban.arnaud@outlook.fr"
+              >
+                ban.arnaud@outlook.fr
+              </a>
+            </p>
+          </div>
+
+          <div className="pt-4 flex justify-start">
+            <HomeButton />
+          </div>
+        </div>
+
+        {/* Colonne vide - Colonne 2 */}
+        <div className="hidden lg:block"></div>
+
+        {/* Image */}
+        <div className="lg:fixed lg:right-0 lg:bottom-[112px] lg:w-auto lg:max-w-[60vw] lg:z-10">
+          <Image
+            src={PhotoSite}
+            alt="Arnaud Ban - Réalisateur et monteur vidéo à Avignon"
+            className="w-full h-auto object-cover transition-all duration-300 scale-x-[-1]"
+            style={{ borderRadius: '1rem' }}
+            width={800}
+            height={1000}
+            priority
+          />
         </div>
       </div>
     </PageTransition>

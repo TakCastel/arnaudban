@@ -49,7 +49,26 @@ export default function ProjectCard({
         {/* Lien sur l'image avec effet de zoom et arrondi */}
         <Link
           href={`/projects/${project.slug}`}
-          className="block rounded-2xl group outline outline-2 outline-transparent outline-offset-2 transition-shadow duration-300 hover:outline-blue-600 dark:hover:outline-white focus:outline-2 focus:outline-blue-600 dark:focus:outline-white"
+          className="block rounded-2xl group transition-all duration-300"
+          style={{
+            outline: '4px solid transparent',
+            outlineOffset: '4px',
+            transition: 'outline-color 300ms ease'
+          }}
+          onMouseEnter={(e) => {
+            const isDark = document.documentElement.classList.contains('dark');
+            e.currentTarget.style.outlineColor = isDark ? 'rgb(241 245 249)' : 'rgb(30 58 138)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.outlineColor = 'transparent';
+          }}
+          onFocus={(e) => {
+            const isDark = document.documentElement.classList.contains('dark');
+            e.currentTarget.style.outlineColor = isDark ? 'rgb(241 245 249)' : 'rgb(30 58 138)';
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.outlineColor = 'transparent';
+          }}
           aria-label={`Voir le projet ${project.title} - ${project.subtitle}`}
         >
           {/* Container avec dimensions fixes et stables - IMPORTANT: position relative pour fill */}

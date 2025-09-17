@@ -91,7 +91,7 @@ export default function HeroSection({ id }: { id?: string }) {
         >
           <video
             className="w-full h-full object-cover rounded-2xl"
-            src="/assets/banner_test.mov"
+            src="/assets/banner_test_mp4H265.mp4"
             autoPlay
             muted
             playsInline
