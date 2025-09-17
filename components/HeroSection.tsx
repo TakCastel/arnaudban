@@ -98,9 +98,7 @@ export default function HeroSection({ id }: { id?: string }) {
             loop
             preload="auto"
             aria-label="Vidéo de présentation d'Arnaud Ban, réalisateur et monteur vidéo"
-            onLoadedData={() => {
-              setTimeout(() => setIsLoaded(true), 300);
-            }}
+            onLoadedData={() => setIsLoaded(true)}
           />
         </motion.div>
       </div>
