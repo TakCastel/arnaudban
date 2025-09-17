@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   trailingSlash: true,
   poweredByHeader: false,
   compress: true,
@@ -8,9 +7,13 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   
-  // Configuration pour l'optimisation des images (désactivée pour l'export statique)
+  // Configuration pour l'optimisation des images avec SSR
   images: {
-    unoptimized: true,
+    formats: ['image/webp', 'image/avif'],
+    deviceSizes: [640, 768, 1024, 1280, 1600],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    domains: [],
+    minimumCacheTTL: 86400, // 24h
   },
 
 };
