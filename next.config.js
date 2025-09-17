@@ -1,19 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  trailingSlash: true,
   poweredByHeader: false,
   compress: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
   
-  // Configuration pour l'optimisation des images avec SSR
+  // Configuration pour l'optimisation des images avec SSR Netlify
   images: {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 768, 1024, 1280, 1600],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     domains: [],
-    minimumCacheTTL: 86400, // 24h
+    minimumCacheTTL: 60,
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 
 };

@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import PageTransition from "@/components/PageTransition";
 import HomeButton from "@/components/HomeButton";
 import Image from "next/image";
-import PhotoSite from "@/public/assets/photo-site.jpg";
 
 export const metadata: Metadata = {
   title: "À propos - Arnaud Ban | Réalisateur & Monteur Vidéo à Avignon",
@@ -90,7 +89,7 @@ export default function AboutPage() {
         {/* Image */}
         <div className="lg:fixed lg:right-0 lg:bottom-[112px] lg:w-auto lg:max-w-[60vw] lg:z-10">
           <Image
-            src={PhotoSite}
+            src="/assets/photo-site.jpg"
             alt="Arnaud Ban - Réalisateur et monteur vidéo à Avignon"
             className="w-full h-auto max-w-full transition-all duration-300 scale-x-[-1] object-cover"
             style={{ 

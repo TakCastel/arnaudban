@@ -8,6 +8,16 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+# Configuration pour l'optimisation d'images Next.js
+[functions]
+  node_bundler = "esbuild"
+
+# Headers spécifiques pour l'API d'images Next.js
+[[headers]]
+  for = "/_next/image*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
 # Headers de sécurité et de performance
 [[headers]]
   for = "/*"
@@ -50,8 +60,8 @@
   to = "/"
   status = 301
 
-# Gestion des erreurs 404
+# Gestion des erreurs 404 pour SSR
 [[redirects]]
   from = "/*"
-  to = "/404.html"
+  to = "/404"
   status = 404
