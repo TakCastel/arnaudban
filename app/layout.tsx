@@ -29,6 +29,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Arnaud Ban" }],
   creator: "Arnaud Ban",
   publisher: "Arnaud Ban",
+  icons: {
+    icon: "/favicon.ico",
+  },
   formatDetection: {
     email: false,
     address: false,
