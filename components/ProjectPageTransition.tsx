@@ -9,7 +9,7 @@ interface ProjectPageTransitionProps {
 
 export default function ProjectPageTransition({ children }: ProjectPageTransitionProps) {
   return (
-    <motion.main
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{
@@ -17,9 +17,8 @@ export default function ProjectPageTransition({ children }: ProjectPageTransitio
         ease: "easeOut"
       }}
       className="bg-background py-8 md:py-16"
-      role="main"
     >
       {children}
-    </motion.main>
+    </motion.div>
   );
 }
