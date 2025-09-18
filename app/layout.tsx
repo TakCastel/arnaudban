@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: "Arnaud Ban",
     images: [
       {
-        url: "/screen-arnaudban.png",
+        url: "https://arnaudban.com/screen-arnaudban.png",
         width: 1200,
         height: 630,
         alt: "Arnaud Ban - Réalisateur & Monteur Vidéo",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     title: "Arnaud Ban | Réalisateur & Monteur Vidéo",
     description:
       "Découvrez Arnaud Ban, réalisateur indépendant spécialisé en montage et étalonnage vidéo à Avignon.",
-    images: ["/screen-arnaudban.png"],
+    images: ["https://arnaudban.com/screen-arnaudban.png"],
   },
   robots: {
     index: true,
