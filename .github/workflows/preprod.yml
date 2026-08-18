@@ -1,0 +1,56 @@
+name: Préprod (GitHub Pages)
+
+# Aperçu de validation pour Arnaud, séparé du déploiement de prod (VPS, voir
+# README.md) : ce workflow ne tourne que sur la branche preprod, jamais sur
+# main, pour qu'un push de preview ne puisse jamais être confondu avec un
+# déploiement réel.
+on:
+  push:
+    branches: [preprod]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un seul déploiement Pages à la fois ; un nouveau push annule l'aperçu en cours.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # GITHUB_PAGES=true active le basePath /arnaudban dans next.config.js —
+      # nécessaire ici (Pages sert le site sous ce sous-chemin), absent en prod.
+      - run: npm run build
+        env:
+          GITHUB_PAGES: "true"
+
+      # Sans ce fichier, GitHub Pages traite le site avec Jekyll, qui ignore
+      # les dossiers commençant par "_" — dont _next, où vit tout le JS/CSS.
+      - run: touch out/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

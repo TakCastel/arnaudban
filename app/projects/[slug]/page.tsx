@@ -1,4 +1,5 @@
-import { getProjects } from "@/lib/getProjects";
+import Link from "next/link";
+import { getProjects, getRelatedProjects } from "@/lib/getProjects";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import ProjectPageTransition from "@/components/ProjectPageTransition";
@@ -6,6 +7,10 @@ import ProjectImageWithSkeleton from "@/components/ProjectImageWithSkeleton";
 import VimeoWithFallback from "@/components/VimeoWithFallback";
 import { projects as allProjects, Project } from "@/data/projects";
 import HomeButton from "@/components/HomeButton";
+import PageContainer from "@/components/PageContainer";
+
+const relatedLinkClass =
+  "font-mono font-bold hover:text-foreground/80 transition-colors duration-300 text-foreground underline decoration-2 underline-offset-4 hover:decoration-4";
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
@@ -50,7 +55,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     openGraph: {
       title: `${project.title} - ${project.subtitle} | Arnaud Ban`,
       description: `${project.description} Projet réalisé par Arnaud Ban, réalisateur et monteur vidéo à Avignon.`,
-      url: `https://arnaudban.com/projects/${project.slug}`,
+      url: `https://arnaudban.fr/projects/${project.slug}`,
       type: "article",
       images: [
         {
@@ -82,16 +87,41 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound();
   }
 
+  const relatedProjects = getRelatedProjects(slug);
+
+  const videoJsonLd = project.videoUrl
+    ? {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        name: `${project.title} - ${project.subtitle}`,
+        description: project.description,
+        thumbnailUrl: `https://arnaudban.fr${project.cover}`,
+        uploadDate: `${project.date}-01-01`,
+        embedUrl: project.videoUrl,
+        creator: {
+          "@type": "Person",
+          name: "Arnaud Ban",
+        },
+      }
+    : null;
+
   return (
     <ProjectPageTransition>
+      {videoJsonLd && (
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }}
+        />
+      )}
       {/* Contenu du projet */}
-      <div className="w-[calc(100vw-32px)] md:w-[70vw] max-w-4xl mx-auto">
+      <PageContainer>
         {/* Titre et sous-titre */}
         <header className="mb-8">
-          <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-foreground mb-4">
+          <h1 className="text-4xl md:text-6xl lg:text-8xl text-foreground mb-4">
             {project.title}
           </h1>
-          <p className="text-xl md:text-3xl lg:text-4xl text-foreground/80">
+          <p className="text-2xl md:text-4xl lg:text-5xl text-foreground/80">
             {project.subtitle}
           </p>
         </header>
@@ -119,7 +149,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <h2 className="sr-only">
               Description
             </h2>
-            <p className="text-foreground/90 leading-relaxed text-base md:text-lg lg:text-xl">
+            <p className="text-foreground/90 leading-relaxed text-lg md:text-xl lg:text-2xl">
               {project.description}
             </p>
           </div>
@@ -134,7 +164,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <h3 className="sr-only">
                   Date
                 </h3>
-                <p className="text-foreground/90 text-base md:text-lg lg:text-xl">
+                <p className="text-foreground/90 text-lg md:text-xl lg:text-2xl">
                   <strong className="font-semibold">{project.date}</strong>
                 </p>
               </div>
@@ -142,7 +172,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <h3 className="sr-only">
                   Mots-clés
                 </h3>
-                <p className="text-foreground/90 text-base md:text-lg lg:text-xl">
+                <p className="text-foreground/90 text-lg md:text-xl lg:text-2xl">
                   <strong className="font-semibold">{project.keywords}</strong>
                 </p>
               </div>
@@ -150,11 +180,34 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
         </div>
 
+        {/* Maillage interne : projets similaires */}
+        {relatedProjects.length > 0 && (
+          <div className="mb-12">
+            <h2 className="text-base uppercase tracking-wide text-foreground/60 mb-3">
+              À voir aussi
+            </h2>
+            <ul className="flex flex-wrap gap-x-2 gap-y-1">
+              {relatedProjects.map((related, i) => (
+                <li key={related.slug} className="flex items-center gap-2">
+                  <Link href={`/projects/${related.slug}`} className={relatedLinkClass}>
+                    {related.title}
+                  </Link>
+                  {i < relatedProjects.length - 1 && (
+                    <span className="text-foreground/40" aria-hidden="true">
+                      ·
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         {/* Bouton retour */}
         <div className="pt-8">
           <HomeButton />
         </div>
-      </div>
+      </PageContainer>
     </ProjectPageTransition>
   );
 }

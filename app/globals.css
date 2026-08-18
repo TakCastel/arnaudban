@@ -3,17 +3,61 @@
 @tailwind utilities;
 
 :root {
-  --background: rgb(239 246 255);
-  --foreground: rgb(30 58 138);
-  --footer-bg: rgb(30 58 138);
-  --footer-text: rgb(255 255 255);
+  /* Les couleurs de marque : tout le thème (clair, footer, sections inversées)
+     en dérive. Pour changer le blanc cassé ou le bleu partout d'un coup, c'est
+     ici et seulement ici. */
+  --beige: rgb(235 222 196);
+  --blue: rgb(28 44 196);
+  /* Noir du header/hero en thème sombre — sert désormais de fond principal
+     du dark theme aussi, pour que tout ce qui est bleu en clair devienne
+     cette même teinte en sombre, partout, au lieu de couleurs isolées. */
+  --ink: rgb(15 15 15);
+
+  --background: var(--beige);
+  --foreground: var(--blue);
+  /* Footer bleu de marque constant, texte beige, quel que soit le thème
+     (même logique que --invert-bg) — pas de bascule ici. */
+  --footer-bg: var(--blue);
+  --footer-text: var(--beige);
+
+  /* Section "inversée" (grille de projets) : bleu de marque constant, texte
+     blanc cassé, quel que soit le thème — pas une bascule sur les couleurs du
+     dark mode, un vrai bloc d'identité. */
+  --invert-bg: var(--blue);
+  --invert-text: var(--beige);
+
+  /* Header / bloc hero : bleu en clair, noir en sombre. */
+  --hero-block-bg: var(--blue);
+  --hero-block-text: var(--beige);
+
+  /* Marge gauche/droite du PageContainer par défaut (max-w-5xl, centré),
+     dupliquée ici en CSS pur : sert de repère à tout élément hors du flux
+     du container (ex. le carrousel Projets, bord à bord) qui doit démarrer
+     à la même limite que le contenu, sans mesurer le DOM en JS. min()
+     reproduit le plafond max-w-5xl, comme le ferait mx-auto + max-w-5xl. */
+  --content-gutter: calc((100vw - min(100vw - 32px, 64rem)) / 2);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --content-gutter: calc((100vw - min(100vw - 128px, 64rem)) / 2);
+  }
 }
 
 .dark {
-  --background: rgb(15 23 42);
-  --foreground: rgb(241 245 249);
-  --footer-bg: rgb(255 255 255);
-  --footer-text: rgb(30 58 138);
+  /* Même noir que le header (--ink) : le fond principal du dark theme ne
+     doit plus être une couleur isolée (ex ancien slate-900), il doit
+     matcher exactement ce qui est déjà utilisé partout où le thème clair
+     est en bleu. */
+  --background: var(--ink);
+  --foreground: var(--beige);
+
+  /* --footer-bg / --footer-text et --invert-bg / --invert-text ne sont pas
+     redéfinies ici : footer et section Projets restent bleu/beige constant,
+     même en thème sombre. */
+
+  --hero-block-bg: var(--ink);
+  --hero-block-text: var(--beige);
 }
 
 body {
@@ -22,24 +66,74 @@ body {
   transition: background-color 300ms ease, color 300ms ease;
 }
 
-/* Styles Masonry optimisés pour 3 colonnes */
-.grid-item {
-  transition: transform 0.3s ease;
-  margin-bottom: 24px;
+/* Antonio pour tous les titres, Raleway pour le reste (voir tailwind.config.js
+   pour les éléments "titre" qui ne sont pas des balises h1-h6, ex. le grand
+   ARNAUD BAN du hero, la variante utilise directement .font-heading). */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-antonio), sans-serif;
 }
 
-.grid-item:hover {
-  transform: translateY(-4px);
+/* Animations d'entrée / transitions de page — en CSS pur, sans librairie JS. */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-page-in {
+  animation: page-in 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-/* Fallback CSS pour éviter le flash noir */
-.grid-item {
-  background: transparent;
+@keyframes fade-simple {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-simple {
+  animation: fade-simple 0.3s ease-out both;
 }
 
-/* S'assurer que Masonry respecte les 3 colonnes */
-.grid-item:nth-child(3n + 1) {
-  clear: left;
+@keyframes hero-title-in {
+  from { opacity: 0; transform: scale(0.75); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-hero-title-in {
+  animation: hero-title-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+@keyframes stagger-item-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-stagger-item {
+  animation: stagger-item-in 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* Apparition / disparition au scroll (voir components/ScrollReveal.tsx,
+   activé via IntersectionObserver) : entrée en fondu + légère montée,
+   sortie par le haut en zoomant tout en s'estompant. Transitions (pas des
+   keyframes) pour pouvoir rejouer l'effet dans les deux sens à chaque
+   passage, en douceur. */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px) scale(1);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+.scroll-reveal--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.scroll-reveal--exited {
+  opacity: 0;
+  transform: translateY(-22px) scale(1.06);
+}
+
+/* Petite flèche qui rebondit doucement (bandeau "scroll down" du hero). */
+@keyframes soft-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+.animate-soft-bounce {
+  animation: soft-bounce 1.6s ease-in-out infinite;
 }
 
 /* Améliorations d'accessibilité */
@@ -66,11 +160,12 @@ button:focus-visible,
   outline-offset: 2px;
 }
 
-/* Améliorer le contraste pour les éléments de navigation */
-nav a:focus,
-nav button:focus {
-  background-color: var(--foreground);
-  color: var(--background);
+/* Focus clavier dans la nav : un trait fin, pas un pavé plein qui jure avec
+   des liens texte sans fond. */
+nav a:focus-visible,
+nav button:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 4px;
 }
 
 /* Transition globale pour le changement de thème */
@@ -105,4 +200,32 @@ nav button:focus {
 .footer-hover:hover {
   color: var(--footer-text);
   opacity: 1;
+}
+
+.footer-divider {
+  border-top: 1px solid var(--footer-text);
+  opacity: 0.15;
+}
+
+.footer-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--footer-text);
+  color: var(--footer-text);
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+.footer-cta-btn:hover {
+  background-color: var(--footer-text);
+  color: var(--footer-bg);
+}
+
+/* Duotone bleu/beige de marque sur les miniatures de projets (voir le filtre
+   SVG dans components/DuotoneFilters.tsx, monté une fois dans le layout
+   racine) : identité constante, qui ne suit pas le thème clair/sombre, comme
+   --invert-bg pour la grille Projets. Léger boost de contraste avant le
+   remap pour que les tons intermédiaires ne s'écrasent pas à plat. */
+.duotone {
+  filter: contrast(1.05) url(#duotone);
 }

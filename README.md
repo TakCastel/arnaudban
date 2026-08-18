@@ -4,19 +4,25 @@ Portfolio de réalisateur indépendant spécialisé en montage et étalonnage vi
 
 ## 🚀 Déploiement
 
-Ce projet utilise Next.js avec export statique pour un déploiement optimal sur Netlify.
+Le site est **entièrement statique** (tout le contenu vient de `data/projects.ts`, codé en dur — aucune donnée dynamique) et déployé sur le **VPS privé d'Arnaud**, sans process Node applicatif en production.
 
 ### Build et déploiement
 
-1. **Build local** : `npm run build`
+1. **Build** : `npm run build`
+   - Next.js est configuré en export statique (`output: 'export'` dans `next.config.js`)
    - Génère le site statique dans le dossier `out/`
-   - Corrige automatiquement les chemins absolus en chemins relatifs
-   - Compatible avec Netlify
+2. **Déploiement** : synchroniser le contenu de `out/` sur le VPS (le dossier contient uniquement du HTML/CSS/JS/assets statiques, servis directement par nginx/Apache — pas de serveur Node à faire tourner).
 
-2. **Déploiement Netlify** :
-   - Le dossier `out/` est automatiquement déployé
-   - Configuration dans `netlify.toml`
-   - Pas de plugin Next.js requis (déploiement statique pur)
+### Headers de sécurité côté serveur
+
+L'export statique ne permet pas de définir des headers HTTP depuis Next.js (`headers()` nécessite un serveur Node). Ils doivent être configurés côté nginx/Apache du VPS :
+
+- `X-Frame-Options: DENY` (global), `SAMEORIGIN` sur `/projects/*`
+- `X-Content-Type-Options: nosniff`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+- Sur `/projects/*`, CSP pour autoriser l'iframe Vimeo :
+  `Content-Security-Policy: frame-src 'self' https://player.vimeo.com https://vimeo.com; frame-ancestors 'self'; object-src 'none';`
 
 ### Structure du projet
 
@@ -24,18 +30,15 @@ Ce projet utilise Next.js avec export statique pour un déploiement optimal sur 
 - `components/` - Composants réutilisables
 - `data/` - Données des projets
 - `public/` - Assets statiques et fichiers de configuration
-- `scripts/` - Scripts utilitaires (correction des chemins)
-- `out/` - Build de production (généré automatiquement)
+- `out/` - Build de production (généré automatiquement, non versionné)
 
 ### Technologies
 
-- **Framework** : Next.js 15 avec App Router
+- **Framework** : Next.js 14 avec App Router
 - **Styling** : Tailwind CSS
-- **Build** : Export statique pour performance maximale
-- **Déploiement** : Netlify avec configuration optimisée
+- **Build** : Export statique (`output: 'export'`) pour une fiabilité et des performances maximales — aucun backend applicatif à maintenir en prod
 
 ## 📝 Notes de développement
 
-- Le script `scripts/fix-paths.js` corrige automatiquement les chemins absolus après le build
-- Toutes les images utilisent des balises `<img>` standard pour compatibilité avec l'export statique
-- Le site est entièrement statique pour des performances optimales
+- Les images utilisent `next/image` avec `images.unoptimized: true` (requis en export statique) : pas d'optimisation à la volée côté serveur, mais lazy-loading et dimensions correctes conservés côté client.
+- Le site est entièrement statique pour des performances et une fiabilité optimales.

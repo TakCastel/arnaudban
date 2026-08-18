@@ -7,14 +7,15 @@ import ThemeToggle from "./ThemeToggle";
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  onGoToProjects: () => void;
 }
 
-export default function MobileMenu({
-  isOpen,
-  onClose,
-  onGoToProjects,
-}: MobileMenuProps) {
+const links = [
+  { n: "01", href: "/projets", label: "Projets", aria: "Voir les projets" },
+  { n: "02", href: "/services", label: "Services", aria: "Aller à la page Services" },
+  { n: "03", href: "/about", label: "À propos", aria: "Aller à la page À propos" },
+];
+
+export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   // Fermer avec la touche ESC
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -58,34 +59,30 @@ export default function MobileMenu({
           isOpen ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="px-4 pb-10 pt-[calc(env(safe-area-inset-top)_+_72px)] h-full flex flex-col items-center justify-start space-y-6">
-          <nav 
-            className="w-full space-y-3"
+        <div className="px-6 pb-10 pt-[calc(env(safe-area-inset-top)_+_88px)] h-full flex flex-col justify-between">
+          <nav
+            className="w-full border-t border-foreground/15"
             role="navigation"
             aria-label="Menu mobile"
           >
-            <button
-              onClick={() => {
-                onGoToProjects();
-                onClose();
-              }}
-              className="block w-full px-5 py-4 text-lg font-semibold text-center bg-background text-foreground border-2 border-foreground rounded-xl"
-              aria-label="Voir la section des projets"
-            >
-              Projets
-            </button>
-            <Link
-              href="/about"
-              onClick={onClose}
-              className="block w-full px-5 py-4 text-lg font-semibold text-center bg-background text-foreground border-2 border-foreground rounded-xl"
-              aria-label="Aller à la page À propos"
-            >
-              À propos
-            </Link>
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={onClose}
+                aria-label={link.aria}
+                className="group flex items-center gap-4 py-5 border-b border-foreground/15"
+              >
+                <span className="font-mono text-xs text-foreground/40">{link.n}</span>
+                <span className="font-heading text-5xl text-foreground transition-transform duration-300 group-hover:translate-x-2">
+                  {link.label}
+                </span>
+              </Link>
+            ))}
           </nav>
 
-          <div className="w-full pt-2">
-            <p className="mb-2 text-sm text-foreground/70">Thème</p>
+          <div className="flex items-center justify-between pt-8">
+            <p className="text-base text-foreground/60">Thème</p>
             <ThemeToggle />
           </div>
         </div>

@@ -56,12 +56,12 @@ export default function VimeoWithFallback({
   }
 
   return (
-    <section className="w-[calc(100vw-32px)] md:w-[70vw] max-w-4xl mx-auto rounded-2xl overflow-hidden mb-8">
+    <section className="w-full overflow-hidden mb-8">
       <div className="relative pt-[56.25%]">
         {isLoading && (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-2xl flex items-center justify-center">
-            <div className="text-gray-500">
-              <p className="text-lg">Chargement de la vidéo...</p>
+          <div className="absolute inset-0 bg-foreground/10 animate-pulse flex items-center justify-center">
+            <div className="text-foreground/60">
+              <p className="text-xl">Chargement de la vidéo...</p>
             </div>
           </div>
         )}
@@ -70,7 +70,7 @@ export default function VimeoWithFallback({
           src={`${videoUrl}?title=0&byline=0&portrait=0`}
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
           title={`${title} - vidéo`}
-          className={`absolute inset-0 w-full h-full rounded-2xl transition-opacity duration-300 ${
+          className={`absolute inset-0 w-full h-full transition-opacity duration-300 ${
             isLoading ? 'opacity-0' : 'opacity-100'
           }`}
           onLoad={handleIframeLoad}

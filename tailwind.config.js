@@ -10,9 +10,12 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "hero-block-bg": "var(--hero-block-bg)",
+        "hero-block-text": "var(--hero-block-text)",
       },
       fontFamily: {
-        sans: ["var(--font-moderat)", "sans-serif"],
+        sans: ["var(--font-raleway)", "sans-serif"],
+        heading: ["var(--font-antonio)", "sans-serif"],
       },
       spacing: {
         18: "4.5rem",

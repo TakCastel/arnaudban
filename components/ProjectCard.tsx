@@ -3,111 +3,61 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Project } from "@/data/projects";
-import { useState, useEffect, useRef } from "react";
 
 interface ProjectCardProps {
   project: Project;
-  imageHeight: string;
 }
 
-export default function ProjectCard({
-  project,
-  imageHeight,
-}: ProjectCardProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        } else {
-          setIsVisible(false);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
+export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <article
-      ref={cardRef}
-      className={`transition-all duration-300 ease-out ${
-        isVisible ? "scale-100 opacity-100" : "scale-90 opacity-0"
-      }`}
-      role="article"
-      aria-labelledby={`project-title-${project.slug}`}
-    >
-      <div className="bg-background">
-        {/* Lien sur l'image avec effet de zoom et arrondi */}
-        <Link
-          href={`/projects/${project.slug}`}
-          className="block rounded-2xl group transition-all duration-300"
-          style={{
-            outline: '4px solid transparent',
-            outlineOffset: '4px',
-            transition: 'outline-color 300ms ease'
-          }}
-          onMouseEnter={(e) => {
-            const isDark = document.documentElement.classList.contains('dark');
-            e.currentTarget.style.outlineColor = isDark ? 'rgb(241 245 249)' : 'rgb(30 58 138)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.outlineColor = 'transparent';
-          }}
-          onFocus={(e) => {
-            const isDark = document.documentElement.classList.contains('dark');
-            e.currentTarget.style.outlineColor = isDark ? 'rgb(241 245 249)' : 'rgb(30 58 138)';
-          }}
-          onBlur={(e) => {
-            e.currentTarget.style.outlineColor = 'transparent';
-          }}
-          aria-label={`Voir le projet ${project.title} - ${project.subtitle}`}
-        >
-          {/* Container avec dimensions fixes et stables - IMPORTANT: position relative pour fill */}
-          <div
-            className={`w-full ${imageHeight} bg-gray-300 relative rounded-2xl`}
-          >
-            <div className="h-full w-full overflow-hidden rounded-2xl">
-              {/* Image optimisée avec Next.js Image */}
-              <Image
-                src={project.cover}
-                alt={`${project.title} - ${project.subtitle} - Projet réalisé par Arnaud Ban`}
-                width={600}
-                height={450}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                quality={85}
-                loading="lazy"
-              />
+    <article role="article" aria-labelledby={`project-title-${project.slug}`}>
+      <Link
+        href={`/projects/${project.slug}`}
+        className="group block"
+        aria-label={`Voir le projet ${project.title} - ${project.subtitle}`}
+      >
+        {/* Image */}
+        <div className="relative w-full aspect-[4/3] overflow-hidden bg-foreground/10">
+          <Image
+            src={project.cover}
+            alt={`${project.title} - ${project.subtitle} - Projet réalisé par Arnaud Ban`}
+            fill
+            className="object-cover duotone transition-transform duration-300 group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            quality={85}
+            loading="lazy"
+          />
+          {project.videoUrl && (
+            <span
+              className="absolute top-3 right-3 flex items-center gap-1.5 bg-background text-foreground text-[10px] font-mono font-semibold uppercase tracking-wide px-2.5 py-1"
+              aria-hidden="true"
+            >
+              ▶ Vidéo
+            </span>
+          )}
+          <span
+            className="absolute inset-0 border border-transparent group-hover:border-foreground group-focus-visible:border-foreground transition-colors duration-200"
+            aria-hidden="true"
+          />
+        </div>
 
-              {/* Overlay avec texte qui apparaît au hover */}
-              <div className="absolute inset-0 rounded-2xl bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out flex flex-col justify-center items-center p-4 text-center">
-                {/* Titre qui apparaît en premier */}
-                <h3
-                  id={`project-title-${project.slug}`}
-                  className="text-white text-xl md:text-3xl font-bold opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-300 ease-out delay-100"
-                >
-                  {project.title}
-                </h3>
-                {/* Sous-titre qui commence juste après */}
-                {project.subtitle && (
-                  <p className="text-white/90 text-sm md:text-xl mt-2 md:mt-4 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-300 ease-out delay-150">
-                    {project.subtitle}
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        </Link>
-      </div>
+        {/* Texte toujours visible (pas seulement au survol) */}
+        <div className="pt-4 pb-6 px-4">
+          <h3
+            id={`project-title-${project.slug}`}
+            className="text-xl md:text-2xl font-bold text-foreground leading-snug"
+          >
+            {project.title}
+          </h3>
+          <p className="text-base text-foreground/60 mt-1 mb-3">
+            {project.subtitle} · {project.date}
+          </p>
+          <span className="inline-flex items-center gap-1.5 text-base font-semibold text-foreground group-hover:gap-2.5 transition-all duration-200">
+            Voir le projet
+            <span aria-hidden="true">→</span>
+          </span>
+        </div>
+      </Link>
     </article>
   );
 }

@@ -54,24 +54,24 @@ export default function ProjectImageWithSkeleton({ src, alt, title }: ProjectIma
   }, [src]);
 
   return (
-    <section className="w-[calc(100vw-32px)] md:w-[70vw] max-w-4xl mx-auto rounded-2xl overflow-hidden mb-8">
+    <section className="w-full overflow-hidden mb-8">
       <div className="relative">
         {/* Skeleton intégré avec les mêmes dimensions que l'image */}
         {!isLoaded && !hasError && (
-          <div className="w-full aspect-[3/2] bg-gray-200 animate-pulse rounded-2xl">
-            <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse rounded-2xl">
+          <div className="w-full aspect-[3/2] bg-foreground/10 animate-pulse">
+            <div className="w-full h-full bg-gradient-to-r from-foreground/10 via-foreground/15 to-foreground/10 animate-pulse">
               {/* Effet de shimmer */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse rounded-2xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/40 to-transparent animate-pulse"></div>
             </div>
           </div>
         )}
-        
+
         {/* Message d'erreur si l'image ne peut pas être chargée */}
         {hasError && (
-          <div className="w-full aspect-[3/2] bg-gray-200 rounded-2xl flex items-center justify-center">
-            <div className="text-center text-gray-500">
-              <p className="text-lg font-medium">Impossible de charger l'image</p>
-              <p className="text-sm mt-2">{alt}</p>
+          <div className="w-full aspect-[3/2] bg-foreground/10 flex items-center justify-center">
+            <div className="text-center text-foreground/60">
+              <p className="text-xl font-medium">Impossible de charger l'image</p>
+              <p className="text-base mt-2">{alt}</p>
             </div>
           </div>
         )}
@@ -82,7 +82,7 @@ export default function ProjectImageWithSkeleton({ src, alt, title }: ProjectIma
           alt={alt}
           width={1200}
           height={800}
-          className={`w-full aspect-[3/2] object-cover rounded-2xl transition-opacity duration-300 ${
+          className={`w-full aspect-[3/2] object-cover duotone transition-opacity duration-300 ${
             isLoaded && !hasError ? 'opacity-100' : 'opacity-0 absolute inset-0'
           }`}
           sizes="(max-width: 768px) 100vw, 70vw"

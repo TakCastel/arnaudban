@@ -14,15 +14,12 @@
     "seo-check": "npm run build && npm run start & sleep 5 && curl -s http://localhost:3000/sitemap.xml && curl -s http://localhost:3000/robots.txt && pkill -f 'next start'"
   },
   "dependencies": {
-    "framer-motion": "^12.23.12",
-    "masonry-layout": "^4.2.2",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.5.0"
   },
   "devDependencies": {
-    "@types/masonry-layout": "^4.2.8",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

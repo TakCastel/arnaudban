@@ -6,66 +6,94 @@ import { usePathname } from "next/navigation";
 import MobileMenu from "./MobileMenu";
 import HamburgerButton from "./HamburgerButton";
 import DesktopNav from "./DesktopNav";
+import PageContainer from "./PageContainer";
 
 export default function Header() {
   const [isVisible, setIsVisible] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const isHome = pathname === "/";
+  // Initialisé directement à partir du pathname (pas juste `false`) : sinon,
+  // le premier rendu affiche le header un instant sur la home, avant que
+  // l'effet ne le masque — un flash visible à l'ouverture.
+  const [overHero, setOverHero] = useState(isHome);
+  // Une fois que le header est apparu la première fois, il reste "construit" :
+  // pas besoin de rejouer l'animation à chaque va-et-vient de scroll.
+  const [hasBuilt, setHasBuilt] = useState(!isHome);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
     return () => clearTimeout(timer);
   }, []);
 
-  const scrollToProjects = () => {
-    if (pathname === "/") {
-      const projectsSection = document.getElementById("work");
-      if (projectsSection) {
-        projectsSection.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      window.location.href = "/#work";
+  useEffect(() => {
+    if (!overHero) setHasBuilt(true);
+  }, [overHero]);
+
+  useEffect(() => {
+    if (!isHome) {
+      setOverHero(false);
+      return;
     }
-  };
+    const handleScroll = () => {
+      // Le hero reste collé (sticky) pendant ~90vh de scroll (voir
+      // HeroSection.tsx) : le header reste invisible jusqu'à ce que le
+      // titre ait presque fini de s'estomper, il apparaît juste après.
+      setOverHero(window.scrollY < window.innerHeight * 0.85);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isHome]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-background z-[70] transition-all duration-300">
-      <div className="w-[calc(100vw-32px)] md:w-[calc(100vw-128px)] mx-auto py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo avec effet de hover */}
-          <Link
-            href="/"
-            className={`text-2xl font-bold text-foreground transition-all duration-300 relative group overflow-hidden ${isVisible
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 -translate-x-4"
+    <header
+      // Sur le hero : pas de header du tout, juste la vidéo et "ARNAUD BAN".
+      // Il réapparaît (fondu) une fois qu'on a quitté le hero.
+      className={`fixed top-0 left-0 right-0 z-[70] h-20 bg-hero-block-bg border-b border-hero-block-text transition-opacity duration-300 ${
+        overHero ? "opacity-0 pointer-events-none" : "opacity-100"
+      }`}
+    >
+      <PageContainer width="full" className="h-full">
+        <div className="h-full flex items-stretch justify-between">
+          {/* Logo dans sa propre cellule (trait des deux côtés), les boutons
+              de nav restent à droite, séparés par le vide comme avant. */}
+          <div className="flex items-stretch">
+            <span className="w-px h-full bg-hero-block-text shrink-0" aria-hidden="true" />
+            {/* "Arnaud Ban" n'apparaît dans le header qu'une fois qu'on a quitté
+                le hero : le grand titre y est déjà, pas besoin de le dupliquer.
+                Il vient prendre sa place au scroll plutôt que d'être là dès le
+                départ. */}
+            <Link
+              href="/"
+              className={`flex items-center px-10 font-heading font-bold uppercase text-3xl text-hero-block-text transition-all duration-500 ease-out ${
+                isVisible && !overHero
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 -translate-y-3 pointer-events-none"
               }`}
-            aria-label="Retour à l'accueil"
-          >
-            <span className="relative z-10">Arnaud Ban</span>
-            {/* Effet de surbrillance qui passe sur le texte */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-300 ease-out"></div>
-            {/* Effet de brillance subtile */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-300 ease-out delay-50"></div>
-          </Link>
+              aria-label="Retour à l'accueil"
+            >
+              Arnaud Ban
+            </Link>
+            <span className="w-px h-full bg-hero-block-text shrink-0" aria-hidden="true" />
+          </div>
 
-          {/* Navigation */}
-          <DesktopNav
-            isVisible={isVisible}
-            onScrollToProjects={scrollToProjects}
-          />
+          {/* Navigation : à droite, comme à l'origine */}
+          <DesktopNav play={hasBuilt} />
 
           {/* Burger mobile */}
-          <HamburgerButton
-            open={isMenuOpen}
-            onToggle={() => setIsMenuOpen((v) => !v)}
-          />
+          <div className="md:hidden flex items-center">
+            <HamburgerButton
+              open={isMenuOpen}
+              onToggle={() => setIsMenuOpen((v) => !v)}
+            />
+          </div>
         </div>
-      </div>
+      </PageContainer>
 
       <MobileMenu
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
-        onGoToProjects={scrollToProjects}
       />
     </header>
   );

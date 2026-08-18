@@ -17,9 +17,9 @@ export default function HomeButton({
   const router = useRouter();
   
   const sizeClasses = {
-    sm: "px-4 py-2 text-sm",
-    md: "px-6 py-3 text-base", 
-    lg: "px-8 py-4 text-lg"
+    sm: "px-4 py-2 text-base",
+    md: "px-6 py-3 text-lg", 
+    lg: "px-8 py-4 text-xl"
   };
 
   const containerClasses = centered ? "text-center" : "";
@@ -46,7 +46,7 @@ export default function HomeButton({
     <div className={`${containerClasses} ${className}`}>
       <button
         onClick={handleClick}
-        className={`inline-block ${sizeClasses[size]} font-semibold text-foreground bg-background border-2 border-foreground rounded-full hover:bg-foreground hover:text-background hover:scale-105 hover:shadow-lg transition-all duration-300`}
+        className={`inline-block ${sizeClasses[size]} font-semibold text-foreground bg-background border border-foreground hover:bg-foreground hover:text-background hover:scale-105 hover:shadow-lg transition-all duration-300`}
         aria-label="Retour à l'accueil"
       >
         Retour à l&apos;accueil
