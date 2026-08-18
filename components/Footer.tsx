@@ -104,7 +104,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="footer-hover transition-colors duration-300"
           >
-            Site conçu par Tarik Talhaoui
+            Site conçu par @tkcstl
           </a>
         </div>
       </PageContainer>
