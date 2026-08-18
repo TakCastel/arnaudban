@@ -108,6 +108,21 @@ export default function Footer() {
           </a>
         </div>
       </PageContainer>
+
+      {/* Signature géante en clôture : ARNAUD à plat, BAN en vertical sur le
+          côté (à peu près à la hauteur d'une lettre d'ARNAUD) — même esprit
+          que les gros wordmarks de footer type "Diana's Seafood". */}
+      <div className="footer-divider" />
+      <PageContainer width="full">
+        <div className="flex items-center justify-between overflow-hidden py-2">
+          <span className="font-heading uppercase footer-text leading-none tracking-tight text-[26vw] whitespace-nowrap -ml-1 md:-ml-2">
+            Arnaud
+          </span>
+          <span className="shrink-0 font-heading uppercase footer-text leading-none tracking-tight [writing-mode:vertical-rl] rotate-180 text-[10.5vw] whitespace-nowrap">
+            Ban
+          </span>
+        </div>
+      </PageContainer>
     </footer>
   );
 }
