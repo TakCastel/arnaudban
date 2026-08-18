@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Project } from "@/data/projects";
+import { withBasePath } from "@/lib/basePath";
 
 /**
  * Carrousel en accordéon : chaque projet est replié (titre en vertical sur
@@ -49,7 +50,7 @@ export default function ProjectAccordion({ projects }: { projects: Project[] }) 
           aria-label={`Voir le projet ${project.title} — ${project.subtitle}`}
         >
           <Image
-            src={project.cover}
+            src={withBasePath(project.cover)}
             alt=""
             fill
             className="object-cover duotone"

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { withBasePath } from "@/lib/basePath";
 
 interface ProjectImageWithSkeletonProps {
   src: string;
@@ -9,7 +10,8 @@ interface ProjectImageWithSkeletonProps {
   title: string;
 }
 
-export default function ProjectImageWithSkeleton({ src, alt, title }: ProjectImageWithSkeletonProps) {
+export default function ProjectImageWithSkeleton({ src: rawSrc, alt, title }: ProjectImageWithSkeletonProps) {
+  const src = withBasePath(rawSrc);
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Project } from "@/data/projects";
+import { withBasePath } from "@/lib/basePath";
 
 interface ProjectCardProps {
   project: Project;
@@ -19,7 +20,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         {/* Image */}
         <div className="relative w-full aspect-[4/3] overflow-hidden bg-foreground/10">
           <Image
-            src={project.cover}
+            src={withBasePath(project.cover)}
             alt={`${project.title} - ${project.subtitle} - Projet réalisé par Arnaud Ban`}
             fill
             className="object-cover duotone transition-transform duration-300 group-hover:scale-105"
