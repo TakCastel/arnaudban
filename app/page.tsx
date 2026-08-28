@@ -3,7 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import ProjectAccordion from "@/components/ProjectAccordion";
 import StackedSections from "@/components/StackedSections";
 import PageContainer from "@/components/PageContainer";
-import FilmCard from "@/components/FilmCard";
+import EdgeToEdgeSection from "@/components/EdgeToEdgeSection";
 import { getProjects } from "@/lib/getProjects";
 import { Metadata } from "next";
 
@@ -48,23 +48,21 @@ export const metadata: Metadata = {
   },
 };
 
-// TODO(placeholder) : lorem ipsum le temps de valider l'effet d'empilement,
-// à remplacer par le vrai copywriting avant mise en ligne.
+// Reprend les 3 mêmes compétences que /services (cohérence avec la
+// signature du hero "Réalisation / Montage"), mais en version courte : le
+// détail complet vit sur /services pour éviter le contenu dupliqué.
 const skills = [
   {
-    n: "01",
-    title: "Lorem Ipsum",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+    title: "Réalisation",
+    text: "De l'écriture à la mise en scène, je conçois et tourne courts métrages, documentaires et vidéos de commande, du repérage jusqu'au dernier plan.",
   },
   {
-    n: "02",
-    title: "Dolor Sit Amet",
-    text: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.",
+    title: "Montage",
+    text: "Sur Premiere Pro, je construis le rythme et la narration de chaque film : clips musicaux, courts métrages, captations d'événements ou vidéos d'entreprise.",
   },
   {
-    n: "03",
-    title: "Consectetur",
-    text: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.",
+    title: "Étalonnage",
+    text: "Sur DaVinci Resolve, je donne à l'image sa tonalité finale : cohérence colorimétrique et identité visuelle propre à chaque projet.",
   },
 ];
 
@@ -78,7 +76,7 @@ export default function HomePage() {
       {/* H1 accessible (sr-only) : le hero reste un pur visuel, sans texte
           superposé — l'intro éditoriale, juste en dessous, porte le message. */}
       <h1 className="sr-only">
-        Arnaud Ban — Réalisateur et monteur vidéo à Avignon
+        Arnaud Ban, réalisateur et monteur vidéo à Avignon
       </h1>
 
       <HeroSection id="top" />
@@ -91,20 +89,29 @@ export default function HomePage() {
               scroll plutôt que de s'enchaîner l'un sous l'autre. */}
           <div className="mb-16 md:mb-24">
             <StackedSections>
-              <p className="font-heading text-3xl md:text-5xl leading-snug max-w-3xl">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              {/* id ciblé par la flèche "scroller en bas" du hero (voir
+                  components/HeroSection.tsx). */}
+              <p
+                id="intro-title"
+                className="font-heading text-3xl md:text-5xl leading-snug max-w-3xl"
+              >
+                Réalisateur et monteur vidéo indépendant à Avignon, je
+                raconte des histoires en images, du court métrage à la
+                vidéo d&apos;entreprise.
               </p>
-              {skills.map((skill) => (
-                <FilmCard key={skill.n} className="max-w-2xl">
-                  <span className="font-mono text-xs text-foreground/40">
-                    {skill.n}
-                  </span>
-                  <h2 className="text-2xl mt-2 mb-3">{skill.title}</h2>
+              {skills.map((skill, i) => (
+                <EdgeToEdgeSection
+                  key={skill.title}
+                  // Alternance gauche/droite : 1er à gauche (par défaut),
+                  // 2e à droite (ml-auto la colle au trait de droite), 3e
+                  // repasse à gauche.
+                  className={`max-w-2xl ${i % 2 === 1 ? "ml-auto" : ""}`}
+                >
+                  <h2 className="text-2xl mb-3">{skill.title}</h2>
                   <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
                     {skill.text}
                   </p>
-                </FilmCard>
+                </EdgeToEdgeSection>
               ))}
             </StackedSections>
           </div>
@@ -124,7 +131,7 @@ export default function HomePage() {
                 Un projet vidéo en tête ?
               </p>
               <p className="text-foreground/70">
-                Montage, étalonnage, réalisation — découvrez mes services ou
+                Montage, étalonnage, réalisation : découvrez mes services ou
                 écrivez-moi directement.
               </p>
             </div>
@@ -135,12 +142,12 @@ export default function HomePage() {
               >
                 Voir mes services
               </Link>
-              <a
-                href="mailto:ban.arnaud@outlook.fr"
+              <Link
+                href="/contact"
                 className="inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-background bg-foreground border border-foreground hover:opacity-90 transition-all duration-300"
               >
                 Écrire un mail
-              </a>
+              </Link>
             </div>
           </div>
         </PageContainer>

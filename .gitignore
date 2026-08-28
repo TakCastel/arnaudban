@@ -25,6 +25,9 @@ yarn-error.log*
 # Local env files
 .env*.local
 
+# Secrets du serveur de contact (voir server/.env.example)
+server/.env
+
 # Vercel
 .vercel
 

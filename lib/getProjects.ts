@@ -1,5 +1,10 @@
 import { projects } from "@/data/projects";
-export const getProjects = () => projects;
+
+// Du plus récent au plus ancien (date = année seule, ex. "2024") — copie
+// triée, pas de mutation du tableau source. Centralisé ici : toute page qui
+// passe par getProjects() (accueil, /projets, ...) hérite du même ordre.
+export const getProjects = () =>
+  [...projects].sort((a, b) => Number(b.date) - Number(a.date));
 export const getProjectBySlug = (slug: string) =>
   projects.find((p) => p.slug === slug);
 

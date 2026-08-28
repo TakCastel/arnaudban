@@ -135,7 +135,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-background text-foreground font-sans">
+      {/* overflow-x-hidden : garde-fou pour le trait bord-à-bord en
+          w-screen de EdgeToEdgeSection — sur certains navigateurs, 100vw
+          déborde de la largeur de scrollbar et ferait apparaître un
+          scroll horizontal parasite sans ça. */}
+      <body className="min-h-screen flex flex-col bg-background text-foreground font-sans overflow-x-hidden">
         <DuotoneFilters />
         <ThemeProvider>
           <SkipToMain />

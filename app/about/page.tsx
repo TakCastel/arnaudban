@@ -49,20 +49,24 @@ export const metadata: Metadata = {
 const linkClass =
   "font-mono font-bold hover:text-foreground/80 transition-colors duration-300 text-foreground underline decoration-2 underline-offset-4 hover:decoration-4";
 
-// TODO(placeholder) : lorem ipsum le temps de valider la mise en page,
-// à remplacer par le vrai copywriting avant mise en ligne.
+// Volontairement différent des 3 cards "compétences" de /services (éviter
+// le contenu dupliqué) : ici on raconte le parcours plutôt que les
+// techniques, avec des faits réels déjà présents sur le site (voir les
+// descriptions de projets dans data/projects.ts : école de cinéma pour
+// Doug/Invisible, Insercall pour les commandes institutionnelles, festival
+// KINO-A et sélection au festival 1ère Marche pour les fictions).
 const skills = [
   {
-    title: "Lorem Ipsum",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+    title: "Formation",
+    text: "Formé au montage et à la réalisation en école de cinéma, où j'ai écrit et réalisé mes premiers films (Doug, Invisible) avant de me spécialiser en montage et étalonnage.",
   },
   {
-    title: "Dolor Sit Amet",
-    text: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.",
+    title: "Expérience terrain",
+    text: "Vidéaste pour des structures comme Insercall à Avignon, j'ai capté et monté des reportages institutionnels et associatifs pour des entreprises et des missions locales du Vaucluse.",
   },
   {
-    title: "Consectetur",
-    text: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.",
+    title: "Fictions & festivals",
+    text: "Mes courts métrages personnels ont été présentés au festival KINO-A, et le clip musical On dit d'elle a fait partie de la sélection du festival 1ère Marche en 2023.",
   },
 ];
 
@@ -74,7 +78,7 @@ export default function AboutPage() {
           Arnaud Ban
         </h1>
         <p className="text-2xl md:text-3xl font-serif italic text-foreground/70 mb-10 md:mb-14">
-          Réalisateur &amp; monteur vidéo — Avignon, Vaucluse
+          Réalisateur &amp; monteur vidéo à Avignon, Vaucluse
         </p>
 
         <div className="space-y-6 md:space-y-8 text-xl md:text-2xl leading-relaxed">
@@ -86,15 +90,11 @@ export default function AboutPage() {
           <p>Mes spécialités sont le montage et l&apos;étalonnage.</p>
 
           <p>
-            Pour toute demande professionnelle, merci de me contacter par
-            mail :{" "}
-            <a
-              href="mailto:ban.arnaud@outlook.fr"
-              className={linkClass}
-              aria-label="Envoyer un email à ban.arnaud@outlook.fr"
-            >
-              ban.arnaud@outlook.fr
-            </a>
+            Pour toute demande professionnelle, contactez-moi via{" "}
+            <Link href="/contact" className={linkClass} aria-label="Aller à la page contact">
+              ma page contact
+            </Link>
+            .
           </p>
         </div>
 
@@ -119,14 +119,9 @@ export default function AboutPage() {
               Un projet vidéo en tête ?
             </p>
             <p className="text-foreground/70">
-              Parlons-en :{" "}
-              <a
-                href="mailto:ban.arnaud@outlook.fr"
-                className={linkClass}
-                aria-label="Envoyer un email à ban.arnaud@outlook.fr"
-              >
-                ban.arnaud@outlook.fr
-              </a>
+              <Link href="/contact" className={linkClass} aria-label="Aller à la page contact">
+                Parlons-en
+              </Link>
             </p>
           </div>
           <Link

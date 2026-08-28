@@ -26,23 +26,29 @@ function NavLink({
   ariaLabel: string;
 }) {
   return (
-    <Link
-      href={href}
-      aria-label={ariaLabel}
-      className={`${cellClass} overflow-hidden transition-[opacity,transform] duration-400 ease-out ${
+    // L'entrée (opacité/montée + délai en cascade) est portée par ce wrapper,
+    // séparé du Link : le `transition-delay` posé en style inline reste dans
+    // le DOM après coup (React ne le retire jamais). S'il était sur le Link
+    // lui-même, il retardait aussi le hover (transition-colors) de ce même
+    // délai à chaque survol suivant — d'où le petit flottement/décalage au
+    // survol. Sur un élément séparé, le hover du Link n'hérite d'aucun délai.
+    <span
+      className={`h-full transition-[opacity,transform] duration-400 ease-out ${
         play ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
       }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      {/* Effet "roulette" au survol : le texte visible part vers le bas
-          pendant qu'une copie identique arrive par le haut. */}
-      <span className="relative h-5 overflow-hidden inline-block">
-        <span className="flex flex-col -translate-y-1/2 transition-transform duration-300 ease-out group-hover:translate-y-0">
-          <span className="h-5 flex items-center">{children}</span>
-          <span className="h-5 flex items-center">{children}</span>
+      <Link href={href} aria-label={ariaLabel} className={`${cellClass} overflow-hidden`}>
+        {/* Effet "roulette" au survol : le texte visible part vers le bas
+            pendant qu'une copie identique arrive par le haut. */}
+        <span className="relative h-5 overflow-hidden inline-block">
+          <span className="flex flex-col -translate-y-1/2 transition-transform duration-300 ease-out group-hover:translate-y-0">
+            <span className="h-5 flex items-center">{children}</span>
+            <span className="h-5 flex items-center">{children}</span>
+          </span>
         </span>
-      </span>
-    </Link>
+      </Link>
+    </span>
   );
 }
 
@@ -66,11 +72,15 @@ export default function DesktopNav({ play }: { play: boolean }) {
         À propos
       </NavLink>
       <Divider />
+      <NavLink href="/contact" play={play} delay={440} ariaLabel="Contact">
+        Contact
+      </NavLink>
+      <Divider />
       <div
         className={`flex items-center transition-[opacity,transform] duration-400 ease-out ${
           play ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
         }`}
-        style={{ transitionDelay: "440ms" }}
+        style={{ transitionDelay: "560ms" }}
       >
         <ThemeToggle className={cellClass} />
       </div>

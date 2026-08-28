@@ -64,11 +64,11 @@ export default function ProjetsPage() {
         </header>
       </PageContainer>
 
-      {/* Grille bord à bord : les lignes qui la composent vont jusqu'aux
-          bords du site, pas seulement de la colonne de contenu. */}
-      <ProjectGrid projects={items} />
-
+      {/* Grille dans le container (comme le reste du contenu), tailles de
+          cases variées — voir ProjectGrid. */}
       <PageContainer className="pb-8 md:pb-16">
+        <ProjectGrid projects={items} />
+
         <div className="pt-10">
           <HomeButton centered={false} />
         </div>

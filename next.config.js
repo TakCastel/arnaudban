@@ -25,6 +25,11 @@ const nextConfig = {
   // ces deux-là ne bénéficient pas du basePath automatique de Next.js.
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
+    // Chemin relatif de l'API de contact (voir server/), reverse-proxifiée
+    // par nginx sous le même domaine que le site (voir server/README.md) —
+    // aucune valeur en preview GitHub Pages, qui n'a pas ce backend : la
+    // page /contact y bascule alors sur un simple lien mailto de secours.
+    NEXT_PUBLIC_CONTACT_API_URL: isGithubPagesPreview ? "" : "/api/contact",
   },
 
   // L'optimisation d'images à la volée nécessite un serveur Node (route

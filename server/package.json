@@ -1,0 +1,17 @@
+{
+  "name": "arnaudban-contact-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Petit serveur Node autonome pour le formulaire de contact d'arnaudban.fr. Le site principal reste 100% statique (voir next.config.js) ; ce serveur ne fait tourner qu'une seule route API et vit dans son propre process, séparé du reste.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "nodemailer": "^9.0.6"
+  }
+}

@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Project } from "@/data/projects";
@@ -10,15 +13,48 @@ import { withBasePath } from "@/lib/basePath";
  * page Projets.
  */
 export default function ProjectAccordion({ projects }: { projects: Project[] }) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setRevealed(entry.isIntersecting),
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const panelClass =
     "group relative flex-1 hover:flex-[3] focus-visible:flex-[3] transition-[flex] duration-500 ease-out overflow-hidden border-r border-foreground/15 last:border-r-0";
 
   return (
     <div
-      className="relative flex h-[70vh] md:h-[560px] w-full border-t border-b border-foreground/15"
+      ref={rootRef}
+      className="relative flex h-[70vh] md:h-[560px] w-full"
       role="list"
       aria-label="Projets récents"
     >
+      {/* Traits haut/bas : bleu de marque constant (--blue), pas
+          `border-foreground` — sinon ils passeraient en beige en thème
+          sombre (voir --foreground dans globals.css) au lieu de rester
+          bleus comme le reste de cette section (même logique que
+          --invert-bg / .duotone). Se révèlent (scaleX 0 → 1) à l'entrée
+          dans le viewport, comme les sections de compétences de l'accueil
+          (voir EdgeToEdgeSection). */}
+      <span
+        aria-hidden="true"
+        className={`absolute top-0 left-0 right-0 h-px origin-center transition-transform duration-700 ease-out ${revealed ? "scale-x-100" : "scale-x-0"}`}
+        style={{ backgroundColor: "var(--blue)" }}
+      />
+      <span
+        aria-hidden="true"
+        className={`absolute bottom-0 left-0 right-0 h-px origin-center transition-transform duration-700 ease-out delay-150 ${revealed ? "scale-x-100" : "scale-x-0"}`}
+        style={{ backgroundColor: "var(--blue)" }}
+      />
+
       {/* Étiquette de section : un vrai titre, pas juste un onglet — grosse
           typo, calée en bas à gauche comme les panneaux repliés, pour un
           rendu plus arty que centré. Le padding-gauche = --content-gutter,
@@ -47,13 +83,13 @@ export default function ProjectAccordion({ projects }: { projects: Project[] }) 
           href={`/projects/${project.slug}`}
           className={panelClass}
           role="listitem"
-          aria-label={`Voir le projet ${project.title} — ${project.subtitle}`}
+          aria-label={`Voir le projet ${project.title}, ${project.subtitle}`}
         >
           <Image
             src={withBasePath(project.cover)}
             alt=""
             fill
-            className="object-cover duotone"
+            className="object-cover"
             sizes="(max-width: 768px) 100vw, 40vw"
             quality={85}
             loading="lazy"

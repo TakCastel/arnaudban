@@ -4,6 +4,8 @@ import PageTransition from "@/components/PageTransition";
 import HomeButton from "@/components/HomeButton";
 import FilmCard from "@/components/FilmCard";
 import PageContainer from "@/components/PageContainer";
+import StackedSections from "@/components/StackedSections";
+import EdgeToEdgeSection from "@/components/EdgeToEdgeSection";
 
 export const metadata: Metadata = {
   title: "Services - Monteur vidéo & réalisateur à Avignon | Arnaud Ban",
@@ -49,31 +51,25 @@ export const metadata: Metadata = {
 const linkClass =
   "font-mono font-bold hover:text-foreground/80 transition-colors duration-300 text-foreground underline decoration-2 underline-offset-4 hover:decoration-4";
 
-// TODO(placeholder) : lorem ipsum le temps de valider la mise en page,
-// à remplacer par le vrai copywriting avant mise en ligne (titres, liens de
-// projets et questions FAQ restent réels).
 const skills = [
   {
-    n: "01",
     title: "Réalisation",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+    text: "Écriture, repérages, direction d'acteurs et de tournage : je conçois des films de A à Z, du court métrage de fiction à la vidéo de commande, pour donner une vraie mise en scène à chaque projet.",
   },
   {
-    n: "02",
     title: "Montage",
-    text: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi.",
+    text: "Sur Premiere Pro, je construis le rythme et la structure narrative du film : courts métrages, clips musicaux, captations d'événements ou reportages institutionnels.",
   },
   {
-    n: "03",
     title: "Étalonnage",
-    text: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.",
+    text: "Sur DaVinci Resolve, je travaille la colorimétrie et l'ambiance de l'image pour donner à chaque vidéo une identité visuelle cohérente, du plan au film entier.",
   },
 ];
 
 const projectTypes = [
   {
     title: "Courts métrages",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    text: "Fictions et documentaires écrits, tournés et montés pour des festivals comme KINO-A, avec un vrai travail de réalisation et d'étalonnage.",
     links: [
       { slug: "doug-2020", label: "Doug" },
       { slug: "goutte-de-trop-2023", label: "Goutte de trop" },
@@ -81,22 +77,22 @@ const projectTypes = [
   },
   {
     title: "Clips musicaux",
-    text: "Sed do eiusmod tempor incididunt ut labore et dolore magna.",
+    text: "Réalisation et montage de clips pour des artistes, avec une esthétique construite en amont avec chaque musicien.",
     links: [{ slug: "on-dit-delle-2021", label: "On dit d'elle" }],
   },
   {
     title: "Vidéos d'entreprise",
-    text: "Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+    text: "Reportages corporate et vidéos institutionnelles : mise en valeur d'un métier, d'une équipe ou d'un événement d'entreprise.",
     links: [{ slug: "id-logistics", label: "ID Logistics" }],
   },
   {
     title: "Événementiel",
-    text: "Duis aute irure dolor in reprehenderit in voluptate velit.",
+    text: "Captation de concerts, spectacles et soirées, montées en teaser ou en aftermovie dynamique.",
     links: [{ slug: "baladi-jazz-project", label: "Baladi jazz project" }],
   },
   {
     title: "Associatif",
-    text: "Excepteur sint occaecat cupidatat non proident, sunt in culpa.",
+    text: "Reportages pour des associations et missions locales du Vaucluse, pour raconter leurs actions et leurs publics.",
     links: [{ slug: "renovart", label: "Renov'Art" }],
   },
 ];
@@ -104,19 +100,19 @@ const projectTypes = [
 const faq = [
   {
     q: "Dans quelles zones intervenez-vous ?",
-    a: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    a: "J'interviens principalement à Avignon et dans tout le Vaucluse, pour du tournage comme pour de la captation. Le montage et l'étalonnage, eux, peuvent se faire à distance à partir de vos rushs, où que vous soyez.",
   },
   {
     q: "Proposez-vous le montage seul, sans le tournage ?",
-    a: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    a: "Oui. Plusieurs de mes projets sont des montages réalisés à partir d'images tournées par d'autres (production, cadreur, client) : vous pouvez me confier uniquement le montage et/ou l'étalonnage de vos rushs.",
   },
   {
     q: "Combien de temps prend un projet ?",
-    a: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    a: "Cela dépend surtout de la quantité de rushs et du niveau de finition attendu : un aftermovie se monte plus vite qu'un court métrage avec étalonnage complet. On définit ensemble un délai réaliste dès l'échange initial.",
   },
   {
     q: "Comment se déroule une prestation ?",
-    a: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    a: "On échange d'abord sur votre besoin et vos objectifs, puis je vous propose un cadrage (et un devis). Vient ensuite le tournage ou la réception de vos rushs, le montage, l'étalonnage, puis un ou deux allers-retours de validation avant la livraison des fichiers finaux.",
   },
 ];
 
@@ -147,9 +143,10 @@ export default function ServicesPage() {
             Services
           </h1>
           <p className="text-2xl md:text-3xl leading-relaxed text-foreground/90">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua, ut
-            enim ad minim veniam quis nostrud exercitation.
+            Réalisation, montage et étalonnage vidéo à Avignon et dans le
+            Vaucluse : courts métrages, clips musicaux, vidéos d&apos;entreprise
+            et captations d&apos;événements, pensés et fabriqués de bout en
+            bout ou repris à partir de vos rushs.
           </p>
         </header>
 
@@ -163,11 +160,8 @@ export default function ServicesPage() {
           </h2>
           <div className="grid md:grid-cols-3 gap-8 md:gap-10">
             {skills.map((skill) => (
-              <FilmCard key={skill.n}>
-                <span className="font-mono text-xs text-foreground/40">
-                  {skill.n}
-                </span>
-                <h3 className="text-2xl text-foreground mt-2 mb-3">
+              <FilmCard key={skill.title}>
+                <h3 className="text-2xl text-foreground mb-3">
                   {skill.title}
                 </h3>
                 <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
@@ -186,30 +180,34 @@ export default function ServicesPage() {
           >
             Types de projets
           </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {projectTypes.map((type) => (
-              <FilmCard key={type.title} className="flex">
-                <div className="flex flex-col w-full">
-                  <h3 className="text-xl text-foreground mb-2">
-                    {type.title}
-                  </h3>
-                  <p className="text-base text-foreground/70 leading-relaxed mb-4 flex-1">
-                    {type.text}
-                  </p>
-                  <p className="text-base">
-                    {type.links.map((link, i) => (
-                      <span key={link.slug}>
-                        <Link href={`/projects/${link.slug}`} className={linkClass}>
-                          {link.label}
-                        </Link>
-                        {i < type.links.length - 1 && ", "}
-                      </span>
-                    ))}
-                  </p>
-                </div>
-              </FilmCard>
+          {/* Empilées et alternées gauche/droite, comme la section
+              Compétences de l'accueil (voir StackedSections /
+              EdgeToEdgeSection) plutôt qu'une grille uniforme. */}
+          <StackedSections>
+            {projectTypes.map((type, i) => (
+              <EdgeToEdgeSection
+                key={type.title}
+                className={`max-w-2xl ${i % 2 === 1 ? "ml-auto" : ""}`}
+              >
+                <h3 className="text-2xl text-foreground mb-3">
+                  {type.title}
+                </h3>
+                <p className="text-base md:text-lg text-foreground/70 leading-relaxed mb-4">
+                  {type.text}
+                </p>
+                <p className="text-base">
+                  {type.links.map((link, j) => (
+                    <span key={link.slug}>
+                      <Link href={`/projects/${link.slug}`} className={linkClass}>
+                        {link.label}
+                      </Link>
+                      {j < type.links.length - 1 && ", "}
+                    </span>
+                  ))}
+                </p>
+              </EdgeToEdgeSection>
             ))}
-          </div>
+          </StackedSections>
         </section>
 
         {/* FAQ */}
@@ -247,22 +245,17 @@ export default function ServicesPage() {
               Discutons de votre projet
             </p>
             <p className="text-foreground/70">
-              Par mail :{" "}
-              <a
-                href="mailto:ban.arnaud@outlook.fr"
-                className={linkClass}
-                aria-label="Envoyer un email à ban.arnaud@outlook.fr"
-              >
-                ban.arnaud@outlook.fr
-              </a>
+              <Link href="/contact" className={linkClass} aria-label="Aller à la page contact">
+                Contactez-moi
+              </Link>
             </p>
           </div>
-          <a
-            href="mailto:ban.arnaud@outlook.fr"
+          <Link
+            href="/contact"
             className="shrink-0 inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-foreground bg-background border border-foreground hover:bg-foreground hover:text-background transition-all duration-300"
           >
             Écrire un mail
-          </a>
+          </Link>
         </div>
 
         <div className="pt-10">

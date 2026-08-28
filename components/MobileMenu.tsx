@@ -10,9 +10,10 @@ interface MobileMenuProps {
 }
 
 const links = [
-  { n: "01", href: "/projets", label: "Projets", aria: "Voir les projets" },
-  { n: "02", href: "/services", label: "Services", aria: "Aller à la page Services" },
-  { n: "03", href: "/about", label: "À propos", aria: "Aller à la page À propos" },
+  { href: "/projets", label: "Projets", aria: "Voir les projets" },
+  { href: "/services", label: "Services", aria: "Aller à la page Services" },
+  { href: "/about", label: "À propos", aria: "Aller à la page À propos" },
+  { href: "/contact", label: "Contact", aria: "Aller à la page Contact" },
 ];
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
@@ -73,7 +74,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 aria-label={link.aria}
                 className="group flex items-center gap-4 py-5 border-b border-foreground/15"
               >
-                <span className="font-mono text-xs text-foreground/40">{link.n}</span>
                 <span className="font-heading text-5xl text-foreground transition-transform duration-300 group-hover:translate-x-2">
                   {link.label}
                 </span>

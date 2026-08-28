@@ -6,12 +6,16 @@
   /* Les couleurs de marque : tout le thème (clair, footer, sections inversées)
      en dérive. Pour changer le blanc cassé ou le bleu partout d'un coup, c'est
      ici et seulement ici. */
-  --beige: rgb(235 222 196);
-  --blue: rgb(28 44 196);
+  --beige: rgb(240 242 248);
+  --blue: rgb(56 40 232);
   /* Noir du header/hero en thème sombre — sert désormais de fond principal
      du dark theme aussi, pour que tout ce qui est bleu en clair devienne
      cette même teinte en sombre, partout, au lieu de couleurs isolées. */
   --ink: rgb(15 15 15);
+  /* Gris sombre du footer en thème sombre (voir .dark ci-dessous) — plus
+     clair que --ink pour bien se lire comme "gris", pas confondu avec le
+     fond noir du reste de la page. */
+  --footer-bg-dark: rgb(38 38 41);
 
   --background: var(--beige);
   --foreground: var(--blue);
@@ -52,9 +56,10 @@
   --background: var(--ink);
   --foreground: var(--beige);
 
-  /* --footer-bg / --footer-text et --invert-bg / --invert-text ne sont pas
-     redéfinies ici : footer et section Projets restent bleu/beige constant,
-     même en thème sombre. */
+  /* --invert-bg / --invert-text ne sont pas redéfinies ici : la section
+     Projets reste bleu/beige constant, même en thème sombre. Le footer, lui,
+     passe en gris sombre (texte beige conservé, toujours lisible dessus). */
+  --footer-bg: var(--footer-bg-dark);
 
   --hero-block-bg: var(--ink);
   --hero-block-text: var(--beige);
@@ -90,12 +95,52 @@ h1, h2, h3, h4, h5, h6 {
   animation: fade-simple 0.3s ease-out both;
 }
 
-@keyframes hero-title-in {
-  from { opacity: 0; transform: scale(0.75); }
-  to { opacity: 1; transform: scale(1); }
+/* Signature d'ouverture du hero (voir components/HeroSection.tsx) :
+   "Réalisation" apparaît, puis "Montage" part de sa position et descend
+   prendre sa place en dessous, puis "Par Arnaud Ban" vient s'insérer entre
+   les deux, en plus petit. Jouée une seule fois au chargement. */
+@keyframes hero-signature-line-in {
+  from { opacity: 0; transform: translateY(0.3em); }
+  to { opacity: 1; transform: translateY(0); }
 }
-.animate-hero-title-in {
-  animation: hero-title-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+.animate-hero-signature-line {
+  animation: hero-signature-line-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+@keyframes hero-signature-descend {
+  from { opacity: 0; transform: translateY(-1.45em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-hero-signature-descend {
+  animation: hero-signature-descend 1s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+}
+
+@keyframes hero-signature-sub-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-hero-signature-sub {
+  animation: hero-signature-sub-in 0.6s ease-out 1.6s both;
+}
+
+/* Indicateur "scroller en bas" du hero (voir components/HeroSection.tsx) :
+   opacité pilotée en JS (délai d'apparition, puis fondu au scroll), pas en
+   keyframes, pour rester modifiable dynamiquement sans conflit de cascade.
+   La flèche à l'intérieur rebondit doucement, en continu. */
+.hero-scroll-hint {
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+}
+.hero-scroll-hint.is-in {
+  opacity: 1;
+}
+
+@keyframes hero-scroll-hint-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(0.35em); }
+}
+.hero-scroll-hint-bounce {
+  animation: hero-scroll-hint-bounce 1.8s ease-in-out infinite;
 }
 
 @keyframes stagger-item-in {
@@ -197,9 +242,30 @@ nav button:focus-visible {
   opacity: 0.8;
 }
 
+/* Soulignement qui se dessine au survol, en plus du fondu couleur/opacité
+   existant — sans toucher au JSX des ~10 liens qui utilisent déjà cette
+   classe (nav du footer, email, mentions légales, crédit). */
+.footer-hover {
+  position: relative;
+}
+.footer-hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-out;
+}
 .footer-hover:hover {
   color: var(--footer-text);
   opacity: 1;
+}
+.footer-hover:hover::after {
+  transform: scaleX(1);
 }
 
 .footer-divider {

@@ -84,7 +84,7 @@ export default function ProjectImageWithSkeleton({ src: rawSrc, alt, title }: Pr
           alt={alt}
           width={1200}
           height={800}
-          className={`w-full aspect-[3/2] object-cover duotone transition-opacity duration-300 ${
+          className={`w-full aspect-[3/2] object-cover transition-opacity duration-300 ${
             isLoaded && !hasError ? 'opacity-100' : 'opacity-0 absolute inset-0'
           }`}
           sizes="(max-width: 768px) 100vw, 70vw"

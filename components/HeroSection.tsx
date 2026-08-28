@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { RiArrowDownLine } from "react-icons/ri";
 import HeroLoader from "./HeroLoader";
 
 // Distance de SCROLL RÉELLE (en plus d'un écran) pendant laquelle la vidéo
@@ -19,6 +20,12 @@ export default function HeroSection({ id }: { id?: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const zoomRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
+  const arrowRef = useRef<HTMLButtonElement>(null);
+  // Passe à true une fois la signature "Réalisation / Montage" entièrement
+  // apparue (voir le setTimeout plus bas) : sert de garde dans applyZoom
+  // pour ne pas faire disparaître la flèche au scroll avant qu'elle ait eu
+  // le temps d'apparaître.
+  const heroEnteredRef = useRef(false);
 
   useEffect(() => {
     // Avec `autoPlay`, le navigateur peut charger la vidéo dès le parsing du
@@ -87,6 +94,17 @@ export default function HeroSection({ id }: { id?: string }) {
         title.style.transform = `translateY(${titleY}px)`;
         title.style.opacity = String(titleOpacity);
       }
+
+      // Flèche "scroller en bas" : ne s'anime qu'une fois la signature
+      // apparue (heroEnteredRef), puis s'estompe vite dès que le scroll
+      // démarre (12% du scroll suffit) — plus la peine de la montrer une
+      // fois qu'on est déjà en train de scroller.
+      const arrow = arrowRef.current;
+      if (arrow && heroEnteredRef.current) {
+        const arrowOpacity = 1 - Math.min(progress / 0.12, 1);
+        arrow.style.opacity = String(arrowOpacity);
+        arrow.style.pointerEvents = arrowOpacity < 0.05 ? "none" : "auto";
+      }
     };
 
     const handleScroll = () => {
@@ -99,11 +117,31 @@ export default function HeroSection({ id }: { id?: string }) {
     applyZoom();
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", applyZoom);
+
+    // La flèche apparaît une fois la signature entièrement affichée (dernière
+    // ligne "Par Arnaud Ban" : delay 1.6s + durée 0.6s, voir globals.css).
+    const revealTimer = setTimeout(() => {
+      heroEnteredRef.current = true;
+      arrowRef.current?.classList.add("is-in");
+      applyZoom();
+    }, 2300);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", applyZoom);
+      clearTimeout(revealTimer);
     };
   }, []);
+
+  // Clique sur la flèche : saute directement au prochain titre (le
+  // paragraphe d'intro juste sous le hero, id="intro-title" dans
+  // app/page.tsx), sans repasser par toute l'animation de zoom/scroll
+  // intermédiaire. Même pattern que components/ScrollToAnchor.tsx.
+  const scrollPastHero = () => {
+    document
+      .getElementById("intro-title")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <div
@@ -156,17 +194,43 @@ export default function HeroSection({ id }: { id?: string }) {
           )}
         </div>
 
-        {/* ARNAUD BAN en très grand, en mix-blend-mode : la couleur du texte
+        {/* Signature en très grand, en mix-blend-mode : la couleur du texte
             s'inverse en continu selon ce qu'il y a derrière dans la vidéo.
-            Monte (lentement) et s'estompe au scroll. */}
+            "Réalisation" apparaît, puis "Montage" part de sa position et
+            descend prendre sa place en dessous, puis "Par Arnaud Ban" vient
+            s'insérer entre les deux. Monte (lentement) et s'estompe au
+            scroll (tout le bloc, via titleRef). */}
         <div
           ref={titleRef}
-          className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 will-change-transform"
+          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 will-change-transform text-center"
         >
-          <span className="animate-hero-title-in font-heading font-bold text-[19vw] md:text-[13vw] tracking-tighter leading-none text-white mix-blend-difference select-none whitespace-nowrap">
-            ARNAUD BAN
+          <span className="animate-hero-signature-line font-heading font-bold text-[16vw] md:text-[11vw] tracking-tighter leading-none text-white mix-blend-difference select-none whitespace-nowrap">
+            Réalisation
+          </span>
+          <span className="animate-hero-signature-sub font-heading text-[clamp(0.8rem,2vw,1.1rem)] tracking-[0.2em] uppercase my-[clamp(0.4rem,1.6vw,1rem)] text-white mix-blend-difference select-none whitespace-nowrap">
+            Par Arnaud Ban
+          </span>
+          <span className="animate-hero-signature-descend font-heading font-bold text-[16vw] md:text-[11vw] tracking-tighter leading-none text-white mix-blend-difference select-none whitespace-nowrap">
+            Montage
           </span>
         </div>
+
+        {/* Indicateur "scroller en bas" : apparaît une fois la signature
+            affichée, flèche qui rebondit doucement en continu. Clic = saute
+            au prochain titre (#intro-title), sinon on peut simplement
+            scroller normalement. */}
+        <button
+          ref={arrowRef}
+          type="button"
+          onClick={scrollPastHero}
+          aria-label="Défiler vers le bas"
+          className="hero-scroll-hint absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-20 text-white mix-blend-difference"
+        >
+          <RiArrowDownLine
+            className="hero-scroll-hint-bounce w-8 h-8 md:w-9 md:h-9"
+            aria-hidden="true"
+          />
+        </button>
       </section>
     </div>
   );

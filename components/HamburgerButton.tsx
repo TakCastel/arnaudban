@@ -18,14 +18,26 @@ export default function HamburgerButton({
     >
       <span
         aria-hidden
-        className="pointer-events-none absolute block h-[1.5px] w-7 bg-hero-block-text transition-transform duration-300 ease-in-out"
+        className={`pointer-events-none absolute block h-[1.5px] w-7 transition-transform duration-300 ease-in-out ${
+          // Fermé : le bouton est sur le header (bg-hero-block-bg), les barres
+          // matchent son texte. Ouvert : le panneau plein écran passe en
+          // bg-background — bg-hero-block-text (beige) y devient invisible en
+          // thème clair (beige sur beige). bg-foreground s'adapte au thème.
+          open ? "bg-foreground" : "bg-hero-block-text"
+        }`}
         style={{
           transform: open ? "translateY(0) rotate(45deg)" : "translateY(-4px)",
         }}
       />
       <span
         aria-hidden
-        className="pointer-events-none absolute block h-[1.5px] w-7 bg-hero-block-text transition-transform duration-300 ease-in-out"
+        className={`pointer-events-none absolute block h-[1.5px] w-7 transition-transform duration-300 ease-in-out ${
+          // Fermé : le bouton est sur le header (bg-hero-block-bg), les barres
+          // matchent son texte. Ouvert : le panneau plein écran passe en
+          // bg-background — bg-hero-block-text (beige) y devient invisible en
+          // thème clair (beige sur beige). bg-foreground s'adapte au thème.
+          open ? "bg-foreground" : "bg-hero-block-text"
+        }`}
         style={{
           transform: open ? "translateY(0) rotate(-45deg)" : "translateY(4px)",
         }}

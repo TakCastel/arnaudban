@@ -1,5 +1,53 @@
+import { ReactNode } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { SiLinkedin } from "react-icons/si";
 import PageContainer from "./PageContainer";
+import { withBasePath } from "@/lib/basePath";
+
+/**
+ * Icône blanche dans un carré qui se dessine au survol (4 traits qui
+ * scalent depuis 0, même esprit que EdgeToEdgeSection mais déclenché au
+ * hover plutôt qu'au scroll). Boîte au plus près de l'icône (pas de marge
+ * négative) pour ne jamais déborder du container de la colonne.
+ */
+function SocialIcon({
+  href,
+  label,
+  children,
+}: {
+  href: string;
+  label: string;
+  children: ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      className="group relative flex items-center justify-center w-11 h-11 text-white"
+    >
+      <span
+        aria-hidden="true"
+        className="absolute top-0 left-0 right-0 h-px bg-white origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100"
+      />
+      <span
+        aria-hidden="true"
+        className="absolute bottom-0 left-0 right-0 h-px bg-white origin-right scale-x-0 transition-transform duration-300 ease-out delay-150 group-hover:scale-x-100"
+      />
+      <span
+        aria-hidden="true"
+        className="absolute top-0 bottom-0 left-0 w-px bg-white origin-top scale-y-0 transition-transform duration-300 ease-out delay-75 group-hover:scale-y-100"
+      />
+      <span
+        aria-hidden="true"
+        className="absolute top-0 bottom-0 right-0 w-px bg-white origin-bottom scale-y-0 transition-transform duration-300 ease-out delay-75 group-hover:scale-y-100"
+      />
+      {children}
+    </a>
+  );
+}
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -12,13 +60,13 @@ export default function Footer() {
           <p className="font-heading text-3xl md:text-5xl footer-text tracking-tight max-w-xl">
             Un projet vidéo en tête ? Discutons-en.
           </p>
-          <a
-            href="mailto:ban.arnaud@outlook.fr"
+          <Link
+            href="/contact"
             className="footer-cta-btn shrink-0 px-6 py-3 text-lg font-semibold"
-            aria-label="Envoyer un email à Arnaud Ban"
+            aria-label="Aller à la page contact"
           >
             Écrire un mail
-          </a>
+          </Link>
         </div>
 
       </PageContainer>
@@ -32,6 +80,30 @@ export default function Footer() {
               Réalisateur &amp; monteur vidéo indépendant, basé à Avignon,
               Vaucluse.
             </p>
+            <div className="flex items-center gap-2 mt-3">
+              <SocialIcon
+                href="https://www.linkedin.com/in/arnaud-ban-6467b7140/"
+                label="Profil LinkedIn d'Arnaud Ban (nouvel onglet)"
+              >
+                <SiLinkedin aria-hidden="true" className="w-6 h-6" />
+              </SocialIcon>
+              {/* Pas d'icône Malt "juste la fleur" dans aucune librairie
+                  (react-icons, Iconify...) : elles reprennent toutes le
+                  même wordmark Simple Icons. Favicon officiel en image. */}
+              <SocialIcon
+                href="https://en.malt.fr/profile/arnaudban"
+                label="Profil Malt d'Arnaud Ban (nouvel onglet)"
+              >
+                <Image
+                  src={withBasePath("/assets/malt-icon.png")}
+                  alt=""
+                  aria-hidden="true"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6"
+                />
+              </SocialIcon>
+            </div>
           </div>
 
           <nav aria-label="Navigation du pied de page">
@@ -52,6 +124,11 @@ export default function Footer() {
               <li>
                 <Link href="/about" className="footer-hover transition-colors duration-300" aria-label="À propos d'Arnaud Ban">
                   À propos
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="footer-hover transition-colors duration-300" aria-label="Contacter Arnaud Ban">
+                  Contact
                 </Link>
               </li>
             </ul>
@@ -106,21 +183,6 @@ export default function Footer() {
           >
             Site conçu par @tkcstl
           </a>
-        </div>
-      </PageContainer>
-
-      {/* Signature géante en clôture : ARNAUD à plat, BAN en vertical sur le
-          côté (à peu près à la hauteur d'une lettre d'ARNAUD) — même esprit
-          que les gros wordmarks de footer type "Diana's Seafood". */}
-      <div className="footer-divider" />
-      <PageContainer width="full">
-        <div className="flex items-center justify-between overflow-hidden py-2">
-          <span className="font-heading uppercase footer-text leading-none tracking-tight text-[26vw] whitespace-nowrap -ml-1 md:-ml-2">
-            Arnaud
-          </span>
-          <span className="shrink-0 font-heading uppercase footer-text leading-none tracking-tight [writing-mode:vertical-rl] rotate-180 text-[10.5vw] whitespace-nowrap">
-            Ban
-          </span>
         </div>
       </PageContainer>
     </footer>
