@@ -21,12 +21,33 @@ double authentification est active (recommandé). Il faut donc un
    affichée) — c'est cette valeur qui va dans `MAIL_PASS`, **pas** le mot de
    passe du compte Microsoft.
 
+## 1bis. Créer les clés hCaptcha (anti-spam)
+
+Le formulaire utilise hCaptcha (la case à cocher "Je ne suis pas un robot")
+en plus du honeypot déjà en place. Choisi plutôt que Google reCAPTCHA :
+inscription par simple compte email, sans passer par un projet Google Cloud.
+
+1. Créer un compte sur https://dashboard.hcaptcha.com/signup (email + mot
+   de passe, gratuit).
+2. Dans le dashboard, "New site" → domaine `arnaudban.fr`.
+3. Deux clés sont générées :
+   - la **Site key** (publique) → va dans `NEXT_PUBLIC_HCAPTCHA_SITE_KEY`,
+     lue au moment du build du site (pas ici dans `server/`, voir
+     `next.config.js` et le README.md à la racine) ;
+   - la **Secret key** → va dans `HCAPTCHA_SECRET_KEY` ci-dessous, dans
+     `server/.env`, jamais ailleurs.
+
+Tant que ces clés ne sont pas configurées, le formulaire fonctionne quand
+même (le widget ne s'affiche pas, seul le honeypot protège) — ce n'est donc
+pas bloquant pour le reste du déploiement.
+
 ## 2. Configuration
 
 ```bash
 cd server
 cp .env.example .env
 # éditer .env et renseigner MAIL_USER / MAIL_PASS / MAIL_TO / ALLOWED_ORIGIN
+# / HCAPTCHA_SECRET_KEY
 ```
 
 `.env` n'est jamais commité (voir `.gitignore` à la racine).

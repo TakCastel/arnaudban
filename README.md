@@ -11,6 +11,11 @@ Le site est **entièrement statique** (tout le contenu vient de `data/projects.t
 1. **Build** : `npm run build`
    - Next.js est configuré en export statique (`output: 'export'` dans `next.config.js`)
    - Génère le site statique dans le dossier `out/`
+   - Pour activer la vérification anti-robot (hCaptcha) du formulaire de
+     contact, définir `NEXT_PUBLIC_HCAPTCHA_SITE_KEY` avant le build (ex.
+     `.env.local` à la racine, ignoré par git) — clé publique, voir
+     `server/README.md` pour où la récupérer et pour la clé secrète (qui va
+     côté `server/`, jamais ici).
 2. **Déploiement** : synchroniser le contenu de `out/` sur le VPS (le dossier contient uniquement du HTML/CSS/JS/assets statiques, servis directement par nginx/Apache — pas de serveur Node à faire tourner).
 
 ### Headers de sécurité côté serveur

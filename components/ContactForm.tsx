@@ -1,6 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import Script from "next/script";
+
+declare global {
+  interface Window {
+    hcaptcha?: {
+      render: (
+        container: HTMLElement,
+        params: { sitekey: string; callback?: () => void; "expired-callback"?: () => void }
+      ) => string;
+      getResponse: (widgetId?: string) => string;
+      reset: (widgetId?: string) => void;
+    };
+  }
+}
 
 const fieldClass =
   "w-full bg-background text-foreground border border-foreground/30 focus:border-foreground px-4 py-3 text-base placeholder:text-foreground/40 transition-colors duration-300";
@@ -15,9 +29,18 @@ type Status = "idle" | "loading" | "success" | "error";
 // de secours plutôt qu'un formulaire qui ne pourrait jamais aboutir.
 const contactApiUrl = process.env.NEXT_PUBLIC_CONTACT_API_URL || "";
 
+// Vide tant qu'Arnaud n'a pas créé son site sur https://dashboard.hcaptcha.com
+// (voir README.md) : dans ce cas le widget ne s'affiche pas et on ne bloque
+// pas l'envoi dessus — seul le honeypot protège, comme avant. Vérifié une
+// seconde fois côté serveur (voir server/index.js), le check client seul ne
+// suffit jamais.
+const hcaptchaSiteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || "";
+
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const captchaContainerRef = useRef<HTMLDivElement>(null);
+  const captchaWidgetId = useRef<string | undefined>(undefined);
 
   if (!contactApiUrl) {
     return (
@@ -48,6 +71,16 @@ export default function ContactForm() {
     // Honeypot : champ caché (voir JSX) que seuls les bots remplissent.
     const company = data.get("company");
 
+    const captchaToken = hcaptchaSiteKey
+      ? window.hcaptcha?.getResponse(captchaWidgetId.current)
+      : undefined;
+
+    if (hcaptchaSiteKey && !captchaToken) {
+      setStatus("error");
+      setErrorMessage("Merci de valider la case de vérification avant d'envoyer.");
+      return;
+    }
+
     try {
       const res = await fetch(contactApiUrl, {
         method: "POST",
@@ -57,6 +90,7 @@ export default function ContactForm() {
           email: data.get("email"),
           message: data.get("message"),
           company,
+          captchaToken,
         }),
       });
 
@@ -73,6 +107,10 @@ export default function ContactForm() {
     } catch {
       setStatus("error");
       setErrorMessage("Impossible de contacter le serveur, réessayez plus tard.");
+    } finally {
+      // Un token hCaptcha est à usage unique : on réinitialise le widget pour
+      // permettre un nouvel essai, que l'envoi ait réussi ou échoué.
+      window.hcaptcha?.reset(captchaWidgetId.current);
     }
   }
 
@@ -143,6 +181,23 @@ export default function ContactForm() {
         <label htmlFor="company">Ne pas remplir ce champ</label>
         <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
       </div>
+
+      {hcaptchaSiteKey && (
+        <>
+          <Script
+            src="https://js.hcaptcha.com/1/api.js"
+            strategy="lazyOnload"
+            onReady={() => {
+              if (captchaContainerRef.current && captchaWidgetId.current === undefined) {
+                captchaWidgetId.current = window.hcaptcha?.render(captchaContainerRef.current, {
+                  sitekey: hcaptchaSiteKey,
+                });
+              }
+            }}
+          />
+          <div ref={captchaContainerRef} />
+        </>
+      )}
 
       {status === "error" && (
         <p role="alert" className="text-red-600 dark:text-red-400">

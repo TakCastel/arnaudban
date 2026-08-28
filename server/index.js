@@ -52,13 +52,48 @@ function isValidEmail(value) {
   return typeof value === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+// Vérifie le token hCaptcha auprès de leur API. Si HCAPTCHA_SECRET_KEY n'est
+// pas configurée (avant qu'Arnaud crée son site sur
+// https://dashboard.hcaptcha.com, voir server/README.md), on laisse passer
+// sans vérifier — le honeypot reste la seule protection, comme avant.
+async function isCaptchaValid(token, remoteip) {
+  const secret = process.env.HCAPTCHA_SECRET_KEY;
+  if (!secret) return true;
+  if (typeof token !== "string" || !token) return false;
+
+  try {
+    // sitekey optionnel mais recommandé par hCaptcha : rattache la
+    // vérification au bon site plutôt qu'au secret seul.
+    const params = new URLSearchParams({
+      secret,
+      response: token,
+      remoteip: remoteip || "",
+      sitekey: process.env.HCAPTCHA_SITE_KEY || "",
+    });
+    const res = await fetch("https://api.hcaptcha.com/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params,
+    });
+    const body = await res.json();
+    return body.success === true;
+  } catch (err) {
+    console.error("Échec de la vérification hCaptcha :", err);
+    return false;
+  }
+}
+
 app.post("/api/contact", contactLimiter, async (req, res) => {
-  const { name, email, message, company } = req.body || {};
+  const { name, email, message, company, captchaToken } = req.body || {};
 
   // Honeypot : champ invisible pour un humain, souvent rempli par les bots.
   // On répond succès sans rien envoyer, pour ne pas leur signaler le piège.
   if (company) {
     return res.status(200).json({ ok: true });
+  }
+
+  if (!(await isCaptchaValid(captchaToken, req.ip))) {
+    return res.status(400).json({ error: "Vérification anti-robot invalide, réessayez." });
   }
 
   if (

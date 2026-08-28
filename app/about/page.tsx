@@ -49,6 +49,17 @@ export const metadata: Metadata = {
 const linkClass =
   "font-mono font-bold hover:text-foreground/80 transition-colors duration-300 text-foreground underline decoration-2 underline-offset-4 hover:decoration-4";
 
+// Fil d'Ariane structuré (SEO) — même logique que faqJsonLd sur /services :
+// aide Google à comprendre la place de cette page dans le site.
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: "https://arnaudban.fr" },
+    { "@type": "ListItem", position: 2, name: "À propos", item: "https://arnaudban.fr/about" },
+  ],
+};
+
 // Volontairement différent des 3 cards "compétences" de /services (éviter
 // le contenu dupliqué) : ici on raconte le parcours plutôt que les
 // techniques, avec des faits réels déjà présents sur le site (voir les
@@ -73,6 +84,11 @@ const skills = [
 export default function AboutPage() {
   return (
     <PageTransition>
+      {/* eslint-disable-next-line react/no-danger */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <PageContainer className="py-8 md:py-16">
         <h1 className="text-5xl md:text-7xl text-foreground mb-3 tracking-tight">
           Arnaud Ban
@@ -83,11 +99,30 @@ export default function AboutPage() {
 
         <div className="space-y-6 md:space-y-8 text-xl md:text-2xl leading-relaxed">
           <p>
-            Bonjour ! Je m&apos;appelle Arnaud Ban et je suis un réalisateur
-            indépendant qui travaille sur Avignon.
+            Je m&apos;appelle Arnaud Ban, réalisateur et monteur vidéo
+            indépendant basé à Avignon, dans le Vaucluse. Formé au montage
+            et à la réalisation en école de cinéma, j&apos;y ai écrit et
+            réalisé mes premiers courts métrages,{" "}
+            <Link href="/projects/doug-2020" className={linkClass} aria-label="Voir le projet Doug">
+              Doug
+            </Link>{" "}
+            et{" "}
+            <Link href="/projects/invisible-2021" className={linkClass} aria-label="Voir le projet Invisible">
+              Invisible
+            </Link>
+            , avant de me spécialiser en montage et étalonnage.
           </p>
 
-          <p>Mes spécialités sont le montage et l&apos;étalonnage.</p>
+          <p>
+            J&apos;interviens aujourd&apos;hui sur des projets audiovisuels
+            variés : courts métrages et documentaires, clips musicaux comme{" "}
+            <Link href="/projects/on-dit-delle-2021" className={linkClass} aria-label="Voir le projet On dit d'elle">
+              On dit d&apos;elle
+            </Link>
+            , vidéos d&apos;entreprise et captations d&apos;événements, pour
+            des clients, associations et missions locales d&apos;Avignon et
+            du Vaucluse.
+          </p>
 
           <p>
             Pour toute demande professionnelle, contactez-moi via{" "}
