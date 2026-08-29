@@ -4,6 +4,7 @@ import HomeButton from "@/components/HomeButton";
 import PageContainer from "@/components/PageContainer";
 import ContactForm from "@/components/ContactForm";
 import SplitText from "@/components/SplitText";
+import StaggerItem from "@/components/StaggerItem";
 
 export const metadata: Metadata = {
   title: "Contact - Arnaud Ban | Réalisateur & Monteur Vidéo à Avignon",
@@ -48,11 +49,13 @@ export default function ContactPage() {
         <SplitText as="h1" className="text-5xl md:text-7xl text-foreground mb-3 tracking-tight">
           Contact
         </SplitText>
-        <p className="text-2xl md:text-3xl font-serif italic text-foreground/70 mb-10 md:mb-14 max-w-2xl">
-          Un projet vidéo en tête ? Racontez-le-moi.
-        </p>
+        <StaggerItem index={0} className="mb-10 md:mb-14 max-w-2xl">
+          <p className="text-2xl md:text-3xl font-serif italic text-foreground/70">
+            Un projet vidéo en tête ? Racontez-le-moi.
+          </p>
+        </StaggerItem>
 
-        <div className="grid md:grid-cols-[1fr_1.3fr] gap-10 md:gap-16">
+        <StaggerItem index={1} className="grid md:grid-cols-[1fr_1.3fr] gap-10 md:gap-16">
           <div className="text-lg leading-relaxed text-foreground/80 space-y-4">
             <p>
               Que ce soit pour un court métrage, un clip, une vidéo
@@ -73,11 +76,11 @@ export default function ContactPage() {
           </div>
 
           <ContactForm />
-        </div>
+        </StaggerItem>
 
-        <div className="pt-14 md:pt-20">
+        <StaggerItem index={2} className="pt-14 md:pt-20">
           <HomeButton centered={false} />
-        </div>
+        </StaggerItem>
       </PageContainer>
     </PageTransition>
   );

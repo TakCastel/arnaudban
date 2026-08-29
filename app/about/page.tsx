@@ -5,6 +5,7 @@ import HomeButton from "@/components/HomeButton";
 import FilmCard from "@/components/FilmCard";
 import PageContainer from "@/components/PageContainer";
 import SplitText from "@/components/SplitText";
+import StaggerItem from "@/components/StaggerItem";
 
 export const metadata: Metadata = {
   title: "À propos - Arnaud Ban | Réalisateur & Monteur Vidéo à Avignon",
@@ -94,11 +95,13 @@ export default function AboutPage() {
         <SplitText as="h1" className="text-5xl md:text-7xl text-foreground mb-3 tracking-tight">
           Arnaud Ban
         </SplitText>
-        <p className="text-2xl md:text-3xl font-serif italic text-foreground/70 mb-10 md:mb-14">
-          Réalisateur &amp; monteur vidéo à Avignon, Vaucluse
-        </p>
+        <StaggerItem index={0} className="mb-10 md:mb-14">
+          <p className="text-2xl md:text-3xl font-serif italic text-foreground/70">
+            Réalisateur &amp; monteur vidéo à Avignon, Vaucluse
+          </p>
+        </StaggerItem>
 
-        <div className="space-y-6 md:space-y-8 text-xl md:text-2xl leading-relaxed">
+        <StaggerItem index={1} className="space-y-6 md:space-y-8 text-xl md:text-2xl leading-relaxed">
           <p>
             Je m&apos;appelle Arnaud Ban, réalisateur et monteur vidéo
             indépendant basé à Avignon, dans le Vaucluse. Formé au montage
@@ -132,10 +135,10 @@ export default function AboutPage() {
             </Link>
             .
           </p>
-        </div>
+        </StaggerItem>
 
         {/* Compétences */}
-        <div className="grid sm:grid-cols-3 gap-8 md:gap-10 my-12 md:my-16">
+        <StaggerItem index={2} className="grid sm:grid-cols-3 gap-8 md:gap-10 my-12 md:my-16">
           {skills.map((skill) => (
             <FilmCard key={skill.title}>
               <h2 className="text-xl text-foreground mb-2">
@@ -146,10 +149,13 @@ export default function AboutPage() {
               </p>
             </FilmCard>
           ))}
-        </div>
+        </StaggerItem>
 
         {/* CTA */}
-        <div className=" border border-foreground p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <StaggerItem
+          index={3}
+          className="border border-foreground p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6"
+        >
           <div>
             <p className="font-heading text-3xl md:text-4xl text-foreground mb-1">
               Un projet vidéo en tête ?
@@ -166,11 +172,11 @@ export default function AboutPage() {
           >
             Voir mes services
           </Link>
-        </div>
+        </StaggerItem>
 
-        <div className="pt-10">
+        <StaggerItem index={4} className="pt-10">
           <HomeButton centered={false} />
-        </div>
+        </StaggerItem>
       </PageContainer>
     </PageTransition>
   );

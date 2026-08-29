@@ -5,6 +5,7 @@ import PageContainer from "@/components/PageContainer";
 import ProjectGrid from "@/components/ProjectGrid";
 import { getProjects } from "@/lib/getProjects";
 import SplitText from "@/components/SplitText";
+import StaggerItem from "@/components/StaggerItem";
 
 export const metadata: Metadata = {
   title: "Projets - Portfolio vidéo | Arnaud Ban, Avignon",
@@ -57,22 +58,26 @@ export default function ProjetsPage() {
           <SplitText as="h1" id="work-title" className="text-5xl md:text-7xl text-foreground mb-5 tracking-tight">
             Projets
           </SplitText>
-          <p className="text-2xl md:text-3xl leading-relaxed text-foreground/90">
-            {items.length} projets : courts métrages, clips musicaux, vidéos
-            d&apos;entreprise, captations d&apos;événements et projets
-            associatifs, réalisés à Avignon et dans le Vaucluse.
-          </p>
+          <StaggerItem index={0}>
+            <p className="text-2xl md:text-3xl leading-relaxed text-foreground/90">
+              {items.length} projets : courts métrages, clips musicaux, vidéos
+              d&apos;entreprise, captations d&apos;événements et projets
+              associatifs, réalisés à Avignon et dans le Vaucluse.
+            </p>
+          </StaggerItem>
         </header>
       </PageContainer>
 
       {/* Grille dans le container (comme le reste du contenu), tailles de
           cases variées — voir ProjectGrid. */}
       <PageContainer className="pb-8 md:pb-16">
-        <ProjectGrid projects={items} />
+        <StaggerItem index={1}>
+          <ProjectGrid projects={items} />
+        </StaggerItem>
 
-        <div className="pt-10">
+        <StaggerItem index={2} className="pt-10">
           <HomeButton centered={false} />
-        </div>
+        </StaggerItem>
       </PageContainer>
     </PageTransition>
   );

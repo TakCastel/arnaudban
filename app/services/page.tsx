@@ -7,6 +7,7 @@ import PageContainer from "@/components/PageContainer";
 import StackedSections from "@/components/StackedSections";
 import EdgeToEdgeSection from "@/components/EdgeToEdgeSection";
 import SplitText from "@/components/SplitText";
+import StaggerItem from "@/components/StaggerItem";
 
 export const metadata: Metadata = {
   title: "Services - Monteur vidéo & réalisateur à Avignon | Arnaud Ban",
@@ -143,104 +144,115 @@ export default function ServicesPage() {
           <SplitText as="h1" className="text-5xl md:text-7xl text-foreground mb-5 tracking-tight">
             Services
           </SplitText>
-          <p className="text-2xl md:text-3xl leading-relaxed text-foreground/90">
-            Réalisation, montage et étalonnage vidéo à Avignon et dans le
-            Vaucluse : courts métrages, clips musicaux, vidéos d&apos;entreprise
-            et captations d&apos;événements, pensés et fabriqués de bout en
-            bout ou repris à partir de vos rushs.
-          </p>
+          <StaggerItem index={0}>
+            <p className="text-2xl md:text-3xl leading-relaxed text-foreground/90">
+              Réalisation, montage et étalonnage vidéo à Avignon et dans le
+              Vaucluse : courts métrages, clips musicaux, vidéos d&apos;entreprise
+              et captations d&apos;événements, pensés et fabriqués de bout en
+              bout ou repris à partir de vos rushs.
+            </p>
+          </StaggerItem>
         </header>
 
         {/* Compétences */}
-        <section aria-labelledby="competences-title" className="mb-16 md:mb-24">
-          <h2
-            id="competences-title"
-            className="text-xs font-semibold uppercase tracking-widest text-foreground/50 mb-6"
-          >
-            Compétences
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8 md:gap-10">
-            {skills.map((skill) => (
-              <FilmCard key={skill.title}>
-                <h3 className="text-2xl text-foreground mb-3">
-                  {skill.title}
-                </h3>
-                <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
-                  {skill.text}
-                </p>
-              </FilmCard>
-            ))}
-          </div>
-        </section>
+        <StaggerItem index={1}>
+          <section aria-labelledby="competences-title" className="mb-16 md:mb-24">
+            <h2
+              id="competences-title"
+              className="text-xs font-semibold uppercase tracking-widest text-foreground/50 mb-6"
+            >
+              Compétences
+            </h2>
+            <div className="grid md:grid-cols-3 gap-8 md:gap-10">
+              {skills.map((skill) => (
+                <FilmCard key={skill.title}>
+                  <h3 className="text-2xl text-foreground mb-3">
+                    {skill.title}
+                  </h3>
+                  <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
+                    {skill.text}
+                  </p>
+                </FilmCard>
+              ))}
+            </div>
+          </section>
+        </StaggerItem>
 
         {/* Types de projets */}
-        <section aria-labelledby="projets-title" className="mb-16 md:mb-24">
-          <h2
-            id="projets-title"
-            className="text-xs font-semibold uppercase tracking-widest text-foreground/50 mb-6"
-          >
-            Types de projets
-          </h2>
-          {/* Empilées et alternées gauche/droite, comme la section
-              Compétences de l'accueil (voir StackedSections /
-              EdgeToEdgeSection) plutôt qu'une grille uniforme. */}
-          <StackedSections>
-            {projectTypes.map((type, i) => (
-              <EdgeToEdgeSection
-                key={type.title}
-                className={`max-w-2xl ${i % 2 === 1 ? "ml-auto" : ""}`}
-              >
-                <h3 className="text-2xl text-foreground mb-3">
-                  {type.title}
-                </h3>
-                <p className="text-base md:text-lg text-foreground/70 leading-relaxed mb-4">
-                  {type.text}
-                </p>
-                <p className="text-base">
-                  {type.links.map((link, j) => (
-                    <span key={link.slug}>
-                      <Link href={`/projects/${link.slug}`} className={linkClass}>
-                        {link.label}
-                      </Link>
-                      {j < type.links.length - 1 && ", "}
-                    </span>
-                  ))}
-                </p>
-              </EdgeToEdgeSection>
-            ))}
-          </StackedSections>
-        </section>
+        <StaggerItem index={2}>
+          <section aria-labelledby="projets-title" className="mb-16 md:mb-24">
+            <h2
+              id="projets-title"
+              className="text-xs font-semibold uppercase tracking-widest text-foreground/50 mb-6"
+            >
+              Types de projets
+            </h2>
+            {/* Empilées et alternées gauche/droite, comme la section
+                Compétences de l'accueil (voir StackedSections /
+                EdgeToEdgeSection) plutôt qu'une grille uniforme. */}
+            <StackedSections>
+              {projectTypes.map((type, i) => (
+                <EdgeToEdgeSection
+                  key={type.title}
+                  className={`max-w-2xl ${i % 2 === 1 ? "ml-auto" : ""}`}
+                >
+                  <h3 className="text-2xl text-foreground mb-3">
+                    {type.title}
+                  </h3>
+                  <p className="text-base md:text-lg text-foreground/70 leading-relaxed mb-4">
+                    {type.text}
+                  </p>
+                  <p className="text-base">
+                    {type.links.map((link, j) => (
+                      <span key={link.slug}>
+                        <Link href={`/projects/${link.slug}`} className={linkClass}>
+                          {link.label}
+                        </Link>
+                        {j < type.links.length - 1 && ", "}
+                      </span>
+                    ))}
+                  </p>
+                </EdgeToEdgeSection>
+              ))}
+            </StackedSections>
+          </section>
+        </StaggerItem>
 
         {/* FAQ */}
-        <section aria-labelledby="faq-title" className="mb-16 md:mb-24">
-          <h2
-            id="faq-title"
-            className="text-xs font-semibold uppercase tracking-widest text-foreground/50 mb-6"
-          >
-            Questions fréquentes
-          </h2>
-          <div className="divide-y divide-foreground/10 border-t border-b border-foreground/10">
-            {faq.map((item) => (
-              <details key={item.q} className="group py-5">
-                <summary className="flex items-center justify-between gap-4 cursor-pointer list-none text-lg md:text-xl font-semibold text-foreground">
-                  {item.q}
-                  <span
-                    className="shrink-0 text-foreground/40 transition-transform duration-200 group-open:rotate-45"
-                    aria-hidden="true"
-                  >
-                    +
-                  </span>
-                </summary>
-                <p className="mt-3 text-foreground/70 leading-relaxed max-w-3xl">
-                  {item.a}
-                </p>
-              </details>
-            ))}
-          </div>
-        </section>
+        <StaggerItem index={3}>
+          <section aria-labelledby="faq-title" className="mb-16 md:mb-24">
+            <h2
+              id="faq-title"
+              className="text-xs font-semibold uppercase tracking-widest text-foreground/50 mb-6"
+            >
+              Questions fréquentes
+            </h2>
+            <div className="divide-y divide-foreground/10 border-t border-b border-foreground/10">
+              {faq.map((item) => (
+                <details key={item.q} className="group py-5">
+                  <summary className="flex items-center justify-between gap-4 cursor-pointer list-none text-lg md:text-xl font-semibold text-foreground">
+                    {item.q}
+                    <span
+                      className="shrink-0 text-foreground/40 transition-transform duration-200 group-open:rotate-45"
+                      aria-hidden="true"
+                    >
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-3 text-foreground/70 leading-relaxed max-w-3xl">
+                    {item.a}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </section>
+        </StaggerItem>
 
         {/* CTA */}
-        <div className=" border border-foreground p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <StaggerItem
+          index={4}
+          className="border border-foreground p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6"
+        >
           <div>
             <p className="font-heading text-3xl md:text-4xl text-foreground mb-1">
               Discutons de votre projet
@@ -257,11 +269,11 @@ export default function ServicesPage() {
           >
             Écrire un mail
           </Link>
-        </div>
+        </StaggerItem>
 
-        <div className="pt-10">
+        <StaggerItem index={5} className="pt-10">
           <HomeButton centered={false} />
-        </div>
+        </StaggerItem>
       </PageContainer>
     </PageTransition>
   );

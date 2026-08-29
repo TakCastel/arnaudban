@@ -1,16 +1,12 @@
 import { ReactNode } from "react";
-import { ROUTE_TRANSITION_CONTENT_DELAY_MS } from "@/lib/routeTransition";
 
+/**
+ * Simple wrapper plein-largeur pour le contenu d'une page (contact, projets,
+ * à propos, services). L'apparition elle-même n'est plus portée ici : chaque
+ * section du contenu joue sa propre entrée en cascade via StaggerItem (voir
+ * ce composant), pour un effet de haut en bas plutôt qu'un fondu unique sur
+ * tout le bloc.
+ */
 export default function PageTransition({ children }: { children: ReactNode }) {
-  return (
-    <div
-      className="w-full animate-page-in"
-      // Démarre juste avant la fin de la rétraction des blocs de
-      // RouteTransition (voir lib/routeTransition.ts) : sinon ce fondu se
-      // joue en douce derrière le rideau, ou laisse un instant à vide.
-      style={{ animationDelay: `${ROUTE_TRANSITION_CONTENT_DELAY_MS}ms` }}
-    >
-      {children}
-    </div>
-  );
+  return <div className="w-full">{children}</div>;
 }
