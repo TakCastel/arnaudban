@@ -143,6 +143,19 @@ h1, h2, h3, h4, h5, h6 {
   animation: hero-scroll-hint-bounce 1.8s ease-in-out infinite;
 }
 
+/* Apparition lettre par lettre (voir components/SplitText.tsx) : chaque
+   lettre monte et se redresse en entrant, avec un délai propre posé en JS
+   (transitionDelay inline, cascade). */
+.split-text-letter {
+  opacity: 0;
+  transform: translateY(0.6em) rotate(6deg);
+  transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.split-text-letter[data-revealed] {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+}
+
 @keyframes stagger-item-in {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }

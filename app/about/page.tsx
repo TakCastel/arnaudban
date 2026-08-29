@@ -4,6 +4,7 @@ import PageTransition from "@/components/PageTransition";
 import HomeButton from "@/components/HomeButton";
 import FilmCard from "@/components/FilmCard";
 import PageContainer from "@/components/PageContainer";
+import SplitText from "@/components/SplitText";
 
 export const metadata: Metadata = {
   title: "À propos - Arnaud Ban | Réalisateur & Monteur Vidéo à Avignon",
@@ -90,9 +91,9 @@ export default function AboutPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <PageContainer className="py-8 md:py-16">
-        <h1 className="text-5xl md:text-7xl text-foreground mb-3 tracking-tight">
+        <SplitText as="h1" className="text-5xl md:text-7xl text-foreground mb-3 tracking-tight">
           Arnaud Ban
-        </h1>
+        </SplitText>
         <p className="text-2xl md:text-3xl font-serif italic text-foreground/70 mb-10 md:mb-14">
           Réalisateur &amp; monteur vidéo à Avignon, Vaucluse
         </p>

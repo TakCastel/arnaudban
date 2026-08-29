@@ -8,6 +8,7 @@ import SkipToMain from "@/components/SkipToMain";
 import ScrollToAnchor from "@/components/ScrollToAnchor";
 import PassiveEventsInit from "@/components/PassiveEventsInit";
 import DuotoneFilters from "@/components/DuotoneFilters";
+import RouteTransition from "@/components/RouteTransition";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -141,6 +142,7 @@ export default function RootLayout({
           scroll horizontal parasite sans ça. */}
       <body className="min-h-screen flex flex-col bg-background text-foreground font-sans overflow-x-hidden">
         <DuotoneFilters />
+        <RouteTransition />
         <ThemeProvider>
           <SkipToMain />
           <Header />

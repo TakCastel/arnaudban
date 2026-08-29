@@ -6,6 +6,7 @@ import FilmCard from "@/components/FilmCard";
 import PageContainer from "@/components/PageContainer";
 import StackedSections from "@/components/StackedSections";
 import EdgeToEdgeSection from "@/components/EdgeToEdgeSection";
+import SplitText from "@/components/SplitText";
 
 export const metadata: Metadata = {
   title: "Services - Monteur vidéo & réalisateur à Avignon | Arnaud Ban",
@@ -139,9 +140,9 @@ export default function ServicesPage() {
       />
       <PageContainer className="py-8 md:py-16">
         <header className="max-w-3xl mb-14 md:mb-20">
-          <h1 className="text-5xl md:text-7xl text-foreground mb-5 tracking-tight">
+          <SplitText as="h1" className="text-5xl md:text-7xl text-foreground mb-5 tracking-tight">
             Services
-          </h1>
+          </SplitText>
           <p className="text-2xl md:text-3xl leading-relaxed text-foreground/90">
             Réalisation, montage et étalonnage vidéo à Avignon et dans le
             Vaucluse : courts métrages, clips musicaux, vidéos d&apos;entreprise

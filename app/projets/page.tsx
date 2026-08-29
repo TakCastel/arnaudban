@@ -4,6 +4,7 @@ import HomeButton from "@/components/HomeButton";
 import PageContainer from "@/components/PageContainer";
 import ProjectGrid from "@/components/ProjectGrid";
 import { getProjects } from "@/lib/getProjects";
+import SplitText from "@/components/SplitText";
 
 export const metadata: Metadata = {
   title: "Projets - Portfolio vidéo | Arnaud Ban, Avignon",
@@ -53,9 +54,9 @@ export default function ProjetsPage() {
           PageContainer, contenu, puis retour à l'accueil. */}
       <PageContainer className="pt-8 md:pt-16">
         <header className="max-w-3xl mb-14 md:mb-20">
-          <h1 id="work-title" className="text-5xl md:text-7xl text-foreground mb-5 tracking-tight">
+          <SplitText as="h1" id="work-title" className="text-5xl md:text-7xl text-foreground mb-5 tracking-tight">
             Projets
-          </h1>
+          </SplitText>
           <p className="text-2xl md:text-3xl leading-relaxed text-foreground/90">
             {items.length} projets : courts métrages, clips musicaux, vidéos
             d&apos;entreprise, captations d&apos;événements et projets
