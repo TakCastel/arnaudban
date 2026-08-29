@@ -122,7 +122,17 @@ export default function RouteTransition() {
       if (url.pathname === window.location.pathname) return;
 
       e.preventDefault();
-      const target = url.pathname + url.search + url.hash;
+      // url.pathname sort de anchor.href, donc contient déjà le basePath tel
+      // qu'écrit dans le HTML par next/link (ex. "/arnaudban/projets/" en
+      // preview GitHub Pages, voir next.config.js). Or router.push() (comme
+      // le `href` d'un <Link>) attend un chemin SANS basePath : il le
+      // rajoute lui-même. Sans ce retrait, on obtenait un doublon
+      // ("/arnaudban/arnaudban/projets/") → 404 au clic. Invisible en prod
+      // (VPS) où le basePath est vide, donc jamais remarqué avant la preview.
+      const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+      const pathname =
+        basePath && url.pathname.startsWith(basePath) ? url.pathname.slice(basePath.length) || "/" : url.pathname;
+      const target = pathname + url.search + url.hash;
 
       setPhase("hidden");
       let raf2 = 0;
