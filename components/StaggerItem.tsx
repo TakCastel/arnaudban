@@ -1,26 +1,16 @@
 import { ReactNode } from "react";
-import { staggerSectionDelayMs } from "@/lib/routeTransition";
+import { textDelayMs } from "@/lib/routeTransition";
 
 /**
- * Une section de page qui apparaît (fondu + légère montée, voir
- * .animate-stagger-item dans globals.css) après le titre — le titre, lui,
- * gère sa propre cascade lettre par lettre via SplitText, pas besoin de
- * l'envelopper ici. `index` = position de cette section parmi les
- * StaggerItem de la page, dans l'ordre d'apparition voulu (0 = juste après
- * le titre, 1 = la suivante, etc.) : c'est ce qui donne l'effet "de haut en
- * bas" au lieu de tout faire apparaître d'un coup.
+ * Le texte qui suit immédiatement le titre d'une page (fondu + légère
+ * montée), avec un léger décalage par rapport à lui — voir
+ * ROUTE_TRANSITION_TEXT_STEP_MS. Le titre gère sa propre cascade lettre par
+ * lettre via SplitText ; le reste du contenu de la page, lui, apparaît au
+ * scroll plutôt que sur ce même minutage — voir components/ScrollReveal.
  */
-export default function StaggerItem({
-  children,
-  index,
-  className = "",
-}: {
-  children: ReactNode;
-  index: number;
-  className?: string;
-}) {
+export default function StaggerItem({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`animate-stagger-item ${className}`} style={{ animationDelay: `${staggerSectionDelayMs(index)}ms` }}>
+    <div className={`animate-stagger-item ${className}`} style={{ animationDelay: `${textDelayMs()}ms` }}>
       {children}
     </div>
   );

@@ -5,10 +5,10 @@
 // encore l'écran — sinon elle se joue en douce derrière le rideau et
 // personne ne la voit.
 export const ROUTE_TRANSITION_BLOCK_COUNT = 5;
-export const ROUTE_TRANSITION_COVER_MS = 450;
-export const ROUTE_TRANSITION_HOLD_MS = 150;
-export const ROUTE_TRANSITION_REVEAL_MS = 450;
-export const ROUTE_TRANSITION_STAGGER_MS = 50;
+export const ROUTE_TRANSITION_COVER_MS = 380;
+export const ROUTE_TRANSITION_HOLD_MS = 120;
+export const ROUTE_TRANSITION_REVEAL_MS = 380;
+export const ROUTE_TRANSITION_STAGGER_MS = 40;
 
 // Temps pour que TOUS les blocs (le dernier de la cascade compris) aient
 // fini de couvrir / de se rétracter.
@@ -24,23 +24,30 @@ export const ROUTE_TRANSITION_REVEAL_TOTAL_MS =
 // "fade out" des blocs plutôt que d'attendre qu'il soit entièrement fini.
 export const ROUTE_TRANSITION_CONTENT_DELAY_MS = Math.round(ROUTE_TRANSITION_REVEAL_TOTAL_MS * 0.75);
 
-// Pas entre chaque section empilée d'une page (voir components/StaggerItem)
-// qui apparaissent l'une après l'autre, de haut en bas, une fois le titre
-// (SplitText, sa propre cascade lettre par lettre) déjà lancé — au lieu de
-// tout faire apparaître d'un coup.
-export const ROUTE_TRANSITION_STAGGER_ITEM_STEP_MS = 90;
-// Au-delà de cet index, les sections suivantes partagent le même délai que
-// la dernière : une page longue (FAQ, listes) ne doit pas faire attendre ses
-// premières sections visibles le temps que toutes les autres, hors écran au
-// chargement, aient chacune leur tour.
-const ROUTE_TRANSITION_STAGGER_ITEM_MAX_STEPS = 4;
+// Vrai uniquement après qu'un clic ait déclenché une vraie transition de
+// page (cover → navigation → reveal, voir RouteTransition.tsx) — jamais au
+// tout premier chargement d'une page (URL tapée, F5) : aucun rideau n'y
+// cache jamais le contenu, donc lui appliquer ce même délai ne ferait
+// qu'attendre pour rien. Simple variable de module (pas de state React) :
+// le gestionnaire de clic de RouteTransition la bascule à true de façon
+// synchrone, juste avant router.push — donc déjà à true quand la page
+// suivante commence à se monter.
+export const routeTransitionState = { hasNavigatedOnce: false };
 
-/**
- * Délai (ms) d'une section de page qui suit le titre : `index` = position de
- * cette section parmi celles-là (0 = juste après le titre). Voir
- * components/StaggerItem.
- */
-export function staggerSectionDelayMs(index: number): number {
-  const step = Math.min(index, ROUTE_TRANSITION_STAGGER_ITEM_MAX_STEPS) + 1;
-  return ROUTE_TRANSITION_CONTENT_DELAY_MS + step * ROUTE_TRANSITION_STAGGER_ITEM_STEP_MS;
+/** Délai de base avant l'apparition du titre/texte d'une page (voir ci-dessus). */
+export function contentEntryDelayMs(): number {
+  return routeTransitionState.hasNavigatedOnce ? ROUTE_TRANSITION_CONTENT_DELAY_MS : 0;
+}
+
+// Écart entre l'apparition du titre (SplitText, sa propre cascade lettre par
+// lettre démarrant à contentEntryDelayMs()) et celle du texte qui le suit
+// (voir components/StaggerItem). Le reste du contenu de la page, lui,
+// apparaît au scroll plutôt qu'à un délai fixe (voir components/ScrollReveal) :
+// pas la peine de tout caler sur le même minutage, l'essentiel est de toute
+// façon hors écran au chargement.
+export const ROUTE_TRANSITION_TEXT_STEP_MS = 160;
+
+/** Délai (ms) du texte qui suit le titre. Voir components/StaggerItem. */
+export function textDelayMs(): number {
+  return contentEntryDelayMs() + ROUTE_TRANSITION_TEXT_STEP_MS;
 }

@@ -58,11 +58,11 @@ const skills = [
   },
   {
     title: "Montage",
-    text: "Sur Premiere Pro, je construis le rythme et la narration de chaque film : clips musicaux, courts métrages, captations d'événements ou vidéos d'entreprise.",
+    text: "Je construis le rythme et la narration de chaque film : clips musicaux, courts métrages, captations d'événements ou vidéos d'entreprise.",
   },
   {
     title: "Étalonnage",
-    text: "Sur DaVinci Resolve, je donne à l'image sa tonalité finale : cohérence colorimétrique et identité visuelle propre à chaque projet.",
+    text: "Je donne à l'image sa tonalité finale : cohérence colorimétrique et identité visuelle propre à chaque projet.",
   },
 ];
 

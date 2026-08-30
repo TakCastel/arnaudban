@@ -6,6 +6,7 @@ import ProjectGrid from "@/components/ProjectGrid";
 import { getProjects } from "@/lib/getProjects";
 import SplitText from "@/components/SplitText";
 import StaggerItem from "@/components/StaggerItem";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Projets - Portfolio vidéo | Arnaud Ban, Avignon",
@@ -58,7 +59,7 @@ export default function ProjetsPage() {
           <SplitText as="h1" id="work-title" className="text-5xl md:text-7xl text-foreground mb-5 tracking-tight">
             Projets
           </SplitText>
-          <StaggerItem index={0}>
+          <StaggerItem>
             <p className="text-2xl md:text-3xl leading-relaxed text-foreground/90">
               {items.length} projets : courts métrages, clips musicaux, vidéos
               d&apos;entreprise, captations d&apos;événements et projets
@@ -69,15 +70,16 @@ export default function ProjetsPage() {
       </PageContainer>
 
       {/* Grille dans le container (comme le reste du contenu), tailles de
-          cases variées — voir ProjectGrid. */}
+          cases variées — voir ProjectGrid. Apparition au scroll (voir
+          ScrollReveal), pas sur le même minuteur que le titre/texte. */}
       <PageContainer className="pb-8 md:pb-16">
-        <StaggerItem index={1}>
+        <ScrollReveal>
           <ProjectGrid projects={items} />
-        </StaggerItem>
+        </ScrollReveal>
 
-        <StaggerItem index={2} className="pt-10">
+        <ScrollReveal className="pt-10">
           <HomeButton centered={false} />
-        </StaggerItem>
+        </ScrollReveal>
       </PageContainer>
     </PageTransition>
   );

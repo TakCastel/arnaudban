@@ -1,7 +1,7 @@
 "use client";
 
 import { createElement, ReactNode, useEffect, useRef, useState } from "react";
-import { ROUTE_TRANSITION_CONTENT_DELAY_MS } from "@/lib/routeTransition";
+import { contentEntryDelayMs } from "@/lib/routeTransition";
 
 /**
  * Apparition lettre par lettre (pas un simple fondu) : chaque lettre monte
@@ -12,11 +12,14 @@ import { ROUTE_TRANSITION_CONTENT_DELAY_MS } from "@/lib/routeTransition";
  * fin de ligne au retour à la ligne.
  *
  * Délai par défaut = durée de la transition de page (voir
- * lib/routeTransition.ts) : ces titres sont presque toujours déjà dans le
- * viewport au montage (IntersectionObserver se déclenche donc tout de
- * suite), sans ce délai la cascade de lettres se jouerait en douce derrière
- * les blocs de RouteTransition. Passer `delay={0}` explicitement pour un
- * usage hors navigation de page (pas encore le cas actuellement).
+ * lib/routeTransition.ts), UNIQUEMENT en sortie d'une vraie navigation
+ * (contentEntryDelayMs() vaut 0 au tout premier chargement — aucun rideau
+ * n'y joue jamais, pas la peine d'y attendre pour rien) : ces titres sont
+ * presque toujours déjà dans le viewport au montage (IntersectionObserver se
+ * déclenche donc tout de suite), sans ce délai la cascade de lettres se
+ * jouerait en douce derrière les blocs de RouteTransition. Passer `delay={0}`
+ * explicitement pour un usage hors navigation de page (pas encore le cas
+ * actuellement).
  *
  * Accessibilité : le texte réel reste porté par `aria-label` sur l'élément
  * englobant ; chaque lettre individuelle est `aria-hidden` pour ne pas être
@@ -26,7 +29,7 @@ export default function SplitText({
   children,
   as = "span",
   className = "",
-  delay = ROUTE_TRANSITION_CONTENT_DELAY_MS,
+  delay = contentEntryDelayMs(),
   id,
 }: {
   children: string;

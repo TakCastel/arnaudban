@@ -8,6 +8,7 @@ import StackedSections from "@/components/StackedSections";
 import EdgeToEdgeSection from "@/components/EdgeToEdgeSection";
 import SplitText from "@/components/SplitText";
 import StaggerItem from "@/components/StaggerItem";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Services - Monteur vidéo & réalisateur à Avignon | Arnaud Ban",
@@ -60,11 +61,11 @@ const skills = [
   },
   {
     title: "Montage",
-    text: "Sur Premiere Pro, je construis le rythme et la structure narrative du film : courts métrages, clips musicaux, captations d'événements ou reportages institutionnels.",
+    text: "Je construis le rythme et la structure narrative du film : courts métrages, clips musicaux, captations d'événements ou reportages institutionnels.",
   },
   {
     title: "Étalonnage",
-    text: "Sur DaVinci Resolve, je travaille la colorimétrie et l'ambiance de l'image pour donner à chaque vidéo une identité visuelle cohérente, du plan au film entier.",
+    text: "Je travaille la colorimétrie et l'ambiance de l'image pour donner à chaque vidéo une identité visuelle cohérente, du plan au film entier.",
   },
 ];
 
@@ -144,7 +145,7 @@ export default function ServicesPage() {
           <SplitText as="h1" className="text-5xl md:text-7xl text-foreground mb-5 tracking-tight">
             Services
           </SplitText>
-          <StaggerItem index={0}>
+          <StaggerItem>
             <p className="text-2xl md:text-3xl leading-relaxed text-foreground/90">
               Réalisation, montage et étalonnage vidéo à Avignon et dans le
               Vaucluse : courts métrages, clips musicaux, vidéos d&apos;entreprise
@@ -154,8 +155,10 @@ export default function ServicesPage() {
           </StaggerItem>
         </header>
 
+        {/* Apparition au scroll à partir d'ici (voir ScrollReveal), pas sur
+            le même minuteur que le titre/texte de l'en-tête. */}
         {/* Compétences */}
-        <StaggerItem index={1}>
+        <ScrollReveal>
           <section aria-labelledby="competences-title" className="mb-16 md:mb-24">
             <h2
               id="competences-title"
@@ -176,10 +179,10 @@ export default function ServicesPage() {
               ))}
             </div>
           </section>
-        </StaggerItem>
+        </ScrollReveal>
 
         {/* Types de projets */}
-        <StaggerItem index={2}>
+        <ScrollReveal>
           <section aria-labelledby="projets-title" className="mb-16 md:mb-24">
             <h2
               id="projets-title"
@@ -216,10 +219,10 @@ export default function ServicesPage() {
               ))}
             </StackedSections>
           </section>
-        </StaggerItem>
+        </ScrollReveal>
 
         {/* FAQ */}
-        <StaggerItem index={3}>
+        <ScrollReveal>
           <section aria-labelledby="faq-title" className="mb-16 md:mb-24">
             <h2
               id="faq-title"
@@ -246,13 +249,10 @@ export default function ServicesPage() {
               ))}
             </div>
           </section>
-        </StaggerItem>
+        </ScrollReveal>
 
         {/* CTA */}
-        <StaggerItem
-          index={4}
-          className="border border-foreground p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6"
-        >
+        <ScrollReveal className="border border-foreground p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
             <p className="font-heading text-3xl md:text-4xl text-foreground mb-1">
               Discutons de votre projet
@@ -269,11 +269,11 @@ export default function ServicesPage() {
           >
             Écrire un mail
           </Link>
-        </StaggerItem>
+        </ScrollReveal>
 
-        <StaggerItem index={5} className="pt-10">
+        <ScrollReveal className="pt-10">
           <HomeButton centered={false} />
-        </StaggerItem>
+        </ScrollReveal>
       </PageContainer>
     </PageTransition>
   );

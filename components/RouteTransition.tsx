@@ -9,6 +9,7 @@ import {
   ROUTE_TRANSITION_HOLD_MS as HOLD_MS,
   ROUTE_TRANSITION_REVEAL_MS as REVEAL_MS,
   ROUTE_TRANSITION_STAGGER_MS as STAGGER_MS,
+  routeTransitionState,
 } from "@/lib/routeTransition";
 
 // useLayoutEffect n'a aucun effet côté serveur (avertissement React sans
@@ -64,6 +65,11 @@ export default function RouteTransition() {
       return () => clearTimeout(idleTimer);
     }
 
+    // Précédent/suivant du navigateur : un rideau se joue aussi ici, donc le
+    // contenu de la page qui vient de se monter doit avoir son délai — trop
+    // tard pour CE montage précis (l'effet tourne après coup), mais ça reste
+    // correct pour les navigations suivantes.
+    routeTransitionState.hasNavigatedOnce = true;
     setPhase("hidden");
     let raf2 = 0;
     const raf1 = requestAnimationFrame(() => {
@@ -142,6 +148,12 @@ export default function RouteTransition() {
       setTimeout(() => {
         setPhase("covered");
         weNavigatedRef.current = true;
+        // Basculé AVANT router.push : SplitText/StaggerItem de la page
+        // suivante lisent ce flag dès leur tout premier rendu pour savoir
+        // s'il faut le délai d'apparition du contenu (voir
+        // lib/routeTransition.ts) — nécessaire seulement ici, en sortie
+        // d'une vraie transition avec rideau, jamais au premier chargement.
+        routeTransitionState.hasNavigatedOnce = true;
         router.push(target);
       }, COVER_TOTAL_MS);
     }
