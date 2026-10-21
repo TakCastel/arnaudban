@@ -66,7 +66,7 @@ export default function Header() {
                 départ. */}
             <Link
               href="/"
-              className={`flex items-center px-10 font-heading font-bold uppercase text-3xl text-hero-block-text transition-all duration-500 ease-out ${
+              className={`flex items-center px-6 lg:px-10 whitespace-nowrap font-heading font-bold uppercase text-2xl lg:text-3xl text-hero-block-text transition-all duration-500 ease-out ${
                 isVisible && !overHero
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 -translate-y-3 pointer-events-none"

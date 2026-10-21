@@ -1,11 +1,8 @@
 import { Metadata } from "next";
-import PageTransition from "@/components/PageTransition";
-import HomeButton from "@/components/HomeButton";
-import PageContainer from "@/components/PageContainer";
+import Cut from "@/components/Cut";
+import Words from "@/components/Words";
+import Slugline from "@/components/Slugline";
 import ContactForm from "@/components/ContactForm";
-import SplitText from "@/components/SplitText";
-import StaggerItem from "@/components/StaggerItem";
-import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Contact - Arnaud Ban | Réalisateur & Monteur Vidéo à Avignon",
@@ -40,51 +37,64 @@ export const metadata: Metadata = {
   },
 };
 
-const linkClass =
-  "font-mono font-bold hover:text-foreground/80 transition-colors duration-300 text-foreground underline decoration-2 underline-offset-4 hover:decoration-4";
-
 export default function ContactPage() {
   return (
-    <PageTransition>
-      <PageContainer className="py-8 md:py-16">
-        <SplitText as="h1" className="text-5xl md:text-7xl text-foreground mb-3 tracking-tight">
-          Contact
-        </SplitText>
-        <StaggerItem className="mb-10 md:mb-14 max-w-2xl">
-          <p className="text-2xl md:text-3xl font-serif italic text-foreground/70">
-            Un projet vidéo en tête ? Racontez-le-moi.
+    <div className="bg-background text-foreground">
+      {/* le titre en carton plein cadre, puis l'adresse en gros :
+          c'est le moyen le plus direct, il passe avant le formulaire. */}
+      <section className="pt-12 md:pt-20 pb-20 md:pb-32" aria-labelledby="contact-title">
+        <Slugline>Int. Bureau de production — Avignon — Jour</Slugline>
+        <Cut className="px-4 md:px-10">
+          <h1
+            id="contact-title"
+            className="font-heading font-bold uppercase leading-[0.86] pt-[0.16em] tracking-tighter text-[18vw] md:text-[11vw]"
+          >
+            <Words>Contact</Words>
+          </h1>
+        </Cut>
+        <Cut className="px-4 md:px-10 mt-10 md:mt-20 grid md:grid-cols-2 gap-x-10 gap-y-6 items-end">
+          <p className="text-[clamp(1.4rem,2.8vw,3rem)] leading-[1.1] tracking-[-0.015em] max-w-[20ch]">
+            Un projet vidéo en tête&nbsp;? <em className="italic whitespace-nowrap">Racontez-le-moi.</em>
           </p>
-        </StaggerItem>
+          <p className="text-base md:text-lg leading-relaxed opacity-80 max-w-md">
+            Court métrage, clip, vidéo d&apos;entreprise ou captation
+            d&apos;événement : décrivez-moi votre projet, je vous réponds
+            rapidement.
+          </p>
+        </Cut>
+      </section>
 
-        {/* Apparition au scroll (voir ScrollReveal), pas sur le même
-            minuteur que le titre/texte au-dessus. */}
-        <ScrollReveal className="grid md:grid-cols-[1fr_1.3fr] gap-10 md:gap-16">
-          <div className="text-lg leading-relaxed text-foreground/80 space-y-4">
-            <p>
-              Que ce soit pour un court métrage, un clip, une vidéo
-              d&apos;entreprise ou une captation d&apos;événement, décrivez-moi
-              votre projet et je vous réponds rapidement.
-            </p>
-            <p>
-              Vous pouvez aussi m&apos;écrire directement par mail :{" "}
-              <a
-                href="mailto:ban.arnaud@outlook.fr"
-                className={linkClass}
-                aria-label="Envoyer un email à ban.arnaud@outlook.fr"
-              >
-                ban.arnaud@outlook.fr
-              </a>
-            </p>
-            <p className="text-foreground/60">Avignon, Vaucluse</p>
-          </div>
+      <section className="pb-20 md:pb-32" aria-labelledby="mail-title">
+        <Slugline>
+          <span id="mail-title">Par mail — Avignon, Vaucluse</span>
+        </Slugline>
+        <Cut className="px-4 md:px-10 border-t border-b border-foreground/20 py-8 md:py-12">
+          {/* break-all en dernier recours : l'adresse ne doit jamais faire
+              déborder la page sur un petit écran. */}
+          <a
+            href="mailto:ban.arnaud@outlook.fr"
+            aria-label="Envoyer un email à ban.arnaud@outlook.fr"
+            className="group inline-flex items-baseline gap-4 text-[clamp(1.5rem,4.2vw,4.5rem)] leading-[1.05] tracking-[-0.03em] [overflow-wrap:anywhere]"
+          >
+            <span className="underline decoration-1 underline-offset-[0.14em] group-hover:decoration-[0.06em]">
+              ban.arnaud@outlook.fr
+            </span>
+            <span aria-hidden="true" className="inline-block text-[0.6em] transition-transform group-hover:translate-x-2">
+              →
+            </span>
+          </a>
+        </Cut>
+      </section>
 
+      {/* le formulaire, présenté comme un clap. */}
+      <section className="pb-24 md:pb-40" aria-labelledby="form-title">
+        <Slugline>
+          <span id="form-title">Ou par le formulaire</span>
+        </Slugline>
+        <Cut className="px-4 md:px-10">
           <ContactForm />
-        </ScrollReveal>
-
-        <ScrollReveal className="pt-14 md:pt-20">
-          <HomeButton centered={false} />
-        </ScrollReveal>
-      </PageContainer>
-    </PageTransition>
+        </Cut>
+      </section>
+    </div>
   );
 }

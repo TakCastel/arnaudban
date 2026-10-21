@@ -43,8 +43,10 @@ function NavLink({
             pendant qu'une copie identique arrive par le haut. */}
         <span className="relative h-5 overflow-hidden inline-block">
           <span className="flex flex-col -translate-y-1/2 transition-transform duration-300 ease-out group-hover:translate-y-0">
-            <span className="h-5 flex items-center">{children}</span>
-            <span className="h-5 flex items-center">{children}</span>
+            {/* whitespace-nowrap : sur écran moyen, « À propos » passait
+                sur deux lignes et la roulette (1 ligne de haut) le coupait. */}
+            <span className="h-5 flex items-center whitespace-nowrap">{children}</span>
+            <span className="h-5 flex items-center whitespace-nowrap">{children}</span>
           </span>
         </span>
       </Link>

@@ -1,14 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import PageTransition from "@/components/PageTransition";
-import HomeButton from "@/components/HomeButton";
-import FilmCard from "@/components/FilmCard";
-import PageContainer from "@/components/PageContainer";
-import StackedSections from "@/components/StackedSections";
-import EdgeToEdgeSection from "@/components/EdgeToEdgeSection";
-import SplitText from "@/components/SplitText";
-import StaggerItem from "@/components/StaggerItem";
-import ScrollReveal from "@/components/ScrollReveal";
+import Cut from "@/components/Cut";
+import Words from "@/components/Words";
+import Slugline from "@/components/Slugline";
+import { withBasePath } from "@/lib/basePath";
 
 export const metadata: Metadata = {
   title: "Services - Monteur vidéo & réalisateur à Avignon | Arnaud Ban",
@@ -51,27 +46,36 @@ export const metadata: Metadata = {
   },
 };
 
-const linkClass =
-  "font-mono font-bold hover:text-foreground/80 transition-colors duration-300 text-foreground underline decoration-2 underline-offset-4 hover:decoration-4";
+// Petit libellé de travail (numéros, intitulés de colonnes, liens) : le même
+// gabarit typographique que les sluglines et le générique de fin.
+const labelClass = "font-heading uppercase tracking-[0.2em] text-xs md:text-sm";
 
+// Le métier, en trois mots-plans. Mêmes couvertures que sur l'accueil pour que
+// le survol "remplisse" chaque mot d'un plan reconnaissable d'une page à l'autre.
 const skills = [
   {
     title: "Réalisation",
-    text: "Écriture, repérages, direction d'acteurs et de tournage : je conçois des films de A à Z, du court métrage de fiction à la vidéo de commande, pour donner une vraie mise en scène à chaque projet.",
+    still: "/assets/ARABESQUE.webp",
+    text: "Écriture, repérages, direction d'acteurs et de tournage : je conçois des films de A à Z, du court métrage de fiction à la vidéo de commande.",
   },
   {
     title: "Montage",
-    text: "Je construis le rythme et la structure narrative du film : courts métrages, clips musicaux, captations d'événements ou reportages institutionnels.",
+    still: "/assets/BELITRE.webp",
+    text: "Le rythme et la structure narrative du film : courts métrages, clips musicaux, captations d'événements ou reportages institutionnels.",
   },
   {
     title: "Étalonnage",
-    text: "Je travaille la colorimétrie et l'ambiance de l'image pour donner à chaque vidéo une identité visuelle cohérente, du plan au film entier.",
+    still: "/assets/TEL_ESPRIT.webp",
+    text: "La colorimétrie et l'ambiance de l'image, pour une identité visuelle cohérente du plan au film entier.",
   },
 ];
 
+// Les types de films. Chaque ligne se remplit au survol de la couverture du
+// projet cité en exemple : l'exemple montré est celui vers lequel on renvoie.
 const projectTypes = [
   {
     title: "Courts métrages",
+    still: "/assets/DOUG.webp",
     text: "Fictions et documentaires écrits, tournés et montés pour des festivals comme KINO-A, avec un vrai travail de réalisation et d'étalonnage.",
     links: [
       { slug: "doug-2020", label: "Doug" },
@@ -80,23 +84,58 @@ const projectTypes = [
   },
   {
     title: "Clips musicaux",
-    text: "Réalisation et montage de clips pour des artistes, avec une esthétique construite en amont avec chaque musicien.",
+    still: "/assets/ON DIT DELLE.webp",
+    text: "Réalisation et montage de clips, avec une esthétique construite en amont avec chaque musicien.",
     links: [{ slug: "on-dit-delle-2021", label: "On dit d'elle" }],
   },
   {
     title: "Vidéos d'entreprise",
-    text: "Reportages corporate et vidéos institutionnelles : mise en valeur d'un métier, d'une équipe ou d'un événement d'entreprise.",
+    still: "/assets/ID_LOGISTICS.webp",
+    text: "Reportages corporate et vidéos institutionnelles : un métier, une équipe ou un événement d'entreprise.",
     links: [{ slug: "id-logistics", label: "ID Logistics" }],
   },
   {
     title: "Événementiel",
-    text: "Captation de concerts, spectacles et soirées, montées en teaser ou en aftermovie dynamique.",
+    still: "/assets/BALADI.webp",
+    text: "Captation de concerts, spectacles et soirées, montées en teaser ou en aftermovie.",
     links: [{ slug: "baladi-jazz-project", label: "Baladi jazz project" }],
   },
   {
     title: "Associatif",
+    still: "/assets/RENOVART.webp",
     text: "Reportages pour des associations et missions locales du Vaucluse, pour raconter leurs actions et leurs publics.",
     links: [{ slug: "renovart", label: "Renov'Art" }],
+  },
+];
+
+// Le déroulé d'une prestation (repris de la FAQ), posé sur une timeline de
+// montage. Les timecodes sont des repères de lecture, pas des durées réelles :
+// ils donnent l'ordre et la proportion, le délai se cale au cas par cas.
+const steps = [
+  {
+    tc: "00:00:00:00",
+    title: "Échange",
+    text: "Votre besoin, vos objectifs, puis un cadrage et un devis.",
+  },
+  {
+    tc: "00:12:00:00",
+    title: "Tournage",
+    text: "Ou réception de vos rushs, si les images existent déjà.",
+  },
+  {
+    tc: "00:31:00:00",
+    title: "Montage",
+    text: "Le rythme et la structure du film.",
+  },
+  {
+    tc: "00:47:00:00",
+    title: "Étalonnage",
+    text: "La couleur et l'ambiance de l'image.",
+  },
+  {
+    tc: "01:00:00:00",
+    title: "Livraison",
+    text: "Un ou deux allers-retours de validation, puis les fichiers finaux.",
   },
 ];
 
@@ -132,149 +171,176 @@ const faqJsonLd = {
   })),
 };
 
+const still = (src: string) =>
+  ({ "--still": `url("${withBasePath(src)}")` }) as React.CSSProperties;
+
 export default function ServicesPage() {
   return (
-    <PageTransition>
+    <div className="bg-background text-foreground">
       {/* eslint-disable-next-line react/no-danger */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <PageContainer className="py-8 md:py-16">
-        <header className="max-w-3xl mb-14 md:mb-20">
-          <SplitText as="h1" className="text-5xl md:text-7xl text-foreground mb-5 tracking-tight">
-            Services
-          </SplitText>
-          <StaggerItem>
-            <p className="text-2xl md:text-3xl leading-relaxed text-foreground/90">
-              Réalisation, montage et étalonnage vidéo à Avignon et dans le
-              Vaucluse : courts métrages, clips musicaux, vidéos d&apos;entreprise
-              et captations d&apos;événements, pensés et fabriqués de bout en
-              bout ou repris à partir de vos rushs.
-            </p>
-          </StaggerItem>
-        </header>
 
-        {/* Apparition au scroll à partir d'ici (voir ScrollReveal), pas sur
-            le même minuteur que le titre/texte de l'en-tête. */}
-        {/* Compétences */}
-        <ScrollReveal>
-          <section aria-labelledby="competences-title" className="mb-16 md:mb-24">
-            <h2
-              id="competences-title"
-              className="text-xs font-semibold uppercase tracking-widest text-foreground/50 mb-6"
-            >
-              Compétences
-            </h2>
-            <div className="grid md:grid-cols-3 gap-8 md:gap-10">
-              {skills.map((skill) => (
-                <FilmCard key={skill.title}>
-                  <h3 className="text-2xl text-foreground mb-3">
-                    {skill.title}
-                  </h3>
-                  <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
-                    {skill.text}
-                  </p>
-                </FilmCard>
-              ))}
-            </div>
-          </section>
-        </ScrollReveal>
+      {/* OUVERTURE — le titre du découpage, puis l'intention décalée à droite
+          comme une note de production en marge. */}
+      <header className="pt-12 md:pt-20 pb-20 md:pb-32">
+        <Slugline>Découpage technique</Slugline>
+        <Cut className="px-4 md:px-10">
+          <h1 className="font-heading font-bold uppercase leading-[0.86] pt-[0.16em] tracking-tighter text-[18vw] md:text-[11vw]">
+            <Words>Services</Words>
+          </h1>
+        </Cut>
+        <Cut className="px-4 md:px-10 mt-8 md:mt-12 md:ml-[50%] max-w-xl">
+          <p className="text-lg md:text-xl leading-relaxed opacity-80">
+            Réalisation, montage et étalonnage vidéo à Avignon et dans le
+            Vaucluse : courts métrages, clips musicaux, vidéos d&apos;entreprise
+            et captations d&apos;événements, pensés et fabriqués de bout en bout
+            ou repris à partir de vos rushs.
+          </p>
+        </Cut>
+      </header>
 
-        {/* Types de projets */}
-        <ScrollReveal>
-          <section aria-labelledby="projets-title" className="mb-16 md:mb-24">
-            <h2
-              id="projets-title"
-              className="text-xs font-semibold uppercase tracking-widest text-foreground/50 mb-6"
-            >
-              Types de projets
-            </h2>
-            {/* Empilées et alternées gauche/droite, comme la section
-                Compétences de l'accueil (voir StackedSections /
-                EdgeToEdgeSection) plutôt qu'une grille uniforme. */}
-            <StackedSections>
-              {projectTypes.map((type, i) => (
-                <EdgeToEdgeSection
-                  key={type.title}
-                  className={`max-w-2xl ${i % 2 === 1 ? "ml-auto" : ""}`}
+      {/* le métier : mots-plans pleine largeur, comme sur l'accueil,
+          mais avec le texte complet (c'est ici que vit le détail). */}
+      <section className="pb-24 md:pb-40" aria-labelledby="competences-title">
+        <Slugline>
+          <span id="competences-title">Compétences</span>
+        </Slugline>
+        <ul>
+          {skills.map((skill) => (
+            <li key={skill.title} className="skill-row group/skill border-t border-foreground/20">
+              <Cut className="grid md:grid-cols-[1fr_minmax(0,22rem)] items-end gap-x-4 gap-y-3 px-4 md:px-10 py-6 md:py-8">
+                <h2
+                  className="skill-word font-heading font-bold uppercase leading-[0.86] pt-[0.16em] tracking-tighter text-[16vw] md:text-[11vw] transition-transform duration-700 ease-out md:group-hover/skill:translate-x-6"
+                  style={still(skill.still)}
                 >
-                  <h3 className="text-2xl text-foreground mb-3">
-                    {type.title}
-                  </h3>
-                  <p className="text-base md:text-lg text-foreground/70 leading-relaxed mb-4">
-                    {type.text}
-                  </p>
-                  <p className="text-base">
-                    {type.links.map((link, j) => (
-                      <span key={link.slug}>
-                        <Link href={`/projects/${link.slug}`} className={linkClass}>
-                          {link.label}
-                        </Link>
-                        {j < type.links.length - 1 && ", "}
-                      </span>
+                  <Words>{skill.title}</Words>
+                </h2>
+                <p className="text-base md:text-lg leading-relaxed opacity-80 md:pb-[1.2vw]">
+                  {skill.text}
+                </p>
+              </Cut>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* les types de films, plus petits que les compétences pour
+          garder une hiérarchie, chacun avec ses projets en "plans de référence". */}
+      <section className="pb-24 md:pb-40" aria-labelledby="projets-title">
+        <Slugline>
+          <span id="projets-title">Types de projets</span>
+        </Slugline>
+        <ul>
+          {projectTypes.map((type) => (
+            <li key={type.title} className="skill-row group/skill border-t border-foreground/20">
+              <Cut className="grid md:grid-cols-[1fr_minmax(0,22rem)] items-end gap-x-4 gap-y-3 px-4 md:px-10 py-5 md:py-6">
+                <h3
+                  className="skill-word font-heading font-bold uppercase leading-[0.86] pt-[0.16em] tracking-tighter text-[12vw] md:text-[7vw] transition-transform duration-700 ease-out md:group-hover/skill:translate-x-6"
+                  style={still(type.still)}
+                >
+                  <Words>{type.title}</Words>
+                </h3>
+                <div className="md:pb-[0.6vw]">
+                  <p className="text-base leading-relaxed opacity-80">{type.text}</p>
+                  <p className={`${labelClass} mt-3 flex flex-wrap gap-x-5 gap-y-1`}>
+                    <span className="opacity-50">Voir</span>
+                    {type.links.map((link) => (
+                      <Link key={link.slug} href={`/projects/${link.slug}`} className="end-link">
+                        {link.label} →
+                      </Link>
                     ))}
                   </p>
-                </EdgeToEdgeSection>
-              ))}
-            </StackedSections>
-          </section>
-        </ScrollReveal>
+                </div>
+              </Cut>
+            </li>
+          ))}
+        </ul>
+      </section>
 
-        {/* FAQ */}
-        <ScrollReveal>
-          <section aria-labelledby="faq-title" className="mb-16 md:mb-24">
-            <h2
-              id="faq-title"
-              className="text-xs font-semibold uppercase tracking-widest text-foreground/50 mb-6"
-            >
-              Questions fréquentes
-            </h2>
-            <div className="divide-y divide-foreground/10 border-t border-b border-foreground/10">
-              {faq.map((item) => (
-                <details key={item.q} className="group py-5">
-                  <summary className="flex items-center justify-between gap-4 cursor-pointer list-none text-lg md:text-xl font-semibold text-foreground">
+      {/* le déroulé sur une timeline de montage : horizontale sur
+          desktop (on lit de gauche à droite comme une piste), verticale sur
+          mobile où cinq colonnes seraient illisibles. */}
+      <section className="pb-24 md:pb-40" aria-labelledby="process-title">
+        <Slugline>
+          <span id="process-title">Déroulé d&apos;une prestation</span>
+        </Slugline>
+        <Cut className="px-4 md:px-10">
+          <ol className="relative grid md:grid-cols-5 border-l md:border-l-0 md:border-t border-foreground/40 ml-1 md:ml-0">
+            {steps.map((step) => (
+              <li key={step.title} className="relative pl-6 md:pl-0 md:pr-6 pb-10 md:pb-0 md:pt-6 last:pb-0">
+                {/* Repère de coupe sur la piste : un trait vertical sur desktop,
+                    une encoche horizontale sur mobile. */}
+                <span
+                  aria-hidden="true"
+                  className="absolute bg-foreground left-0 top-[0.55em] w-3 h-px md:top-[-0.75rem] md:w-px md:h-6"
+                />
+                <p className={`${labelClass} tabular-nums opacity-60`}>{step.tc}</p>
+                <h3 className="mt-2 md:mt-4 font-heading font-bold uppercase leading-[0.9] pt-[0.16em] tracking-tighter text-[12vw] md:text-[3.6vw]">
+                  <Words>{step.title}</Words>
+                </h3>
+                <p className="mt-2 md:mt-3 text-base leading-relaxed opacity-80 max-w-xs">
+                  {step.text}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </Cut>
+      </section>
+
+      {/* questions fréquentes : des lignes à filet plutôt qu'un
+          accordéon encadré ; la réponse s'ouvre dans la moitié droite. */}
+      <section className="pb-24 md:pb-40" aria-labelledby="faq-title">
+        <Slugline>
+          <span id="faq-title">Questions fréquentes</span>
+        </Slugline>
+        <div className="border-b border-foreground/20">
+          {faq.map((item) => (
+            <Cut key={item.q} className="border-t border-foreground/20">
+              <details className="group px-4 md:px-10 py-5 md:py-7">
+                <summary className="grid grid-cols-[1fr_auto] items-baseline gap-x-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                  <span className="font-heading uppercase leading-[1.05] tracking-tight text-xl md:text-3xl transition-transform duration-300 ease-out group-hover:translate-x-2">
                     {item.q}
-                    <span
-                      className="shrink-0 text-foreground/40 transition-transform duration-200 group-open:rotate-45"
-                      aria-hidden="true"
-                    >
-                      +
-                    </span>
-                  </summary>
-                  <p className="mt-3 text-foreground/70 leading-relaxed max-w-3xl">
-                    {item.a}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </section>
-        </ScrollReveal>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="font-heading text-2xl md:text-4xl opacity-50 transition-transform duration-200 group-open:rotate-45"
+                  >
+                    +
+                  </span>
+                </summary>
+                <p className="mt-4 md:mt-6 md:ml-[50%] max-w-xl text-base md:text-lg leading-relaxed opacity-80">
+                  {item.a}
+                </p>
+              </details>
+            </Cut>
+          ))}
+        </div>
+      </section>
 
-        {/* CTA */}
-        <ScrollReveal className="border border-foreground p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div>
-            <p className="font-heading text-3xl md:text-4xl text-foreground mb-1">
-              Discutons de votre projet
-            </p>
-            <p className="text-foreground/70">
-              <Link href="/contact" className={linkClass} aria-label="Aller à la page contact">
-                Contactez-moi
-              </Link>
-            </p>
-          </div>
-          <Link
-            href="/contact"
-            className="shrink-0 inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-foreground bg-background border border-foreground hover:bg-foreground hover:text-background transition-all duration-300"
+      {/* FIN — carton de fin, qui sert d'appel à l'action. Le filet du haut
+          ne se voit qu'en thème sombre, où le fond de page est déjà noir et
+          le carton se fondrait sinon dans la séquence précédente. */}
+      <section className="border-t border-foreground/20 bg-[var(--ink)] text-[var(--beige)] py-24 md:py-40" aria-labelledby="end-title">
+        <Cut className="px-4 md:px-10 text-center">
+          <p
+            id="end-title"
+            className="font-heading font-bold uppercase leading-[0.85] pt-[0.16em] tracking-tighter text-[18vw] md:text-[11vw]"
           >
-            Écrire un mail
-          </Link>
-        </ScrollReveal>
-
-        <ScrollReveal className="pt-10">
-          <HomeButton centered={false} />
-        </ScrollReveal>
-      </PageContainer>
-    </PageTransition>
+            <Words>On en parle&nbsp;?</Words>
+          </p>
+          <div className="mt-10 md:mt-14 flex flex-wrap justify-center gap-x-10 gap-y-4 font-heading uppercase tracking-[0.2em] text-sm md:text-base">
+            <Link href="/contact" className="end-link">
+              Écrire un mail →
+            </Link>
+            <Link href="/projets" className="end-link opacity-70 hover:opacity-100">
+              Voir les projets →
+            </Link>
+          </div>
+        </Cut>
+      </section>
+    </div>
   );
 }

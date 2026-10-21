@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Raleway, Antonio } from "next/font/google";
+import { Antonio } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -9,11 +10,18 @@ import ScrollToAnchor from "@/components/ScrollToAnchor";
 import PassiveEventsInit from "@/components/PassiveEventsInit";
 import DuotoneFilters from "@/components/DuotoneFilters";
 import RouteTransition from "@/components/RouteTransition";
+import FilmGrain from "@/components/FilmGrain";
+import Timecode from "@/components/Timecode";
 
-const raleway = Raleway({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-raleway",
+// Moderat (fichiers déjà dans public/fonts) pour le texte courant : plus
+// de caractère que Raleway, et une vraie italique pour les mots appuyés.
+const moderat = localFont({
+  src: [
+    { path: "../public/fonts/Moderat-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../public/fonts/Moderat-Italic.woff2", weight: "400", style: "italic" },
+    { path: "../public/fonts/Moderat-Bold.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -118,7 +126,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr-FR" className={`${raleway.variable} ${antonio.variable}`}>
+    <html lang="fr-FR" suppressHydrationWarning className={`${moderat.variable} ${antonio.variable}`}>
       <head>
         {/* Applique le thème sauvegardé avant le premier paint, pour éviter un flash
             visuel sans avoir à bloquer le rendu serveur du reste de la page (voir
@@ -127,7 +135,7 @@ export default function RootLayout({
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html:
-              "try{if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark')}}catch(e){}",
+              "document.documentElement.classList.add('js');try{if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark')}}catch(e){}",
           }}
         />
         <script
@@ -150,6 +158,8 @@ export default function RootLayout({
           <PassiveEventsInit />
           <main className="pt-20 flex-grow" role="main" tabIndex={-1}>{children}</main>
           <Footer />
+          <Timecode />
+          <FilmGrain />
         </ThemeProvider>
       </body>
     </html>

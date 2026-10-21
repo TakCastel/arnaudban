@@ -1,12 +1,10 @@
 import { Metadata } from "next";
-import PageTransition from "@/components/PageTransition";
-import HomeButton from "@/components/HomeButton";
-import PageContainer from "@/components/PageContainer";
-import ProjectGrid from "@/components/ProjectGrid";
+import Link from "next/link";
+import Cut from "@/components/Cut";
+import Words from "@/components/Words";
+import Slugline from "@/components/Slugline";
+import ProjetsBobine from "@/components/ProjetsBobine";
 import { getProjects } from "@/lib/getProjects";
-import SplitText from "@/components/SplitText";
-import StaggerItem from "@/components/StaggerItem";
-import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Projets - Portfolio vidéo | Arnaud Ban, Avignon",
@@ -49,38 +47,48 @@ export const metadata: Metadata = {
 
 export default function ProjetsPage() {
   const items = getProjects();
+  // Années extrêmes de la bobine, pour la ligne de "carton" sous le titre.
+  const years = items.map((p) => Number(p.date));
+  const from = Math.min(...years);
+  const to = Math.max(...years);
+
   return (
-    <PageTransition>
-      {/* Même fond que Services/À propos (--background/--foreground du thème
-          courant) et même structure de page : header (h1 + intro) dans
-          PageContainer, contenu, puis retour à l'accueil. */}
-      <PageContainer className="pt-8 md:pt-16">
-        <header className="max-w-3xl mb-14 md:mb-20">
-          <SplitText as="h1" id="work-title" className="text-5xl md:text-7xl text-foreground mb-5 tracking-tight">
-            Projets
-          </SplitText>
-          <StaggerItem>
-            <p className="text-2xl md:text-3xl leading-relaxed text-foreground/90">
-              {items.length} projets : courts métrages, clips musicaux, vidéos
-              d&apos;entreprise, captations d&apos;événements et projets
-              associatifs, réalisés à Avignon et dans le Vaucluse.
-            </p>
-          </StaggerItem>
-        </header>
-      </PageContainer>
+    <div className="bg-background text-foreground">
+      {/* OUVERTURE — le titre plein cadre, puis une seule ligne de contexte
+          décalée à droite : la page s'ouvre comme un carton de début. */}
+      <header className="pt-10 md:pt-16 pb-16 md:pb-28">
+        <Slugline>Int. Projection — Nuit</Slugline>
+        <Cut className="px-4 md:px-10">
+          <h1
+            id="work-title"
+            className="font-heading font-bold uppercase leading-[0.86] pt-[0.16em] tracking-tighter text-[18vw] md:text-[11vw] -ml-[0.04em]"
+          >
+            <Words>Projets</Words>
+          </h1>
+        </Cut>
+        <Cut className="px-4 md:px-10 mt-8 md:mt-12 md:ml-[50%] max-w-xl">
+          <p className="font-heading uppercase tracking-[0.2em] text-xs md:text-sm opacity-70 mb-3 tabular-nums">
+            {items.length} films — {from}–{to}
+          </p>
+          <p className="text-base md:text-lg leading-relaxed opacity-80">
+            Courts métrages, clips musicaux, vidéos d&apos;entreprise,
+            captations d&apos;événements et projets associatifs, réalisés à
+            Avignon et dans le Vaucluse.
+          </p>
+        </Cut>
+      </header>
 
-      {/* Grille dans le container (comme le reste du contenu), tailles de
-          cases variées — voir ProjectGrid. Apparition au scroll (voir
-          ScrollReveal), pas sur le même minuteur que le titre/texte. */}
-      <PageContainer className="pb-8 md:pb-16">
-        <ScrollReveal>
-          <ProjectGrid projects={items} />
-        </ScrollReveal>
-
-        <ScrollReveal className="pt-10">
-          <HomeButton centered={false} />
-        </ScrollReveal>
-      </PageContainer>
-    </PageTransition>
+      {/* la bobine elle-même : filtres, liste ou planche contact.
+          Pas d'appel à l'action ici : le pied de page s'en charge déjà. */}
+      <section className="pb-12 md:pb-16" aria-label="Tous les projets">
+        <Slugline>Int. Chutiers — Bobine complète</Slugline>
+        <ProjetsBobine projects={items} />
+        <div className="px-4 md:px-10 pt-8 border-t border-foreground/20 flex font-heading uppercase tracking-[0.2em] text-sm md:text-base">
+          <Link href="/" className="end-link opacity-70 hover:opacity-100">
+            ← Accueil
+          </Link>
+        </div>
+      </section>
+    </div>
   );
 }

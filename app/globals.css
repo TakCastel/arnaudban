@@ -71,7 +71,7 @@ body {
   transition: background-color 300ms ease, color 300ms ease;
 }
 
-/* Antonio pour tous les titres, Raleway pour le reste (voir tailwind.config.js
+/* Antonio pour tous les titres, Moderat pour le reste (voir tailwind.config.js
    pour les éléments "titre" qui ne sont pas des balises h1-h6, ex. le grand
    ARNAUD BAN du hero, la variante utilise directement .font-heading). */
 h1, h2, h3, h4, h5, h6 {
@@ -307,4 +307,228 @@ nav button:focus-visible {
    remap pour que les tons intermédiaires ne s'écrasent pas à plat. */
 .duotone {
   filter: contrast(1.05) url(#duotone);
+}
+/* ===================================================================
+   Direction "film monté" (accueil) : grain, timecode, coupes franches,
+   liste de projets étalonnée, générique de fin.
+   =================================================================== */
+
+/* Grain de pellicule (voir components/FilmGrain.tsx). Le bruit est un SVG
+   feTurbulence en data URI ; le fond déborde de 10% pour que les sauts de
+   position ne laissent jamais voir de bord. */
+.film-grain {
+  position: fixed;
+  inset: -10%;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1.6 -0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: film-grain 0.5s steps(6) infinite;
+}
+.dark .film-grain {
+  opacity: 0.1;
+}
+@keyframes film-grain {
+  0% { transform: translate(0, 0); }
+  17% { transform: translate(-3%, 2%); }
+  33% { transform: translate(2%, -4%); }
+  50% { transform: translate(-4%, -1%); }
+  67% { transform: translate(3%, 3%); }
+  83% { transform: translate(-1%, 4%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Point "REC" du timecode : clignote à la seconde, sans fondu. */
+.timecode-rec {
+  animation: rec-blink 1s steps(1) infinite;
+}
+@keyframes rec-blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-grain,
+  .timecode-rec {
+    animation: none;
+  }
+}
+
+/* Apparitions (voir components/Cut.tsx) : caché tant que le bloc attend
+   d'entrer dans l'écran. */
+.cut[data-phase="armed"] > * {
+  visibility: hidden;
+}
+
+/* Avant hydratation : caché seulement si le JS est là (classe .js posée
+   dans le <head>), et réaffiché d'office après 2,5 s si rien ne s'est
+   passé — une page ne peut pas rester vide. */
+.js .cut[data-phase="idle"] > * {
+  visibility: hidden;
+  animation: cut-failsafe 0s linear 2.5s forwards;
+}
+@keyframes cut-failsafe {
+  to { visibility: visible; }
+}
+
+/* Entrée : chaque enfant direct monte, en cascade. `backwards` (pas
+   `both`) : une fois joué, l'élément retrouve ses propres transform —
+   sinon l'animation écraserait à vie un transform posé en JS. */
+.cut[data-phase="in"] > * {
+  animation: cut-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.cut[data-phase="in"] > :nth-child(2) { animation-delay: 0.08s; }
+.cut[data-phase="in"] > :nth-child(3) { animation-delay: 0.16s; }
+.cut[data-phase="in"] > :nth-child(4) { animation-delay: 0.24s; }
+.cut[data-phase="in"] > :nth-child(5) { animation-delay: 0.32s; }
+@keyframes cut-rise {
+  from { opacity: 0; transform: translateY(32px); }
+}
+
+/* Listes dans un bloc : les lignes arrivent l'une après l'autre. */
+.cut[data-phase="in"] li {
+  animation: cut-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.cut[data-phase="in"] li:nth-child(2) { animation-delay: 0.06s; }
+.cut[data-phase="in"] li:nth-child(3) { animation-delay: 0.12s; }
+.cut[data-phase="in"] li:nth-child(4) { animation-delay: 0.18s; }
+.cut[data-phase="in"] li:nth-child(5) { animation-delay: 0.24s; }
+.cut[data-phase="in"] li:nth-child(6) { animation-delay: 0.3s; }
+.cut[data-phase="in"] li:nth-child(7) { animation-delay: 0.36s; }
+.cut[data-phase="in"] li:nth-child(8) { animation-delay: 0.42s; }
+.cut[data-phase="in"] li:nth-child(9) { animation-delay: 0.48s; }
+.cut[data-phase="in"] li:nth-child(n + 10) { animation-delay: 0.54s; }
+
+/* Mots qui sortent d'un cache (voir components/Words.tsx). Le padding
+   vertical du cache laisse la place aux accents et aux jambages. */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.18em 0.04em 0.18em;
+  margin: -0.18em -0.04em -0.18em;
+}
+.word > span {
+  display: inline-block;
+}
+.cut[data-phase="in"] .word > span {
+  animation: word-up 1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: calc(0.1s + var(--i, 0) * 0.07s);
+}
+@keyframes word-up {
+  from { transform: translateY(110%) rotate(4deg); }
+}
+
+/* Images en balayage, comme un volet qui s'ouvre, et léger recul de
+   l'image dedans. */
+.cut[data-phase="in"] .wipe {
+  animation: wipe-open 1.2s cubic-bezier(0.77, 0, 0.18, 1) backwards;
+}
+.cut[data-phase="in"] .wipe img {
+  animation: wipe-settle 1.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+@keyframes wipe-open {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes wipe-settle {
+  from { transform: scale(1.18); }
+}
+
+/* Trait des en-têtes de section : se trace de gauche à droite. */
+.slugline-rule {
+  transform-origin: left;
+}
+.cut[data-phase="in"] .slugline-rule {
+  animation: rule-draw 1.1s cubic-bezier(0.77, 0, 0.18, 1) 0.15s backwards;
+}
+@keyframes rule-draw {
+  from { transform: translateY(-0.3em) scaleX(0); }
+}
+
+/* Bandeau défilant (voir components/Marquee.tsx) : lettres évidées. */
+.marquee-word {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cut[data-phase] *,
+  .cut[data-phase] > * {
+    animation: none !important;
+  }
+}
+
+/* Mots-plans (savoir-faire, services) : au survol, la typo devient une
+   fenêtre sur un plan du portfolio (background-clip: text). Le remplissage
+   se fait mot par mot, sur les spans animés de <Words> : un clip posé sur
+   le titre lui-même ne traverse pas leurs transform/overflow. */
+.skill-word,
+.skill-word .word > span {
+  color: var(--foreground);
+}
+.skill-word .word > span {
+  background-image: var(--still);
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* Avec un interlignage serré (0.86), la boîte du span est plus petite que
+     les lettres : l'image s'arrêtait avant le bas des glyphes (bande claire)
+     et laissait l'accent du É vide. On étend la boîte de tous côtés, sans
+     rien décaler (marges négatives équivalentes). */
+  padding: 0.35em 0.06em;
+  margin: -0.35em -0.06em;
+}
+/* Un voile sombre sur l'image et un contour fin à la couleur du texte :
+   sans eux, les zones claires d'un plan (ciel, projecteur…) effaçaient le
+   haut ou le bas des lettres une fois remplies. */
+@media (hover: hover) {
+  .skill-row:hover .skill-word .word > span {
+    color: transparent;
+    background-image: linear-gradient(rgb(0 0 0 / 0.2), rgb(0 0 0 / 0.2)), var(--still);
+    -webkit-text-stroke: 1.5px var(--foreground);
+  }
+}
+
+/* Liste de projets (voir components/ProjectReel.tsx) : le fond prend
+   l'étalonnage du projet survolé. */
+.reel {
+  transition: background-color 350ms ease, color 350ms ease;
+}
+.reel-row {
+  border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  transition: opacity 200ms ease;
+}
+.reel-follower {
+  transition: opacity 150ms ease;
+  will-change: transform;
+}
+.reel-follower img {
+  transition: none;
+}
+/* Suiveur réservé aux appareils avec survol ; image dans la ligne sinon. */
+.hover-only { display: none; }
+.hover-none-only { display: block; }
+@media (hover: hover) and (pointer: fine) {
+  .hover-only { display: block; }
+  .hover-none-only { display: none; }
+}
+
+/* Lien du générique de fin : soulignement qui se trace au survol. */
+.end-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  padding-bottom: 4px;
+  transition: background-size 300ms ease, opacity 300ms ease;
+}
+.end-link:hover {
+  background-size: 100% 1px;
+}
+
+/* En sombre, le fond de page est déjà --ink : un filet sépare le carton
+   de fin de l'accueil de la section au-dessus. */
+.dark .end-credits {
+  border-top: 1px solid color-mix(in srgb, var(--beige) 15%, transparent);
 }

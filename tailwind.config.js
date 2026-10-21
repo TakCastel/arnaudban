@@ -14,7 +14,7 @@ module.exports = {
         "hero-block-text": "var(--hero-block-text)",
       },
       fontFamily: {
-        sans: ["var(--font-raleway)", "sans-serif"],
+        sans: ["var(--font-body)", "sans-serif"],
         heading: ["var(--font-antonio)", "sans-serif"],
       },
       spacing: {

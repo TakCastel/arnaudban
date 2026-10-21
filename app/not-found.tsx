@@ -1,44 +1,36 @@
 import Link from "next/link";
-import HomeButton from "@/components/HomeButton";
-import PageContainer from "@/components/PageContainer";
+import Cut from "@/components/Cut";
+import Words from "@/components/Words";
+import Slugline from "@/components/Slugline";
 
+// 404 en langage de monteur : la page a sauté au montage. Court, une blague
+// et deux sorties, rien de plus.
 export default function NotFound() {
   return (
-    <main className="bg-background flex items-center justify-center py-8 md:py-16 min-h-[calc(100vh-80px)]">
-      <PageContainer className="text-center">
-        {/* Numéro 404 stylisé */}
-        <div className="mb-8">
-          <h1 className="text-8xl md:text-9xl text-foreground/20 tracking-tight">
-            404
-          </h1>
+    // Pas de <main> ici : le layout en fournit déjà un (un seul par page).
+    <div className="bg-background text-foreground min-h-[calc(100vh-80px)] flex flex-col justify-center pt-12 md:pt-16 pb-20 md:pb-28">
+      <Slugline>Int. Salle de montage — Chutes — Nuit</Slugline>
+      <Cut className="px-4 md:px-10">
+        <h1 className="font-heading font-bold uppercase leading-[0.86] pt-[0.16em] tracking-tighter text-[18vw] md:text-[11vw]">
+          <Words>Plan coupé</Words>
+          <br />
+          <Words start={2}>au montage</Words>
+        </h1>
+      </Cut>
+      <Cut className="px-4 md:px-10 mt-8 md:mt-12 md:ml-[50%] max-w-md">
+        <p className="text-base md:text-lg leading-relaxed opacity-80">
+          Erreur 404 : cette page n&apos;existe pas, ou elle a changé de place
+          dans la timeline.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 font-heading uppercase tracking-[0.2em] text-sm md:text-base">
+          <Link href="/" className="end-link">
+            Retour au début →
+          </Link>
+          <Link href="/projets" className="end-link opacity-70 hover:opacity-100">
+            Tous les projets →
+          </Link>
         </div>
-
-        {/* Message d'erreur */}
-        <div className="mb-12">
-          <h2 className="text-4xl md:text-5xl text-foreground mb-4">
-            Page introuvable
-          </h2>
-          <p className="text-xl md:text-2xl text-foreground/70 leading-relaxed max-w-2xl mx-auto">
-            Désolé, la page que vous recherchez n&apos;existe pas ou a été déplacée.
-          </p>
-        </div>
-
-        {/* Actions */}
-        <div className="space-y-4">
-          <div>
-            <HomeButton size="lg" centered={false} />
-          </div>
-          
-          <div>
-            <Link
-              href="/projets"
-              className="text-xl text-foreground/70 hover:text-foreground transition-colors duration-300"
-            >
-              Voir tous les projets
-            </Link>
-          </div>
-        </div>
-      </PageContainer>
-    </main>
+      </Cut>
+    </div>
   );
 }
